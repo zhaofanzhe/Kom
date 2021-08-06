@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
-abstract class Entity<T : Any>(private val kClass: KClass<T>) {
+abstract class Table<T : Any>(private val kClass: KClass<T>) {
 
     private val fields = mutableListOf<Field<*>>()
 

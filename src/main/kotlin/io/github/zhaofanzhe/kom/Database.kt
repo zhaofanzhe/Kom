@@ -10,7 +10,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return QueryClause<Void>(Queryer(connectionFactory))
     }
 
-    fun <U : Any> select(clause: Entity<U>): QueryClause<U> {
+    fun <U : Any> select(clause: Table<U>): QueryClause<U> {
         return query().select(clause)
     }
 
@@ -18,7 +18,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return query().select(*fields)
     }
 
-    fun <U : Any> selectFrom(clause: Entity<U>): QueryClause<U> {
+    fun <U : Any> selectFrom(clause: Table<U>): QueryClause<U> {
         return query().select(clause).from(clause)
     }
 

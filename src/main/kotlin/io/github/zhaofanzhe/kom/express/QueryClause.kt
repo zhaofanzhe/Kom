@@ -36,9 +36,9 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val queryClause: Express by computable
 
-    fun <U:Any> select(entity: Entity<U>): QueryClause<U> {
-        this.select = SelectClause(*entity.declares())
-        this.fromKClass = entity.entityClass() as KClass<T>
+    fun <U:Any> select(table: Table<U>): QueryClause<U> {
+        this.select = SelectClause(*table.declares())
+        this.fromKClass = table.entityClass() as KClass<T>
         return this as QueryClause<U>
     }
 
@@ -48,8 +48,8 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return this as QueryClause<Tuple>
     }
 
-    fun from(entity: Entity<*>): QueryClause<T> {
-        this.from = FromClause(entity)
+    fun from(table: Table<*>): QueryClause<T> {
+        this.from = FromClause(table)
         return this
     }
 
