@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.express.builder.ClauseExpressBuilder
 
 class OffsetClause(size: Long) : ClauseExpressBuilder() {
 
-    private val offset = "offset "
+    private val offset = " offset "
 
     init {
         if (size > 0) {
