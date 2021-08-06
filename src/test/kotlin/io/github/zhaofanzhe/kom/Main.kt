@@ -5,7 +5,7 @@ import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.toolkit.and
 import io.github.zhaofanzhe.kom.toolkit.desc
 import io.github.zhaofanzhe.kom.toolkit.eq
-import io.github.zhaofanzhe.kom.toolkit.neq
+import io.github.zhaofanzhe.kom.toolkit.ne
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -30,7 +30,7 @@ fun main() {
     val express = database.select(users.id, users.username)
         .from(users)
         .where(and {
-            and(users.username.neq("张三"))
+            and(users.username.ne("张三"))
             or {
                 or(users.id.eq(1))
                 or(users.id.eq(2))

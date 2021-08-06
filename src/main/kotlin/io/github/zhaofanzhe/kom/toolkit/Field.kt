@@ -16,7 +16,7 @@ fun <T> Column<T>.eq(other: T): EqualsLogicExpress {
 /**
  * select * from user where [id != ?]
  */
-fun <T> Column<T>.neq(other: T): NotEqualsLogicExpress {
+fun <T> Column<T>.ne(other: T): NotEqualsLogicExpress {
     return NotEqualsLogicExpress(this, other as Any)
 }
 
