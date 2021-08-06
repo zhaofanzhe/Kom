@@ -16,9 +16,9 @@ data class User(
 )
 
 class Users : Table<User>(User::class) {
-    val id = field(User::id)
-    val username = field(User::username)
-    val password = field(User::password)
+    val id = column(User::id)
+    val username = column(User::username, "username_123")
+    val password = column(User::password)
 }
 
 fun main() {

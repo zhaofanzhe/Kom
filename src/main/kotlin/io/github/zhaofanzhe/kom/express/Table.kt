@@ -6,10 +6,10 @@ import kotlin.reflect.KMutableProperty1
 
 abstract class Table<T : Any>(private val kClass: KClass<T>) {
 
-    private val fields = mutableListOf<Column<*>>()
+    private val columns = mutableListOf<Column<*>>()
 
     internal fun declares(): Array<DeclareExpress> {
-        return fields.map { DeclareExpress(it) }.toTypedArray()
+        return columns.map { DeclareExpress(it) }.toTypedArray()
     }
 
     internal fun tableName(): String {
@@ -20,10 +20,10 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
         return this.kClass
     }
 
-    fun <U> field(property: KMutableProperty1<T, U>): Column<U> {
-        val field = Column<U>(property.name)
-        fields.add(field)
-        return field
+    fun <U> column(property: KMutableProperty1<T, U>, columnName: String = property.name): Column<U> {
+        val column = Column<U>(fieldName = property.name,columnName = columnName)
+        columns.add(column)
+        return column
     }
 
 }

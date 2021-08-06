@@ -1,15 +1,16 @@
 package io.github.zhaofanzhe.kom.express
 
 data class Column<T>(
-    private val field: String,
+    private val columnName: String,
+    private val fieldName: String,
 ) : Express() {
 
-    internal fun fieldName(): String {
-        return field
+    internal fun columnName(): String {
+        return columnName
     }
 
-    internal fun columnName(): String {
-        return field
+    internal fun fieldName(): String {
+        return fieldName
     }
 
     override fun express(): String {
