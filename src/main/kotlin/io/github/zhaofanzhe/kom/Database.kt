@@ -14,8 +14,8 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return query().select(clause)
     }
 
-    fun select(vararg fields: Field<*>): QueryClause<Tuple> {
-        return query().select(*fields)
+    fun select(vararg columns: Column<*>): QueryClause<Tuple> {
+        return query().select(*columns)
     }
 
     fun <U : Any> selectFrom(clause: Table<U>): QueryClause<U> {

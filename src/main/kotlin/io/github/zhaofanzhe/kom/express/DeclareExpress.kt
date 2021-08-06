@@ -3,10 +3,10 @@ package io.github.zhaofanzhe.kom.express
 /**
  * 声明表达式
  */
-class DeclareExpress(private val field: Field<*>) : Express() {
+class DeclareExpress(private val column: Column<*>) : Express() {
 
     override fun express(): String {
-        return field.columnName()
+        return column.columnName()
     }
 
     override fun params(): Array<Any> {

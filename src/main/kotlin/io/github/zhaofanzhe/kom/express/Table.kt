@@ -6,7 +6,7 @@ import kotlin.reflect.KMutableProperty1
 
 abstract class Table<T : Any>(private val kClass: KClass<T>) {
 
-    private val fields = mutableListOf<Field<*>>()
+    private val fields = mutableListOf<Column<*>>()
 
     internal fun declares(): Array<DeclareExpress> {
         return fields.map { DeclareExpress(it) }.toTypedArray()
@@ -20,8 +20,8 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
         return this.kClass
     }
 
-    fun <U> field(property: KMutableProperty1<T, U>): Field<U> {
-        val field = Field<U>(property.name)
+    fun <U> field(property: KMutableProperty1<T, U>): Column<U> {
+        val field = Column<U>(property.name)
         fields.add(field)
         return field
     }

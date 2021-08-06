@@ -1,6 +1,6 @@
 package io.github.zhaofanzhe.kom.express
 
-data class Field<T>(
+data class Column<T>(
     private val field: String,
 ) : Express() {
 

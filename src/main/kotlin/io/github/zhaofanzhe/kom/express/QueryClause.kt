@@ -42,8 +42,8 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return this as QueryClause<U>
     }
 
-    fun select(vararg fields: Field<*>): QueryClause<Tuple> {
-        this.select = SelectClause(*fields.map { DeclareExpress(it) }.toTypedArray())
+    fun select(vararg columns: Column<*>): QueryClause<Tuple> {
+        this.select = SelectClause(*columns.map { DeclareExpress(it) }.toTypedArray())
         this.fromKClass = Tuple::class as KClass<T>
         return this as QueryClause<Tuple>
     }
@@ -58,8 +58,8 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return this
     }
 
-    fun groupBy(vararg fields: Field<*>): QueryClause<T> {
-        this.groupBy = GroupByClause(*fields)
+    fun groupBy(vararg columns: Column<*>): QueryClause<T> {
+        this.groupBy = GroupByClause(*columns)
         return this
     }
 
