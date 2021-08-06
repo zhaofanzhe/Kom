@@ -14,7 +14,7 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 package io.github.zhaofanzhe.kom
 
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
-import io.github.zhaofanzhe.kom.express.Entity
+import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.toolkit.and
 import io.github.zhaofanzhe.kom.toolkit.desc
 import io.github.zhaofanzhe.kom.toolkit.eq
@@ -28,10 +28,10 @@ data class User(
     var password: String = "",
 )
 
-class Users : Entity<User>(User::class) {
-    val id = field(User::id)
-    val username = field(User::username)
-    val password = field(User::password)
+class Users : Table<User>(User::class) {
+    val id = column(User::id)
+    val username = column(User::username, "username_123")
+    val password = column(User::password)
 }
 
 fun main() {
