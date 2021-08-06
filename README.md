@@ -4,7 +4,10 @@
 
 ## 说明
 目前的进度只是一个玩具,有兴趣的人可以加入进来
+
 不定时更新
+
+有任何问题可以通过 [Issues](https://github.com/zhaofanzhe/Kom/issues) 联系我
 
 ### 例子
 ```kotlin

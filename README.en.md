@@ -4,7 +4,10 @@
 
 ## Explain
 The current progress is just a toy. Interested people can join in.
+
 Update from time to time.
+
+If you have any questions, please contact me via [Issues](https://github.com/zhaofanzhe/Kom/issues)
 
 ### Example
 ```kotlin
