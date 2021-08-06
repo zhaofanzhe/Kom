@@ -6,11 +6,11 @@ import io.github.zhaofanzhe.kom.queryer.Queryer
 
 class Database(private val connectionFactory: ConnectionFactory) {
 
-    private fun query() :QueryClause<*> {
+    private fun query(): QueryClause<*> {
         return QueryClause<Void>(Queryer(connectionFactory))
     }
 
-    fun <U> select(clause: Entity<U>): QueryClause<U> {
+    fun <U : Any> select(clause: Entity<U>): QueryClause<U> {
         return query().select(clause)
     }
 
@@ -18,7 +18,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return query().select(*fields)
     }
 
-    fun <U> selectFrom(clause: Entity<U>): QueryClause<U> {
+    fun <U : Any> selectFrom(clause: Entity<U>): QueryClause<U> {
         return query().select(clause).from(clause)
     }
 

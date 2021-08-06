@@ -2,9 +2,10 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.Computable
+import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
-class QueryClause<T>(private val queryer: Queryer) : Clause() {
+class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val computable = Computable {
         val list = mutableListOf(select, from, where, groupBy, orderBy)
@@ -31,19 +32,19 @@ class QueryClause<T>(private val queryer: Queryer) : Clause() {
 
     private var offset: OffsetClause? by computable.observable(null)
 
-    private var fromClazz: Class<T>? = null
+    private var fromKClass: KClass<T>? = null
 
     private val queryClause: Express by computable
 
-    fun <U> select(entity: Entity<U>): QueryClause<U> {
+    fun <U:Any> select(entity: Entity<U>): QueryClause<U> {
         this.select = SelectClause(*entity.declares())
-        this.fromClazz = entity.entityClass() as Class<T>
+        this.fromKClass = entity.entityClass() as KClass<T>
         return this as QueryClause<U>
     }
 
     fun select(vararg fields: Field<*>): QueryClause<Tuple> {
         this.select = SelectClause(*fields.map { DeclareExpress(it) }.toTypedArray())
-        this.fromClazz = Tuple::class.java as Class<T>
+        this.fromKClass = Tuple::class as KClass<T>
         return this as QueryClause<Tuple>
     }
 
@@ -72,7 +73,7 @@ class QueryClause<T>(private val queryer: Queryer) : Clause() {
         return this
     }
 
-    fun limit(limitSize: Long,offsetSize: Long): QueryClause<T> {
+    fun limit(limitSize: Long, offsetSize: Long): QueryClause<T> {
         return limit(limitSize).offset(offsetSize)
     }
 
@@ -82,7 +83,7 @@ class QueryClause<T>(private val queryer: Queryer) : Clause() {
     }
 
     fun fetchAll(): List<T> {
-        return queryer.executeQuery(express(), params().toList()).fetchAll(this.fromClazz!!)
+        return queryer.executeQuery(express(), params().toList()).fetchAll(this.fromKClass!!)
     }
 
     private fun totalExpress(): Express {

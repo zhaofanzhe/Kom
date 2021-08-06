@@ -2,7 +2,10 @@ package io.github.zhaofanzhe.kom
 
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.express.Entity
-import io.github.zhaofanzhe.kom.toolkit.*
+import io.github.zhaofanzhe.kom.toolkit.and
+import io.github.zhaofanzhe.kom.toolkit.desc
+import io.github.zhaofanzhe.kom.toolkit.eq
+import io.github.zhaofanzhe.kom.toolkit.neq
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -12,7 +15,7 @@ data class User(
     var password: String = "",
 )
 
-class Users : Entity<User>(User::class.java) {
+class Users : Entity<User>(User::class) {
     val id = field(User::id)
     val username = field(User::username)
     val password = field(User::password)
@@ -36,7 +39,7 @@ fun main() {
         .groupBy(users.id)
         .orderBy(users.id.desc())
         .limit(10)
-        .offset(10)
+        .offset(0)
 
     println(express)
 

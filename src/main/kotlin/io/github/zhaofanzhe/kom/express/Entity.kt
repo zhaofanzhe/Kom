@@ -1,9 +1,10 @@
 package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.naming.Naming
+import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
-abstract class Entity<T>(private val clazz: Class<T>) {
+abstract class Entity<T : Any>(private val kClass: KClass<T>) {
 
     private val fields = mutableListOf<Field<*>>()
 
@@ -12,11 +13,11 @@ abstract class Entity<T>(private val clazz: Class<T>) {
     }
 
     internal fun tableName(): String {
-        return Naming.toTableName(Naming.toEntityName(clazz))
+        return Naming.toTableName(Naming.toEntityName(kClass))
     }
 
-    internal fun entityClass(): Class<T> {
-        return this.clazz
+    internal fun entityClass(): KClass<T> {
+        return this.kClass
     }
 
     fun <U> field(property: KMutableProperty1<T, U>): Field<U> {

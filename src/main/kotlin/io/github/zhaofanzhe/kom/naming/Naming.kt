@@ -1,6 +1,8 @@
 package io.github.zhaofanzhe.kom.naming
 
+import io.github.zhaofanzhe.kom.KomException
 import java.lang.StringBuilder
+import kotlin.reflect.KClass
 
 object Naming {
 
@@ -14,11 +16,14 @@ object Naming {
         return words.joinToString(separator = "_")
     }
 
-    fun toEntityName(clazz: Class<*>): String {
-        return clazz.typeName.split(".").last()
+    fun toEntityName(kClass: KClass<*>): String {
+        if (kClass.simpleName == "") {
+            throw KomException("This class does not have simpleName, please check whether this class is anonymous")
+        }
+        return kClass.simpleName!!
     }
 
-    private fun toWords(text:String):MutableList<String>{
+    private fun toWords(text: String): MutableList<String> {
         val words = mutableListOf<String>()
 
         val word = StringBuilder()
