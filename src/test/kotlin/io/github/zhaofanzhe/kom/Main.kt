@@ -8,12 +8,14 @@ import java.sql.DriverManager
 
 data class User(
     var id: Int = 0,
-    var username: String = ""
+    var username: String = "",
+    var password: String = "",
 )
 
 class Users : Entity<User>(User::class.java) {
-    val id = field<Int>("id")
-    val username = field<String>("username")
+    val id = field(User::id)
+    val username = field(User::username)
+    val password = field(User::password)
 }
 
 fun main() {

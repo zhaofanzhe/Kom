@@ -1,6 +1,7 @@
 package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.naming.Naming
+import kotlin.reflect.KMutableProperty1
 
 abstract class Entity<T>(private val clazz: Class<T>) {
 
@@ -18,8 +19,8 @@ abstract class Entity<T>(private val clazz: Class<T>) {
         return this.clazz
     }
 
-    fun <T> field(fieldName: String): Field<T> {
-        val field = Field<T>(fieldName)
+    fun <U> field(property: KMutableProperty1<T, U>): Field<U> {
+        val field = Field<U>(property.name)
         fields.add(field)
         return field
     }
