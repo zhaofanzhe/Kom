@@ -2,10 +2,7 @@ package io.github.zhaofanzhe.kom
 
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.express.Table
-import io.github.zhaofanzhe.kom.toolkit.and
-import io.github.zhaofanzhe.kom.toolkit.desc
-import io.github.zhaofanzhe.kom.toolkit.eq
-import io.github.zhaofanzhe.kom.toolkit.ne
+import io.github.zhaofanzhe.kom.toolkit.*
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -47,6 +44,9 @@ fun main() {
         .leftJoin(address)
         .on(and {
             and(users.id eq address.userId)
+        })
+        .where(and {
+            and(users.id gt 1)
         })
 
     println(express)

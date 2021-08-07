@@ -4,7 +4,8 @@ import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
-class EqualsLogicExpress(
+class CompareLogicExpress(
+    private val operator: String,
     private val left: Any,
     private val right: Any,
 ) : LogicExpress<Boolean>() {
@@ -19,7 +20,7 @@ class EqualsLogicExpress(
             expressBuilder.append("?")
             paramsBuilder.add(left)
         }
-        expressBuilder.append(" = ")
+        expressBuilder.append(""" $operator """)
         if (right is Express) {
             right.generate(context)
             expressBuilder.append(right.express())
