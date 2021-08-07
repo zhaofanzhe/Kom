@@ -2,20 +2,12 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.Computable
-import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
 class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val computable = Computable {
-        val list = mutableListOf(select, from, where, groupBy, orderBy)
-        if (limit != null) {
-            list.add(limit)
-            if (offset != null) {
-                list.add(offset)
-            }
-        }
-        ExpressMerge(*list.toTypedArray())
+        merge()
     }
 
     private var select: SelectClause? by computable.observable(null)
@@ -88,6 +80,23 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private fun totalExpress(): Express {
         return ExpressMerge(select, from, where)
+    }
+
+    private fun merge():ExpressMerge{
+        val list = mutableListOf(select, from, where, groupBy, orderBy)
+        if (limit != null) {
+            list.add(limit)
+            if (offset != null) {
+                list.add(offset)
+            }
+        }
+        val merge = ExpressMerge(*list.toTypedArray())
+        merge.generate()
+        return merge
+    }
+
+    override fun generate() {
+        computable.update(merge())
     }
 
     override fun express(): String {

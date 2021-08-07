@@ -2,7 +2,7 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.builder.ExpressBuilder
 
-class SortExpress(column: Column<*>, genre: Genre) : ExpressBuilder() {
+class SortExpress(private val column: Column<*>,private val genre: Genre) : ExpressBuilder() {
 
     enum class Genre {
         ASC, DESC;
@@ -15,7 +15,8 @@ class SortExpress(column: Column<*>, genre: Genre) : ExpressBuilder() {
         }
     }
 
-    init {
+    override fun generate() {
+        column.generate()
         expressBuilder.append(column.columnName())
         expressBuilder.append(' ')
         expressBuilder.append(genre)

@@ -2,18 +2,20 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.builder.ClauseExpressBuilder
 
-class SelectClause(vararg declares: DeclareExpress) : ClauseExpressBuilder() {
+class SelectClause(private vararg val declares: DeclareExpress) : ClauseExpressBuilder() {
 
     private val select = "select "
 
-    init {
+    override fun generate() {
+        super.generate()
         expressBuilder.append(select)
         if (declares.isEmpty()) {
             expressBuilder.append("*")
         } else {
-            val express = ExpressMerge(*declares,separator = ", ")
-            expressBuilder.append(express.express())
-            paramsBuilder.addAll(express.params())
+            val merge = ExpressMerge(*declares,separator = ", ")
+            merge.generate()
+            expressBuilder.append(merge.express())
+            paramsBuilder.addAll(merge.params())
         }
     }
 

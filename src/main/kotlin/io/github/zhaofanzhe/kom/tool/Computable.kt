@@ -5,7 +5,7 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class Computable<T>(private val compute: () -> T) : ReadOnlyProperty<Any?,T> {
+class Computable<T>(private val compute: () -> T) : ReadOnlyProperty<Any?, T> {
 
     private var completed = false
 
@@ -23,6 +23,11 @@ class Computable<T>(private val compute: () -> T) : ReadOnlyProperty<Any?,T> {
             completed = true
         }
         return value!!
+    }
+
+    fun update(value: T) {
+        this.completed = false
+        this.value = value
     }
 
 }

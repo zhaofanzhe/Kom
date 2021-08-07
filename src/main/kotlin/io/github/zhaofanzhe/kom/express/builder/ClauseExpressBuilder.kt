@@ -9,6 +9,11 @@ open class ClauseExpressBuilder : Clause() {
 
     internal val paramsBuilder = mutableListOf<Any>()
 
+    override fun generate() {
+        expressBuilder.clear()
+        paramsBuilder.clear()
+    }
+
     override fun express(): String {
         return expressBuilder.toString()
     }

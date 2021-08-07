@@ -5,6 +5,10 @@ package io.github.zhaofanzhe.kom.express
  */
 class DeclareExpress(private val column: Column<*>) : Express() {
 
+    override fun generate() {
+        // Nothing
+    }
+
     override fun express(): String {
         return column.columnName()
     }

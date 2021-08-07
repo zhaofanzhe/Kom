@@ -4,12 +4,15 @@ import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
 class NotEqualsLogicExpress(
-    left: Any,
-    right: Any,
+    private val left: Any,
+    private val right: Any,
 ) : LogicExpress<Boolean>() {
 
-    init {
+    override fun generate() {
+        super.generate()
+
         if (left is Express){
+            left.generate()
             expressBuilder.append(left.express())
         } else {
             expressBuilder.append("?")
@@ -17,6 +20,7 @@ class NotEqualsLogicExpress(
         }
         expressBuilder.append(" != ")
         if (right is Express){
+            right.generate()
             expressBuilder.append(right.express())
         } else {
             expressBuilder.append("?")

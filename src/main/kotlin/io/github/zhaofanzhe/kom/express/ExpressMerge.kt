@@ -3,12 +3,14 @@ package io.github.zhaofanzhe.kom.express
 /**
  * 表达式合并
  */
-class ExpressMerge(vararg exprs: Express?,separator: String = "") : Express() {
+class ExpressMerge(private vararg val exprs: Express?,private val separator: String = "") : Express() {
 
-    private val express: String = exprs.filterNotNull().joinToString(separator = separator) { it.express() }
-    private val params: Array<Any>
+    private lateinit var express: String
+    private lateinit var params: Array<Any>
 
-    init {
+    override fun generate() {
+        exprs.filterNotNull().forEach { it.generate() }
+        express = exprs.filterNotNull().joinToString(separator = separator) { it.express() }
         val params = mutableListOf<Any>()
         exprs.filterNotNull().forEach {
             params.addAll(it.params())

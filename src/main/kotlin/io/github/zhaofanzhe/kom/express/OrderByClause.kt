@@ -2,14 +2,18 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.builder.ClauseExpressBuilder
 
-class OrderByClause(vararg exprs: SortExpress) : ClauseExpressBuilder() {
+class OrderByClause(private vararg val exprs: SortExpress) : ClauseExpressBuilder() {
 
     private val orderBy = "\norder by "
 
-    init {
+    override fun generate() {
+        super.generate()
         if (exprs.isNotEmpty()) {
             expressBuilder.append(orderBy)
-            expressBuilder.append(ExpressMerge(*exprs, separator = ", ").express())
+            val merge = ExpressMerge(*exprs, separator = ", ")
+            merge.generate()
+            expressBuilder.append(merge.express())
         }
     }
+
 }

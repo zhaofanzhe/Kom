@@ -4,11 +4,17 @@ import io.github.zhaofanzhe.kom.express.LogicExpress
 import kotlin.math.max
 
 class AndLogicExpress(
-    left: LogicExpress<Boolean>,
-    right: LogicExpress<Boolean>,
+    private val left: LogicExpress<Boolean>,
+    private val right: LogicExpress<Boolean>,
 ) : LogicExpress<Boolean>() {
 
-    init {
+    @Suppress("DuplicatedCode")
+    override fun generate() {
+        super.generate()
+
+        left.generate()
+        right.generate()
+
         val leftLayer = left.logicLayer
         val rightLayer = right.logicLayer
 

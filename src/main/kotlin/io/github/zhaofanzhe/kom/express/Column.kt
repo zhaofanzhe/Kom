@@ -13,6 +13,10 @@ data class Column<T>(
         return fieldName
     }
 
+    override fun generate() {
+        // Nothing
+    }
+
     override fun express(): String {
         return columnName()
     }
