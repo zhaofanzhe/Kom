@@ -55,7 +55,7 @@ fun main() {
     val address = Addresses()
     val users = Users()
 
-    val express = database.select(address)
+    val express = database.select(users, address)
         .from(users)
         .leftJoin(address)
         .on(and {
@@ -66,7 +66,11 @@ fun main() {
 
     val list = express.fetchAll()
 
-    println(list)
+    list.forEach {
+        println(it[users])
+        println(it[address])
+        println("------")
+    }
 
 }
 
