@@ -27,7 +27,10 @@ abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableNa
         return this.kClass
     }
 
-    fun <U> column(property: KMutableProperty1<T, U>, columnName: String = property.name): Column<U> {
+    fun <U> column(
+        property: KMutableProperty1<T, U>,
+        columnName: String = Naming.toColumnName(property.name)
+    ): Column<U> {
         val column = Column<U>(table = this, fieldName = property.name, columnName = columnName)
         columns.add(column)
         return column

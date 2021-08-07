@@ -17,6 +17,10 @@ class Computable<T>(private val compute: () -> T) : ReadOnlyProperty<Any?, T> {
         }
     }
 
+    fun notice() {
+        this.completed = false
+    }
+
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         if (!completed) {
             value = compute()

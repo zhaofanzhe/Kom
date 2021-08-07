@@ -28,6 +28,8 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private var offset: OffsetClause? by computable.observable(null)
 
+    private var joins: MutableList<JoinClause<*>> by computable.observable(mutableListOf())
+
     private var source: Any? = null
 
     private val queryClause: Express by computable
@@ -47,6 +49,27 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     fun from(table: Table<*>): QueryClause<T> {
         this.from = FromClause(table)
         return this
+    }
+
+    internal fun join(clause: JoinClause<*>): QueryClause<T> {
+        joins.add(clause)
+        return this
+    }
+
+    fun innerJoin(table: Table<*>): JoinClause<T> {
+        return JoinClause(JoinClause.Genre.INNER, table, this)
+    }
+
+    fun leftJoin(table: Table<*>): JoinClause<T> {
+        return JoinClause(JoinClause.Genre.LEFT, table, this)
+    }
+
+    fun rightJoin(table: Table<*>): JoinClause<T> {
+        return JoinClause(JoinClause.Genre.RIGHT, table, this)
+    }
+
+    fun fullJoin(table: Table<*>): JoinClause<T> {
+        return JoinClause(JoinClause.Genre.FULL, table, this)
     }
 
     fun where(clause: LogicExpress<Boolean>): QueryClause<T> {
@@ -92,7 +115,9 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     }
 
     private fun merge(context: Context): ExpressMerge {
-        val list = mutableListOf(select, from, where, groupBy, orderBy)
+        val list = mutableListOf<Express?>(select, from)
+        list.addAll(joins)
+        list.addAll(arrayOf(where, groupBy, orderBy))
         if (limit != null) {
             list.add(limit)
             if (offset != null) {

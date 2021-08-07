@@ -13,7 +13,7 @@ data class User(
     var id: Int = 0,
     var username: String = "",
 ) {
-    constructor():this(id = 0, username = "")
+    constructor() : this(id = 0, username = "")
 }
 
 class Users : Table<User>(User::class) {
@@ -21,35 +21,39 @@ class Users : Table<User>(User::class) {
     val username = column(User::username)
 }
 
+data class Address(
+    var id: Int = 0,
+    var address: String = "",
+    var userId: Int = 0,
+) {
+    constructor() : this(id = 0, address = "", userId = 0)
+}
+
+class Addresses : Table<Address>(Address::class) {
+    var id = column(Address::id)
+    var address = column(Address::address)
+    var userId = column(Address::userId)
+}
+
 fun main() {
 
     val database = getDatabase()
 
+    val address = Addresses()
     val users = Users()
 
-    val express = database.select(users.id,users.username)
+    val express = database.select(address)
         .from(users)
-        .where(and {
-            and(users.username.ne("张三"))
-            or {
-                or(users.id.eq(1))
-                or(users.id.eq(2))
-            }
+        .leftJoin(address)
+        .on(and {
+            and(users.id eq address.userId)
         })
-        .groupBy(users.id)
-        .orderBy(users.id.desc())
-        .limit(10)
-        .offset(0)
 
     println(express)
 
     val list = express.fetchAll()
 
     println(list)
-
-    list.forEach {
-        println("""id = ${it[users.id]}, username = ${it[users.username]}""")
-    }
 
 }
 
