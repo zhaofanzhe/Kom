@@ -12,13 +12,13 @@ import java.sql.DriverManager
 data class User(
     var id: Int = 0,
     var username: String = "",
-    var password: String = "",
-)
+) {
+    constructor():this(id = 0, username = "")
+}
 
 class Users : Table<User>(User::class) {
     val id = column(User::id)
-    val username = column(User::username, "username_123")
-    val password = column(User::password)
+    val username = column(User::username, "username1")
 }
 
 fun main() {
@@ -27,7 +27,7 @@ fun main() {
 
     val users = Users()
 
-    val express = database.select(users.id, users.username)
+    val express = database.select(users)
         .from(users)
         .where(and {
             and(users.username.ne("张三"))

@@ -8,6 +8,10 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
 
     private val columns = mutableListOf<Column<*>>()
 
+    internal fun columns(): List<Column<*>> {
+        return columns.toList()
+    }
+
     internal fun declares(): Array<DeclareExpress> {
         return columns.map { DeclareExpress(it) }.toTypedArray()
     }
@@ -21,7 +25,7 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
     }
 
     fun <U> column(property: KMutableProperty1<T, U>, columnName: String = property.name): Column<U> {
-        val column = Column<U>(fieldName = property.name,columnName = columnName)
+        val column = Column<U>(fieldName = property.name, columnName = columnName)
         columns.add(column)
         return column
     }

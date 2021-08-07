@@ -8,9 +8,9 @@ import kotlin.reflect.jvm.isAccessible
 
 class AnyFiller(private val instance: Any) : Filler<Any> {
 
-    override fun set(field: String, value: Any) {
+    override fun set(key: String, value: Any) {
         val optional = instance::class.memberProperties.stream()
-            .filter { it.name == field }
+            .filter { it.name == key }
             .filter { it != null }
             .findAny()
 

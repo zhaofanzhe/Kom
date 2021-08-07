@@ -6,8 +6,8 @@ import io.github.zhaofanzhe.kom.express.Tuple
 
 class TupleFiller(private val instance: Tuple) : Filler<Tuple> {
 
-    override fun set(field: String, value: Any) {
-        instance[field] = value
+    override fun set(key: String, value: Any) {
+        instance[key] = value
     }
 
     override fun getInstance(): Tuple {

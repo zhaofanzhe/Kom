@@ -32,19 +32,19 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private var offset: OffsetClause? by computable.observable(null)
 
-    private var fromKClass: KClass<T>? = null
+    private var source: Any? = null
 
     private val queryClause: Express by computable
 
     fun <U:Any> select(table: Table<U>): QueryClause<U> {
         this.select = SelectClause(*table.declares())
-        this.fromKClass = table.entityClass() as KClass<T>
+        this.source = table
         return this as QueryClause<U>
     }
 
     fun select(vararg columns: Column<*>): QueryClause<Tuple> {
         this.select = SelectClause(*columns.map { DeclareExpress(it) }.toTypedArray())
-        this.fromKClass = Tuple::class as KClass<T>
+        this.source = Tuple::class
         return this as QueryClause<Tuple>
     }
 
@@ -83,7 +83,7 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     }
 
     fun fetchAll(): List<T> {
-        return queryer.executeQuery(express(), params().toList()).fetchAll(this.fromKClass!!)
+        return queryer.executeQuery(express(), params().toList()).fetchAll(this.source!!)
     }
 
     private fun totalExpress(): Express {
