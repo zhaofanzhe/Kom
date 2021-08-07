@@ -1,15 +1,11 @@
 package io.github.zhaofanzhe.kom.tool
 
-class AliasSequenceGenerator {
+class AliasGenerator {
 
     private val generators = mutableMapOf<String, SequenceGenerator>()
 
     fun next(name: String): String {
-        var generator = generators[name]
-        if (generator == null){
-            generator= SequenceGenerator()
-            generators[name] = generator
-        }
+        val generator = generators.getOrPut(name) { SequenceGenerator() }
         return """${name}_${generator.next()}"""
     }
 
