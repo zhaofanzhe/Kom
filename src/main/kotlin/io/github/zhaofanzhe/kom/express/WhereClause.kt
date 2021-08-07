@@ -2,7 +2,7 @@ package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.builder.ClauseExpressBuilder
 
-class WhereClause(express: LogicExpress) : ClauseExpressBuilder() {
+class WhereClause(express: LogicExpress<Boolean>) : ClauseExpressBuilder() {
 
     private val where = "\nwhere "
 

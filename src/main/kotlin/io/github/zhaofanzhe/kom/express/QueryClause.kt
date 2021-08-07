@@ -53,7 +53,7 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return this
     }
 
-    fun where(clause: LogicExpress): QueryClause<T> {
+    fun where(clause: LogicExpress<Boolean>): QueryClause<T> {
         this.where = WhereClause(clause)
         return this
     }

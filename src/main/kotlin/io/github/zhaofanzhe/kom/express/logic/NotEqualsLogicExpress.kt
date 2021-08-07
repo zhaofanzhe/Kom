@@ -6,7 +6,7 @@ import io.github.zhaofanzhe.kom.express.LogicExpress
 class NotEqualsLogicExpress(
     left: Any,
     right: Any,
-) : LogicExpress() {
+) : LogicExpress<Boolean>() {
 
     init {
         if (left is Express){

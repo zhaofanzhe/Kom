@@ -4,9 +4,9 @@ import io.github.zhaofanzhe.kom.express.LogicExpress
 
 
 @Suppress("DuplicatedCode")
-class AndGroup : LogicExpress() {
+class AndGroup : LogicExpress<Boolean>() {
 
-    fun and(other: LogicExpress) {
+    fun and(other: LogicExpress<Boolean>) {
         val layer = logicLayer
         val otherLayer = other.logicLayer
         if (layer > 0) {

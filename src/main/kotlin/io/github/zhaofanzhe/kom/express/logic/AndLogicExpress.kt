@@ -4,9 +4,9 @@ import io.github.zhaofanzhe.kom.express.LogicExpress
 import kotlin.math.max
 
 class AndLogicExpress(
-    left: LogicExpress,
-    right: LogicExpress,
-) : LogicExpress() {
+    left: LogicExpress<Boolean>,
+    right: LogicExpress<Boolean>,
+) : LogicExpress<Boolean>() {
 
     init {
         val leftLayer = left.logicLayer

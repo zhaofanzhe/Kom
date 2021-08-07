@@ -4,9 +4,9 @@ import io.github.zhaofanzhe.kom.express.LogicExpress
 
 
 @Suppress("DuplicatedCode")
-class OrGroup : LogicExpress() {
+class OrGroup : LogicExpress<Boolean>() {
 
-    fun or(other: LogicExpress) {
+    fun or(other: LogicExpress<Boolean>) {
         val layer = logicLayer
         val otherLayer = other.logicLayer
         if (layer > 0) {

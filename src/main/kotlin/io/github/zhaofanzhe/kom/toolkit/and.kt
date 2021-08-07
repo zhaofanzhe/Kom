@@ -6,7 +6,7 @@ import io.github.zhaofanzhe.kom.express.logic.AndGroup
 /**
  * select * from [id = ? and username = ?]
  */
-fun and(init: AndGroup.() -> Unit): LogicExpress {
+fun and(init: AndGroup.() -> Unit): LogicExpress<Boolean> {
     val scope = AndGroup()
     scope.init()
     return scope
