@@ -6,8 +6,8 @@ class FromClause(private val table: Table<*>):ClauseExpressBuilder() {
 
     private var from  = "\nfrom "
 
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
         expressBuilder.append(from)
         expressBuilder.append(table.tableName())
     }

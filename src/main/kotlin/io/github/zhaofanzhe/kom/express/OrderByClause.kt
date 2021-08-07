@@ -6,12 +6,12 @@ class OrderByClause(private vararg val exprs: SortExpress) : ClauseExpressBuilde
 
     private val orderBy = "\norder by "
 
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
         if (exprs.isNotEmpty()) {
             expressBuilder.append(orderBy)
             val merge = ExpressMerge(*exprs, separator = ", ")
-            merge.generate()
+            merge.generate(context)
             expressBuilder.append(merge.express())
         }
     }

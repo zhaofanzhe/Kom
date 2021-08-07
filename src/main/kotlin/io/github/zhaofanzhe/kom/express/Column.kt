@@ -13,7 +13,7 @@ data class Column<T>(
         return fieldName
     }
 
-    override fun generate() {
+    override fun generate(context: Context) {
         // Nothing
     }
 

@@ -8,8 +8,8 @@ class ExpressMerge(private vararg val exprs: Express?,private val separator: Str
     private lateinit var express: String
     private lateinit var params: Array<Any>
 
-    override fun generate() {
-        exprs.filterNotNull().forEach { it.generate() }
+    override fun generate(context: Context) {
+        exprs.filterNotNull().forEach { it.generate(context) }
         express = exprs.filterNotNull().joinToString(separator = separator) { it.express() }
         val params = mutableListOf<Any>()
         exprs.filterNotNull().forEach {

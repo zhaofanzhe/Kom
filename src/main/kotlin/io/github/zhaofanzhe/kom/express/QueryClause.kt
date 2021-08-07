@@ -7,7 +7,7 @@ import io.github.zhaofanzhe.kom.tool.Computable
 class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val computable = Computable {
-        merge()
+        merge(Context())
     }
 
     private var select: SelectClause? by computable.observable(null)
@@ -82,7 +82,7 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return ExpressMerge(select, from, where)
     }
 
-    private fun merge():ExpressMerge{
+    private fun merge(context: Context):ExpressMerge{
         val list = mutableListOf(select, from, where, groupBy, orderBy)
         if (limit != null) {
             list.add(limit)
@@ -91,12 +91,12 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
             }
         }
         val merge = ExpressMerge(*list.toTypedArray())
-        merge.generate()
+        merge.generate(context)
         return merge
     }
 
-    override fun generate() {
-        computable.update(merge())
+    override fun generate(context: Context) {
+        computable.update(merge(context))
     }
 
     override fun express(): String {

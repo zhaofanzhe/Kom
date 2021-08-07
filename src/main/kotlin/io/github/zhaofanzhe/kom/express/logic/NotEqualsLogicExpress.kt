@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.express.logic
 
+import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
@@ -8,11 +9,11 @@ class NotEqualsLogicExpress(
     private val right: Any,
 ) : LogicExpress<Boolean>() {
 
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
 
         if (left is Express){
-            left.generate()
+            left.generate(context)
             expressBuilder.append(left.express())
         } else {
             expressBuilder.append("?")
@@ -20,7 +21,7 @@ class NotEqualsLogicExpress(
         }
         expressBuilder.append(" != ")
         if (right is Express){
-            right.generate()
+            right.generate(context)
             expressBuilder.append(right.express())
         } else {
             expressBuilder.append("?")

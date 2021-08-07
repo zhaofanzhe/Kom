@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.express.logic
 
+import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
 
@@ -18,11 +19,11 @@ class AndGroup : LogicExpress<Boolean>() {
         and(scope)
     }
 
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
 
         exprs.forEach {
-            it.generate()
+            it.generate(context)
 
             val layer = logicLayer
             val otherLayer = it.logicLayer

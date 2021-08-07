@@ -6,9 +6,9 @@ class WhereClause(private val express: LogicExpress<Boolean>) : ClauseExpressBui
 
     private val where = "\nwhere "
 
-    override fun generate() {
-        super.generate()
-        express.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
+        express.generate(context)
         expressBuilder.append(where)
         expressBuilder.append(express.express())
         paramsBuilder.addAll(express.params())

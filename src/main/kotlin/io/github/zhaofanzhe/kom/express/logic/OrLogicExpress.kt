@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.express.logic
 
+import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.LogicExpress
 import kotlin.math.max
 
@@ -9,11 +10,11 @@ class OrLogicExpress(
 ) : LogicExpress<Boolean>() {
 
     @Suppress("DuplicatedCode")
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
 
-        left.generate()
-        right.generate()
+        left.generate(context)
+        right.generate(context)
 
         val leftLayer = left.logicLayer
         val rightLayer = right.logicLayer

@@ -6,14 +6,14 @@ class SelectClause(private vararg val declares: DeclareExpress) : ClauseExpressB
 
     private val select = "select "
 
-    override fun generate() {
-        super.generate()
+    override fun generate(context: Context) {
+        super.generate(context)
         expressBuilder.append(select)
         if (declares.isEmpty()) {
             expressBuilder.append("*")
         } else {
             val merge = ExpressMerge(*declares,separator = ", ")
-            merge.generate()
+            merge.generate(context)
             expressBuilder.append(merge.express())
             paramsBuilder.addAll(merge.params())
         }

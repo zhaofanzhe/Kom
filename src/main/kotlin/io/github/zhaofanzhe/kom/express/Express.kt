@@ -5,7 +5,7 @@ package io.github.zhaofanzhe.kom.express
  */
 abstract class Express {
 
-    internal abstract fun generate()
+    internal abstract fun generate(context: Context)
 
     internal abstract fun express(): String
 

@@ -5,7 +5,7 @@ package io.github.zhaofanzhe.kom.express
  */
 class DeclareExpress(private val column: Column<*>) : Express() {
 
-    override fun generate() {
+    override fun generate(context: Context) {
         // Nothing
     }
 
