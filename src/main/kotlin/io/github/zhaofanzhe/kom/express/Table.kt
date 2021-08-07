@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
-abstract class Table<T : Any>(private val kClass: KClass<T>) {
+abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableName: String = "") {
 
     private val columns = mutableListOf<Column<*>>()
 
@@ -17,6 +17,9 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
     }
 
     internal fun tableName(): String {
+        if (tableName != "") {
+            return tableName
+        }
         return Naming.toTableName(Naming.toEntityName(kClass))
     }
 
@@ -25,7 +28,7 @@ abstract class Table<T : Any>(private val kClass: KClass<T>) {
     }
 
     fun <U> column(property: KMutableProperty1<T, U>, columnName: String = property.name): Column<U> {
-        val column = Column<U>(fieldName = property.name, columnName = columnName)
+        val column = Column<U>(table = this, fieldName = property.name, columnName = columnName)
         columns.add(column)
         return column
     }

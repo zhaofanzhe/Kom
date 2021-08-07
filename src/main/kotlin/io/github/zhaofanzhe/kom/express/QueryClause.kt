@@ -1,13 +1,17 @@
 package io.github.zhaofanzhe.kom.express
 
+import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.Computable
 
 @Suppress("UNCHECKED_CAST")
 class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
+    private lateinit var context: Context
+
     private val computable = Computable {
-        merge(Context())
+        context = Context()
+        merge(context)
     }
 
     private var select: SelectClause? by computable.observable(null)
@@ -28,7 +32,7 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val queryClause: Express by computable
 
-    fun <U:Any> select(table: Table<U>): QueryClause<U> {
+    fun <U : Any> select(table: Table<U>): QueryClause<U> {
         this.select = SelectClause(*table.declares())
         this.source = table
         return this as QueryClause<U>
@@ -75,14 +79,19 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     }
 
     fun fetchAll(): List<T> {
-        return queryer.executeQuery(express(), params().toList()).fetchAll(this.source!!)
+        return queryer.executeQuery(express(), params().toList()).fetchAll(
+            QuerySource(
+                context = context,
+                source = this.source!!,
+            )
+        )
     }
 
     private fun totalExpress(): Express {
         return ExpressMerge(select, from, where)
     }
 
-    private fun merge(context: Context):ExpressMerge{
+    private fun merge(context: Context): ExpressMerge {
         val list = mutableListOf(select, from, where, groupBy, orderBy)
         if (limit != null) {
             list.add(limit)

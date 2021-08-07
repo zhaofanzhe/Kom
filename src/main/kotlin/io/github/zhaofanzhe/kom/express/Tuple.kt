@@ -1,23 +1,23 @@
 package io.github.zhaofanzhe.kom.express
 
-class Tuple {
+import io.github.zhaofanzhe.kom.queryer.QuerySource
+import java.lang.StringBuilder
 
-    private val map = HashMap<String, Any>()
+class Tuple(private val querySource: QuerySource) {
+
+    private val map = HashMap<Column<*>, Any>()
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(column: Column<T>): T? {
-        return this[column.columnName()] as T?
+    operator fun <T> get(key: Column<T>): T? {
+        return map[key] as T
     }
 
-    operator fun get(key: String): Any? {
-        return map[key]
-    }
-
-    operator fun set(key: String, value: Any) {
+    operator fun set(key: Column<*>, value: Any) {
         map[key] = value
     }
 
     override fun toString(): String {
+        val builder = StringBuilder()
         return map.toString()
     }
 

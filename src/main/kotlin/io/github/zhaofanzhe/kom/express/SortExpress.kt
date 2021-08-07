@@ -16,8 +16,9 @@ class SortExpress(private val column: Column<*>,private val genre: Genre) : Expr
     }
 
     override fun generate(context: Context) {
-        column.generate(context)
-        expressBuilder.append(column.columnName())
+        val express = column.columnExpress()
+        express.generate(context)
+        expressBuilder.append(express.express())
         expressBuilder.append(' ')
         expressBuilder.append(genre)
     }

@@ -3,27 +3,26 @@
 package io.github.zhaofanzhe.kom.queryer.filler
 
 import io.github.zhaofanzhe.kom.KomException
+import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.Tuple
+import io.github.zhaofanzhe.kom.queryer.QuerySource
 import kotlin.reflect.KClass
 
 interface Filler<T> {
 
     companion object {
 
-        fun <T:Any> create(source:Any): Filler<T> {
-            return when (source) {
+        fun <T : Any> create(querySource: QuerySource): Filler<T> {
+            return when (val source = querySource.source()) {
                 is Table<*> -> {
-                    TableFiller(source as Table<T>,newInstance(source.entityClass()))
+                    TableFiller(newInstance(source.entityClass())) as Filler<T>
                 }
                 Tuple::class -> {
-                    TupleFiller(newInstance(source as KClass<Tuple>)) as Filler<T>
-                }
-                MutableMap::class -> {
-                    MutableMapFiller(newInstance(source as KClass<MutableMap<String,Any>>)) as Filler<T>
+                    TupleFiller(Tuple(querySource)) as Filler<T>
                 }
                 else -> {
-                    AnyFiller(newInstance(source as KClass<T>)) as Filler<T>
+                    throw KomException("undefined source ${source::class.qualifiedName}")
                 }
             }
         }
@@ -41,7 +40,7 @@ interface Filler<T> {
 
     }
 
-    fun set(key: String, value: Any)
+    fun set(column: Column<*>, value: Any)
 
     fun getInstance(): T
 

@@ -18,7 +18,7 @@ data class User(
 
 class Users : Table<User>(User::class) {
     val id = column(User::id)
-    val username = column(User::username, "username1")
+    val username = column(User::username)
 }
 
 fun main() {
@@ -27,7 +27,7 @@ fun main() {
 
     val users = Users()
 
-    val express = database.select(users)
+    val express = database.select(users.id,users.username)
         .from(users)
         .where(and {
             and(users.username.ne("张三"))
@@ -46,6 +46,10 @@ fun main() {
     val list = express.fetchAll()
 
     println(list)
+
+    list.forEach {
+        println("""id = ${it[users.id]}, username = ${it[users.username]}""")
+    }
 
 }
 

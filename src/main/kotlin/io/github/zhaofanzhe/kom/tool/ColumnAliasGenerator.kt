@@ -4,9 +4,10 @@ import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.express.Table
 import kotlin.reflect.KClass
 
+@Suppress("MemberVisibilityCanBePrivate")
 class ColumnAliasGenerator(private val tableAliasGenerator: TableAliasGenerator) {
 
-    private val columns = mutableMapOf<Table<*>, MutableMap<Column<*>, String>>()
+    internal val columns = mutableMapOf<Table<*>, MutableMap<Column<*>, String>>()
 
     fun next(column: Column<*>): String {
         val table = column.table()

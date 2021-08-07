@@ -1,9 +1,10 @@
 package io.github.zhaofanzhe.kom.express
 
 data class Column<T>(
+    private val table: Table<*>,
     private val columnName: String,
     private val fieldName: String,
-) : Express() {
+) {
 
     internal fun columnName(): String {
         return columnName
@@ -13,16 +14,16 @@ data class Column<T>(
         return fieldName
     }
 
-    override fun generate(context: Context) {
-        // Nothing
+    internal fun table(): Table<*> {
+        return table
     }
 
-    override fun express(): String {
-        return columnName()
+    internal fun columnExpress(): ColumnExpress {
+        return ColumnExpress(this)
     }
 
-    override fun params(): Array<Any> {
-        return emptyArray()
+    override fun toString(): String {
+        return """${table.tableName()}.${columnName}"""
     }
 
 }

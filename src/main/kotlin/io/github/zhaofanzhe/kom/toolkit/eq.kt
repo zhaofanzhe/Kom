@@ -7,5 +7,5 @@ import io.github.zhaofanzhe.kom.express.logic.EqualsLogicExpress
  * select * from user where [id = ?]
  */
 fun <T> Column<T>.eq(other: T): EqualsLogicExpress {
-    return EqualsLogicExpress(this, other as Any)
+    return EqualsLogicExpress(this.columnExpress(), other as Any)
 }
