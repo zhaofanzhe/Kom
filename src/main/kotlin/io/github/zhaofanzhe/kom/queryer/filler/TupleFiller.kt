@@ -7,7 +7,7 @@ import io.github.zhaofanzhe.kom.express.Tuple
 
 class TupleFiller(private val instance: Tuple) : Filler<Tuple> {
 
-    override fun set(column: Column<*>, value: Any) {
+    override fun set(column: Column<*>, value: Any?) {
         instance[column] = value
     }
 

@@ -22,4 +22,11 @@ class QuerySource(
         return source
     }
 
+    internal fun to(source: Any): QuerySource {
+        return QuerySource(
+            context = context,
+            source = source,
+        )
+    }
+
 }

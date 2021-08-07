@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.Computable
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
 class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private lateinit var context: Context
@@ -38,6 +38,16 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         this.select = SelectClause(*table.declares())
         this.source = table
         return this as QueryClause<U>
+    }
+
+    fun select(vararg tables: Table<*>): QueryClause<Tuple> {
+        val declares = mutableListOf<DeclareExpress>()
+        tables.forEach {
+            declares.addAll(it.declares())
+        }
+        this.select = SelectClause(*declares.toTypedArray())
+        this.source = Tuple::class
+        return this as QueryClause<Tuple>
     }
 
     fun select(vararg columns: Column<*>): QueryClause<Tuple> {

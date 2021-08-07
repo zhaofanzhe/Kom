@@ -10,8 +10,12 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return QueryClause<Void>(Queryer(connectionFactory))
     }
 
-    fun <U : Any> select(clause: Table<U>): QueryClause<U> {
-        return query().select(clause)
+    fun <U : Any> select(table: Table<U>): QueryClause<U> {
+        return query().select(table)
+    }
+
+    fun select(vararg tables: Table<*>): QueryClause<Tuple> {
+        return query().select(*tables)
     }
 
     fun select(vararg columns: Column<*>): QueryClause<Tuple> {

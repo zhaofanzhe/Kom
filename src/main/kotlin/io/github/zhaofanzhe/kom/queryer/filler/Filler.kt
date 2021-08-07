@@ -40,7 +40,7 @@ interface Filler<T> {
 
     }
 
-    fun set(column: Column<*>, value: Any)
+    fun set(column: Column<*>, value: Any?)
 
     fun getInstance(): T
 

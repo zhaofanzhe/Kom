@@ -8,7 +8,7 @@ import kotlin.reflect.jvm.isAccessible
 @Suppress("UNCHECKED_CAST")
 open class TableFiller<T:Any>(private val instance: T) : Filler<T> {
 
-    override fun set(column: Column<*>, value: Any) {
+    override fun set(column: Column<*>, value: Any?) {
         val optional = instance::class.memberProperties.stream()
             .filter { it.name == column.fieldName() }
             .filter { it != null }
@@ -18,7 +18,7 @@ open class TableFiller<T:Any>(private val instance: T) : Filler<T> {
             return
         }
 
-        val property = optional.get() as KMutableProperty1<Any, Any>
+        val property = optional.get() as KMutableProperty1<Any, Any?>
 
         val isAccessible = property.isAccessible
 
