@@ -1,11 +1,12 @@
-package io.github.zhaofanzhe.kom.express
+package io.github.zhaofanzhe.kom.express.declare
 
-import io.github.zhaofanzhe.kom.express.builder.ExpressBuilder
+import io.github.zhaofanzhe.kom.express.Column
+import io.github.zhaofanzhe.kom.express.Context
 
 /**
  * 声明表达式
  */
-class DeclareExpress(private val column: Column<*>) : ExpressBuilder() {
+class ColumnDeclareExpress(private val column: Column<*>) : DeclareExpress() {
 
     override fun generate(context: Context) {
         val tableAlias = context.tableAliasGenerator.next(column.table())

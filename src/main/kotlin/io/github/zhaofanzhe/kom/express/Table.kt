@@ -1,5 +1,7 @@
 package io.github.zhaofanzhe.kom.express
 
+import io.github.zhaofanzhe.kom.express.declare.ColumnDeclareExpress
+import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
@@ -13,7 +15,7 @@ abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableNa
     }
 
     internal fun declares(): Array<DeclareExpress> {
-        return columns.map { DeclareExpress(it) }.toTypedArray()
+        return columns.map { ColumnDeclareExpress(it) }.toTypedArray()
     }
 
     internal fun tableName(): String {

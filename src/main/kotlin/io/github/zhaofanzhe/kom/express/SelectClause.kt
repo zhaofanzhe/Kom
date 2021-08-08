@@ -1,6 +1,7 @@
 package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.builder.ClauseExpressBuilder
+import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
 class SelectClause(private vararg val declares: DeclareExpress) : ClauseExpressBuilder() {
 

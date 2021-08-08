@@ -1,16 +1,16 @@
 package io.github.zhaofanzhe.kom.express
 
+import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.filler.Filler
-import java.lang.StringBuilder
 
 class Tuple(private val querySource: QuerySource) {
 
-    private val map = HashMap<Column<*>, Any?>()
+    private val map = HashMap<Declare<*>, Any?>()
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(column: Column<T>): T? {
-        return map[column] as T
+    operator fun <T> get(declare: Declare<T>): T? {
+        return map[declare] as T
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -22,7 +22,7 @@ class Tuple(private val querySource: QuerySource) {
         return filler.getInstance()
     }
 
-    operator fun set(key: Column<*>, value: Any?) {
+    operator fun set(key: Declare<*>, value: Any?) {
         map[key] = value
     }
 

@@ -6,6 +6,7 @@ import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.Tuple
+import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import kotlin.reflect.KClass
 
@@ -40,7 +41,7 @@ interface Filler<T> {
 
     }
 
-    fun set(column: Column<*>, value: Any?)
+    fun set(column: Declare<*>, value: Any?)
 
     fun getInstance(): T
 

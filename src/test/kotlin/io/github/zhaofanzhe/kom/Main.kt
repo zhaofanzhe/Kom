@@ -39,7 +39,9 @@ fun main() {
     val address = Addresses()
     val users = Users()
 
-    val express = database.select(users, address)
+    val count = count(users.id)
+
+    val express = database.select(users.id,users.username,count)
         .from(users)
         .leftJoin(address)
         .on(and {
@@ -54,9 +56,7 @@ fun main() {
     val list = express.fetchAll()
 
     list.forEach {
-        println(it[users])
-        println(it[address])
-        println("------")
+        println("""id = ${it[users.id]}, username = ${it[users.username]}, count = ${it[count]}""")
     }
 
 }

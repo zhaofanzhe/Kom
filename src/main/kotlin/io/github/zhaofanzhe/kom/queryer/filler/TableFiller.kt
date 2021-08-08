@@ -1,6 +1,8 @@
 package io.github.zhaofanzhe.kom.queryer.filler
 
+import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.Column
+import io.github.zhaofanzhe.kom.express.declare.Declare
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
@@ -8,9 +10,14 @@ import kotlin.reflect.jvm.isAccessible
 @Suppress("UNCHECKED_CAST")
 open class TableFiller<T:Any>(private val instance: T) : Filler<T> {
 
-    override fun set(column: Column<*>, value: Any?) {
+    override fun set(declare: Declare<*>, value: Any?) {
+
+        if (declare !is Column<*>){
+            throw KomException("declare is not Column")
+        }
+
         val optional = instance::class.memberProperties.stream()
-            .filter { it.name == column.fieldName() }
+            .filter { it.name == declare.fieldName() }
             .filter { it != null }
             .findAny()
 
@@ -27,6 +34,7 @@ open class TableFiller<T:Any>(private val instance: T) : Filler<T> {
         property.set(instance, value)
 
         if (!isAccessible) property.isAccessible = false
+
     }
 
     override fun getInstance(): T {

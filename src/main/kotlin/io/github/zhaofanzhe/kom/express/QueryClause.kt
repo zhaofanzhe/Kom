@@ -1,5 +1,7 @@
 package io.github.zhaofanzhe.kom.express
 
+import io.github.zhaofanzhe.kom.express.declare.Declare
+import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.Computable
@@ -50,8 +52,8 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return this as QueryClause<Tuple>
     }
 
-    fun select(vararg columns: Column<*>): QueryClause<Tuple> {
-        this.select = SelectClause(*columns.map { DeclareExpress(it) }.toTypedArray())
+    fun select(vararg declares: Declare<*>): QueryClause<Tuple> {
+        this.select = SelectClause(*declares.map { it.declare() }.toTypedArray())
         this.source = Tuple::class
         return this as QueryClause<Tuple>
     }
