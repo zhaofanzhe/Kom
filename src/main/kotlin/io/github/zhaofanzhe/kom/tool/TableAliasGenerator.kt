@@ -1,7 +1,6 @@
 package io.github.zhaofanzhe.kom.tool
 
 import io.github.zhaofanzhe.kom.express.ITable
-import io.github.zhaofanzhe.kom.express.Table
 import kotlin.reflect.KClass
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -15,7 +14,7 @@ class TableAliasGenerator {
         return tables.getOrPut(table) {
             generators.getOrPut(table::class) {
                 AliasGenerator()
-            }.next(table.tableName())
+            }.generate(table.tableName)
         }
     }
 

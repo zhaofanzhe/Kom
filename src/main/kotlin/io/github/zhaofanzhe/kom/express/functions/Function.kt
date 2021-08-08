@@ -1,47 +1,58 @@
 package io.github.zhaofanzhe.kom.express.functions
 
+import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.ITable
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
+import io.github.zhaofanzhe.kom.express.declare.DeclareRef
+import java.lang.StringBuilder
 
-@Suppress("MemberVisibilityCanBePrivate")
-class Function<T>(
-    private val prototype: Declare<T>? = null,
-    private val init: (Function<T>) -> Unit,
+@Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
+class Function<T : Any>(
+    override val table: ITable<*>,
+    private val functionName: String,
+    private val functionArgs: Array<Any>,
+    override val ref: Declare<T>? = null,
 ) : Declare<T> {
 
-    init {
-        init(this)
+    override fun declare(): DeclareExpress<T> {
+        return FunctionDeclareExpress(this)
     }
 
-    internal lateinit var declareExpress: DeclareExpress
-
-    internal lateinit var functionExpress: FunctionExpress
-
-    override fun declareExpress(): DeclareExpress {
-        return declareExpress
+    override fun express(): Express {
+        return FunctionExpress(functionName, functionArgs)
     }
 
-    override fun isPrototypeMatch(declare: Declare<T>): Boolean {
-        if (this.prototype == null) return false
-        if (this.prototype == declare) return true
-        return this.prototype.isPrototypeMatch(declare)
+    override fun newTableDeclare(table: ITable<*>): Declare<T> {
+        return DeclareRef(
+            table = table,
+            ref = this,
+        )
     }
 
-    override fun prototype(): Declare<T>? {
-        return prototype
-    }
-
-    override fun clone(table: ITable<*>): Declare<T> {
-        return Function(prototype = this, init = init)
-    }
-
-    fun func(): FunctionExpress {
-        return functionExpress
-    }
+    override val name: String = "__col"
 
     override fun toString(): String {
-        return functionExpress.express()
+        val builder = StringBuilder()
+        builder.append(functionName)
+        builder.append('(')
+        functionArgs.forEachIndexed { index, value ->
+            if (index > 0) {
+                builder.append(", ")
+            }
+            if (value is Declare<*>) {
+                var ref: Declare<*> = value
+                while (true) {
+                    if (ref.ref == null) break
+                    ref = ref.ref!!
+                }
+                builder.append(ref.name)
+            } else {
+                builder.append("?")
+            }
+        }
+        builder.append(')')
+        return builder.toString()
     }
 
 }

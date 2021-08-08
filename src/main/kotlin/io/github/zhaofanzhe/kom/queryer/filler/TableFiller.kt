@@ -12,10 +12,12 @@ open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
 
     override fun set(declare: Declare<*>, value: Any?) {
 
+        if (value == null) return
+
         var root = declare
 
         while (true) {
-            val prototype = root.prototype() ?: break
+            val prototype = root.ref ?: break
             root = prototype
         }
 
@@ -24,7 +26,7 @@ open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
         }
 
         val optional = instance::class.memberProperties.stream()
-            .filter { it.name == root.fieldName() }
+            .filter { it.name == root.fieldName }
             .filter { it != null }
             .findAny()
 

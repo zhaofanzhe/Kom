@@ -3,7 +3,9 @@ package io.github.zhaofanzhe.kom
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.toolkit.and
-import io.github.zhaofanzhe.kom.toolkit.ne
+import io.github.zhaofanzhe.kom.toolkit.eq
+import io.github.zhaofanzhe.kom.toolkit.gt
+import io.github.zhaofanzhe.kom.toolkit.lt
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -38,25 +40,30 @@ fun main() {
     val database = getDatabase()
 
     val users = Users()
+    val address = Addresses()
 
-    val t1 = database
-        .select(users)
-        .from(users).where(and {
-            and(users.id ne 1)
+    val t1 = database.selectFrom(users)
+        .where(and {
+            and(users.id gt 1)
+        }).subQuery()
+
+    val express = database.select(users,address)
+        .from(t1)
+        .leftJoin(address)
+        .on(and {
+            and(users.id eq address.userId)
         })
 
-    val t2 = database.selectFrom(t1.subQuery())
+    println(express)
 
-    println(t2)
+    val list = express.fetchAll()
 
-    val result = t2.fetchOne()
+    println(list)
 
-    if (result == null) {
-        println("not fund")
-        return
+    list.forEach {
+        println(it[users])
+        println(it[address])
     }
-
-    println(result)
 
 }
 

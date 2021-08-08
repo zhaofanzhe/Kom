@@ -1,18 +1,15 @@
 package io.github.zhaofanzhe.kom.express
 
-/**
- * 表达式
- */
-abstract class Express {
+abstract class Express : IExpress {
 
-    internal abstract fun generate(context: Context)
+    override fun generate(context: Context): IExpressResult {
+        return generate(context, ExpressResult())
+    }
 
-    internal abstract fun express(): String
-
-    internal abstract fun params(): Array<Any>
+    abstract fun generate(context: Context, result: ExpressResult): IExpressResult
 
     override fun toString(): String {
-        return express()
+        return generate(Context()).express()
     }
 
 }

@@ -4,7 +4,8 @@ import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.filler.Filler
 
-class Tuple(private val querySource: QuerySource) {
+
+class Tuple(private val source: QuerySource) {
 
     private val map = HashMap<Declare<*>, Any?>()
 
@@ -16,20 +17,20 @@ class Tuple(private val querySource: QuerySource) {
                 if (root === declare) {
                     return entry.key
                 }
-                root = root.prototype()
+                root = root.ref
             }
         }
         return null
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(declare: Declare<T>): T? {
+    operator fun <T:Any> get(declare: Declare<T>): T? {
         return map[find(declare)] as? T
     }
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Any> get(table: Table<T>): T {
-        val filler = Filler.create<T>(querySource.to(table))
+        val filler = Filler.create<T>(source.to(table))
         table.declares().forEach {
             filler.set(it, this[it])
         }

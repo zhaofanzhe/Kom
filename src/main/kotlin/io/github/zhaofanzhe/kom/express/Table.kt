@@ -1,54 +1,36 @@
 package io.github.zhaofanzhe.kom.express
 
-import io.github.zhaofanzhe.kom.express.declare.ColumnDeclareExpress
 import io.github.zhaofanzhe.kom.express.declare.Declare
-import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
-abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableName: String = "") : ITable<T> {
+abstract class Table<T : Any>(
+    override val entityClass: KClass<T>,
+    override val tableName: String = Naming.toTableName(Naming.toEntityName(entityClass))
+) : ITable<T> {
 
-    private val columns = mutableListOf<Column<*>>()
+    private var columns = mutableListOf<Column<*>>()
 
     override fun declares(): List<Declare<*>> {
-        return columns.toList()
+        return columns
     }
 
-    override fun declareExpress(): Array<DeclareExpress> {
-        return columns.map { ColumnDeclareExpress(it) }.toTypedArray()
-    }
-
-    override fun tableName(): String {
-        if (tableName != "") {
-            return tableName
-        }
-        return Naming.toTableName(Naming.toEntityName(kClass))
-    }
-
-    override fun entityClass(): KClass<T> {
-        return this.kClass
-    }
-
-    override fun source(): Any? {
-        val entityClass = this.entityClass()
-        if (entityClass == Tuple::class){
-            return entityClass
-        }
-        return this
-    }
-
-    override fun rootTable(): ITable<T> {
-        return this
-    }
-
-    fun <U> column(
+    fun <U : Any> column(
         property: KMutableProperty1<T, U>,
         columnName: String = Naming.toColumnName(property.name)
     ): Column<U> {
-        val column = Column<U>(table = this, fieldName = property.name, columnName = columnName)
+        val column = Column<U>(
+            name = columnName,
+            fieldName = property.name,
+            table = this
+        )
         columns.add(column)
         return column
+    }
+
+    override fun refs(): List<ITable<*>>? {
+        return null
     }
 
 }

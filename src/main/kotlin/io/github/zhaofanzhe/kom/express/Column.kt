@@ -1,53 +1,35 @@
 package io.github.zhaofanzhe.kom.express
 
-import io.github.zhaofanzhe.kom.express.declare.ColumnDeclareExpress
 import io.github.zhaofanzhe.kom.express.declare.Declare
+import io.github.zhaofanzhe.kom.express.declare.DeclareStatementExpress
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
-@Suppress("MemberVisibilityCanBePrivate")
-data class Column<T>(
-    private val table: ITable<*>,
-    private val columnName: String,
-    private val fieldName: String,
-    private val prototype: Declare<T>? = null,
+class Column<T : Any>(
+    override val name: String,
+    val fieldName: String,
+    override val table: ITable<*>,
+    override val ref: Column<T>? = null,
 ) : Declare<T> {
 
-    internal fun columnName(): String {
-        return columnName
+    override fun declare(): DeclareExpress<T> {
+        return DeclareStatementExpress(this)
     }
 
-    internal fun fieldName(): String {
-        return fieldName
+    override fun express(): Express {
+        return DeclareRefExpress(this)
     }
 
-    internal fun table(): ITable<*> {
-        return table
-    }
-
-    internal fun columnExpress(): ColumnExpress {
-        return ColumnExpress(this)
-    }
-
-    override fun declareExpress(): DeclareExpress {
-        return ColumnDeclareExpress(this)
-    }
-
-    override fun isPrototypeMatch(declare: Declare<T>): Boolean {
-        if (this.prototype == null) return false
-        if (this.prototype == declare) return true
-        return this.prototype.isPrototypeMatch(declare)
-    }
-
-    override fun prototype(): Declare<T>? {
-        return prototype
-    }
-
-    override fun clone(table: ITable<*>): Declare<T> {
-        return Column(table, columnName, fieldName, this)
+    override fun newTableDeclare(table: ITable<*>): Declare<T> {
+        return Column(
+            name = name,
+            fieldName = fieldName,
+            table = table,
+            ref = this,
+        )
     }
 
     override fun toString(): String {
-        return columnName
+        return name
     }
 
 }

@@ -1,23 +1,67 @@
 package io.github.zhaofanzhe.kom.express
 
-import io.github.zhaofanzhe.kom.tool.ColumnAliasGenerator
+import io.github.zhaofanzhe.kom.KomException
+import io.github.zhaofanzhe.kom.express.declare.Declare
+import io.github.zhaofanzhe.kom.tool.DeclareAliasGenerator
 import io.github.zhaofanzhe.kom.tool.TableAliasGenerator
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("UNCHECKED_CAST")
 class Context {
 
-    internal val tableAliasGenerator = TableAliasGenerator()
+    private val tableAliasGenerator = TableAliasGenerator()
 
-    internal val columnAliasGenerator = ColumnAliasGenerator(tableAliasGenerator)
+    private val declareAliasGenerator = DeclareAliasGenerator(tableAliasGenerator)
 
-    // root table to current table
-    internal var tables = mutableMapOf<ITable<*>, ITable<*>>()
+    internal var runtime: Runtime? = null
 
-    internal fun setTables(vararg tables: ITable<*>) {
-        this.tables = mutableMapOf()
-        tables.forEach {
-            this.tables[it.rootTable()] = it
+    /**
+     * 当前环境表别名
+     */
+    fun <T : Any> currentTable(table: ITable<T>): ITable<T> {
+        if (runtime == null) throw KomException("runtime not fund.")
+        return runtime!!.tableRuntime[table] as? ITable<T> ?: throw KomException("""not fund table "$table".""")
+    }
+
+    /**
+     * 当前环境表名
+     */
+    fun <T : Any> currentTableName(table: ITable<T>): String {
+        return table.tableName
+    }
+
+    /**
+     * 当前环境表别名
+     */
+    fun <T : Any> currentTableAlias(table: ITable<T>): String {
+        return tableAliasGenerator.next(currentTable(table))
+    }
+
+    /**
+     * 当前环境表列
+     */
+    fun <T : Any> currentDeclare(declare: Declare<T>): Declare<T> {
+        if (runtime == null) throw KomException("runtime not fund.")
+        return runtime!!.declareRuntime[declare] as? Declare<T> ?: throw KomException("""not fund declare "$declare".""")
+    }
+
+    /**
+     * 当前环境列名
+     */
+    fun <T : Any> currentDeclareName(declare: Declare<T>): String {
+        val current = currentDeclare(declare)
+        val ref = current.ref
+        if (ref != null) {
+            return declareAliasGenerator.generate(ref)
         }
+        return current.name
+    }
+
+    /**
+     * 当前环境列别名
+     */
+    fun <T : Any> currentDeclareAlias(declare: Declare<T>): String {
+        val current = currentDeclare(declare)
+        return declareAliasGenerator.generate(current)
     }
 
 }

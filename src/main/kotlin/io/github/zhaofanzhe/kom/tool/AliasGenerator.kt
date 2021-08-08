@@ -4,7 +4,7 @@ class AliasGenerator {
 
     private val generators = mutableMapOf<String, SequenceGenerator>()
 
-    fun next(name: String): String {
+    fun generate(name: String): String {
         val generator = generators.getOrPut(name) { SequenceGenerator() }
         return """${name}_${generator.next()}"""
     }

@@ -1,15 +1,34 @@
 package io.github.zhaofanzhe.kom.express.declare
 
+import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.ITable
 
-interface Declare<T> {
+/**
+ * 声明
+ *  - 字段
+ *  - 函数
+ */
+interface Declare<T : Any> {
 
-    fun declareExpress(): DeclareExpress
+    /**
+     * 声明表达式
+     */
+    fun declare(): DeclareExpress<T>
 
-    fun isPrototypeMatch(declare: Declare<T>): Boolean
+    /**
+     * 普通表达式
+     */
+    fun express(): Express
 
-    fun prototype(): Declare<T>?
+    /**
+     * 新表声明
+     */
+    fun newTableDeclare(table: ITable<*>): Declare<T>
 
-    fun clone(table: ITable<*>): Declare<T>
+    val ref: Declare<T>?
+
+    val name: String
+
+    val table: ITable<*>
 
 }

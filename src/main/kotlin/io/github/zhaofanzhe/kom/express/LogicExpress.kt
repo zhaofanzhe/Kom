@@ -1,8 +1,7 @@
 package io.github.zhaofanzhe.kom.express
 
-import io.github.zhaofanzhe.kom.express.builder.ExpressBuilder
 
-abstract class LogicExpress<T> : ExpressBuilder(){
+abstract class LogicExpress<T> : Express(){
 
     internal var logicLayer = 0
 

@@ -1,6 +1,8 @@
 package io.github.zhaofanzhe.kom
 
+import io.github.zhaofanzhe.kom.clause.*
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
+import io.github.zhaofanzhe.kom.express.Tuple
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer

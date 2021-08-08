@@ -1,42 +1,35 @@
 package io.github.zhaofanzhe.kom.queryer
 
 import io.github.zhaofanzhe.kom.express.Context
+import io.github.zhaofanzhe.kom.express.ITable
+import io.github.zhaofanzhe.kom.express.Tuple
 import io.github.zhaofanzhe.kom.express.declare.Declare
+import kotlin.reflect.KClass
 
 class QuerySource(
     private val context: Context,
-    private val select: Array<Declare<*>>,
-    private val source: Any,
+    private val table: ITable<*>?,
+    private val select: List<Declare<*>>,
 ) {
 
     val declares: Map<Declare<*>, String> by lazy {
-
-        val map = mutableMapOf<Declare<*>, String>()
-        context.columnAliasGenerator.columns.forEach { it ->
-            it.value.forEach {
-                map[it.key] = it.value
-            }
-        }
-        context.columnAliasGenerator.others.forEach {
-            map[it.key] = it.value
-        }
-
-        val list = mutableMapOf<Declare<*>, String>()
+        val declares = mutableMapOf<Declare<*>, String>()
+        println("----------")
         select.forEach {
-            list[it] = map[it]!!
+            declares[it] = context.currentDeclareAlias(it)
         }
-        list
+        declares
     }
 
-    internal fun source(): Any {
-        return source
+    fun entityClass(): KClass<*> {
+        return table?.entityClass ?: Tuple::class
     }
 
-    internal fun to(source: Any): QuerySource {
+    internal fun to(table: ITable<*>): QuerySource {
         return QuerySource(
             context = context,
-            select = select,
-            source = source,
+            select = table.declares(),
+            table = table,
         )
     }
 

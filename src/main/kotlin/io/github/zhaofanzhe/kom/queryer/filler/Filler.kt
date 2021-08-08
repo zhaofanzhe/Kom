@@ -3,9 +3,6 @@
 package io.github.zhaofanzhe.kom.queryer.filler
 
 import io.github.zhaofanzhe.kom.KomException
-import io.github.zhaofanzhe.kom.express.Column
-import io.github.zhaofanzhe.kom.express.ITable
-import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.Tuple
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource
@@ -15,16 +12,13 @@ interface Filler<T> {
 
     companion object {
 
-        fun <T : Any> create(querySource: QuerySource): Filler<T> {
-            return when (val source = querySource.source()) {
-                is ITable<*> -> {
-                    TableFiller(newInstance(source.entityClass())) as Filler<T>
-                }
+        fun <T : Any> create(source: QuerySource): Filler<T> {
+            return when (source.entityClass()) {
                 Tuple::class -> {
-                    TupleFiller(Tuple(querySource)) as Filler<T>
+                    TupleFiller(Tuple(source)) as Filler<T>
                 }
                 else -> {
-                    throw KomException("undefined source ${source::class.qualifiedName}")
+                    TableFiller(newInstance(source.entityClass())) as Filler<T>
                 }
             }
         }
