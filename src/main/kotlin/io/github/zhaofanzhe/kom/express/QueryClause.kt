@@ -10,6 +10,12 @@ import io.github.zhaofanzhe.kom.tool.Computable
 class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private val computable = Computable {
+        val tables = mutableListOf<ITable<*>>()
+        if (fromTable != null){
+            tables.add(fromTable!!)
+        }
+        tables.addAll(joinTables)
+        context.setTables(*tables.toTypedArray())
         merge(context)
     }
 
@@ -18,6 +24,9 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     private var select: SelectClause? by computable.observable(null)
 
     private var from: FromClause? by computable.observable(null)
+
+    var fromTable: ITable<*>? = null
+        private set
 
     private var where: WhereClause? by computable.observable(null)
 
@@ -31,7 +40,10 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
 
     private var joins: MutableList<JoinClause<*>> by computable.observable(mutableListOf())
 
+    private var joinTables: MutableList<ITable<*>> = mutableListOf()
+
     private val queryClause: Express by computable
+
 
     var source: Any? = null
         private set
@@ -67,12 +79,14 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     }
 
     fun from(table: ITable<*>): QueryClause<T> {
+        this.fromTable = table
         this.from = FromClause(table)
         return this
     }
 
-    internal fun join(clause: JoinClause<*>): QueryClause<T> {
+    internal fun join(clause: JoinClause<*>, table: ITable<*>): QueryClause<T> {
         joins.add(clause)
+        joinTables.add(table)
         return this
     }
 
@@ -122,7 +136,7 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
     }
 
     fun subQuery(): SubQuery<T> {
-        return SubQuery(clone())
+        return SubQuery(this)
     }
 
     fun fetchOne(): T? {
@@ -172,19 +186,19 @@ class QueryClause<T : Any>(private val queryer: Queryer) : Clause() {
         return queryClause.params()
     }
 
-    fun clone(): QueryClause<T> {
-        val clause = QueryClause<T>(queryer = queryer)
-        clause.select = this.select
-        clause.from = this.from
-        clause.where = this.where
-        clause.groupBy = this.groupBy
-        clause.orderBy = this.orderBy
-        clause.limit = this.limit
-        clause.offset = this.offset
-        clause.joins = this.joins
-        clause.source = this.source
-        clause.declares = this.declares
-        return clause
-    }
+//    fun clone(): QueryClause<T> {
+//        val clause = QueryClause<T>(queryer = queryer)
+//        clause.select = this.select
+//        clause.from = this.from
+//        clause.where = this.where
+//        clause.groupBy = this.groupBy
+//        clause.orderBy = this.orderBy
+//        clause.limit = this.limit
+//        clause.offset = this.offset
+//        clause.joins = this.joins
+//        clause.source = this.source
+//        clause.declares = this.declares
+//        return clause
+//    }
 
 }

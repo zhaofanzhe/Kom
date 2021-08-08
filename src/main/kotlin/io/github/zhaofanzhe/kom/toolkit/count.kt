@@ -11,3 +11,10 @@ fun count(column: Column<*>): Function<Number> {
         it.functionExpress = CountFunctionExpress(column.columnExpress())
     }
 }
+
+fun countAll(): Function<Number> {
+    return Function {
+        it.declareExpress = FunctionDeclareExpress(it)
+        it.functionExpress = CountFunctionExpress("*")
+    }
+}

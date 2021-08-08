@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.express
 
+import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.builder.ExpressBuilder
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
@@ -10,7 +11,7 @@ class SubQuery<T : Any>(
     private val clause: QueryClause<T>
 ) : ExpressBuilder(), ITable<T> {
 
-    private val declares: List<Declare<*>> = clause.declares?.map { it.clone(this) } ?: emptyList()
+    private val declares: List<Declare<*>> = clause.declares.map { it.clone(this) } ?: emptyList()
 
     private val source: Any? = clause.source
 
@@ -48,10 +49,14 @@ class SubQuery<T : Any>(
 
     override fun source(): Any {
         val entityClass = this.entityClass()
-        if (entityClass == Tuple::class){
+        if (entityClass == Tuple::class) {
             return entityClass
         }
         return this
+    }
+
+    override fun rootTable(): ITable<T> {
+        return clause.fromTable?.rootTable() as? ITable<T> ?: throw KomException("Table not found.")
     }
 
 }

@@ -38,6 +38,10 @@ abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableNa
         return this
     }
 
+    override fun rootTable(): ITable<T> {
+        return this
+    }
+
     fun <U> column(
         property: KMutableProperty1<T, U>,
         columnName: String = Naming.toColumnName(property.name)

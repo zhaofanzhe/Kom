@@ -19,7 +19,7 @@ class JoinClause<T : Any>(
 
     fun on(express: LogicExpress<Boolean>): QueryClause<T> {
         this.express = express
-        return clause.join(this)
+        return clause.join(this, table)
     }
 
     override fun generate(context: Context) {

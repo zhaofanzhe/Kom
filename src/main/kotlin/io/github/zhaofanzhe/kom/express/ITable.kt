@@ -16,4 +16,6 @@ interface ITable<T : Any> {
 
     fun source(): Any?
 
+    fun rootTable(): ITable<T>
+
 }

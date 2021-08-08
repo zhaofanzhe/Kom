@@ -3,7 +3,7 @@ package io.github.zhaofanzhe.kom
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.toolkit.and
-import io.github.zhaofanzhe.kom.toolkit.eq
+import io.github.zhaofanzhe.kom.toolkit.ne
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -42,14 +42,16 @@ fun main() {
     val t1 = database
         .select(users)
         .from(users).where(and {
-            and(users.id eq 1)
+            and(users.id ne 1)
         })
 
     val t2 = database.selectFrom(t1.subQuery())
 
+    println(t2)
+
     val result = t2.fetchOne()
 
-    if (result == null){
+    if (result == null) {
         println("not fund")
         return
     }
