@@ -27,7 +27,7 @@ class AndGroup : LogicExpress<Boolean>() {
 
             val layer = logicLayer
             val otherLayer = it.logicLayer
-            if (layer > 0) {
+            if (expressBuilder.isNotEmpty()) {
                 expressBuilder.append(" and ")
             }
             if (otherLayer >= layer) {

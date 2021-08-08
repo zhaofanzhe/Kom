@@ -11,11 +11,11 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return QueryClause<Void>(Queryer(connectionFactory))
     }
 
-    fun <U : Any> select(table: Table<U>): QueryClause<U> {
+    fun <U : Any> select(table: ITable<U>): QueryClause<U> {
         return query().select(table)
     }
 
-    fun select(vararg tables: Table<*>): QueryClause<Tuple> {
+    fun select(vararg tables: ITable<*>): QueryClause<Tuple> {
         return query().select(*tables)
     }
 
@@ -23,7 +23,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return query().select(*declares)
     }
 
-    fun <U : Any> selectFrom(clause: Table<U>): QueryClause<U> {
+    fun <U : Any> selectFrom(clause: ITable<U>): QueryClause<U> {
         return query().select(clause).from(clause)
     }
 

@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.express.builder.ExpressBuilder
 
 class JoinClause<T : Any>(
     private val genre: Genre,
-    private val table: Table<*>,
+    private val table: ITable<*>,
     private val clause: QueryClause<T>,
 ) : ExpressBuilder() {
 
@@ -28,7 +28,15 @@ class JoinClause<T : Any>(
         express.generate(context)
 
         expressBuilder.append(genre.join)
-        expressBuilder.append(table.tableName())
+
+        if (table is Express) {
+            table.generate(context)
+            expressBuilder.append(table.express())
+            paramsBuilder.addAll(table.params())
+        } else {
+            expressBuilder.append(table.tableName())
+        }
+
         expressBuilder.append(" as ")
         expressBuilder.append(context.tableAliasGenerator.next(table))
         expressBuilder.append(" on ")

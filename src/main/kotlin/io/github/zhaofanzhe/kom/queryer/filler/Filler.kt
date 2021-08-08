@@ -4,6 +4,7 @@ package io.github.zhaofanzhe.kom.queryer.filler
 
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.Column
+import io.github.zhaofanzhe.kom.express.ITable
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.Tuple
 import io.github.zhaofanzhe.kom.express.declare.Declare
@@ -16,7 +17,7 @@ interface Filler<T> {
 
         fun <T : Any> create(querySource: QuerySource): Filler<T> {
             return when (val source = querySource.source()) {
-                is Table<*> -> {
+                is ITable<*> -> {
                     TableFiller(newInstance(source.entityClass())) as Filler<T>
                 }
                 Tuple::class -> {
@@ -41,7 +42,7 @@ interface Filler<T> {
 
     }
 
-    fun set(column: Declare<*>, value: Any?)
+    fun set(declare: Declare<*>, value: Any?)
 
     fun getInstance(): T
 

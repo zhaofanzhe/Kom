@@ -14,7 +14,7 @@ class QueryResult(private val resultSet: ResultSet) {
 
         val filler = Filler.create<T>(querySource)
 
-        querySource.columns.forEach { (column, name) ->
+        querySource.declares.forEach { (column, name) ->
             filler.set(column, resultSet.getObject(name))
         }
 
@@ -25,7 +25,7 @@ class QueryResult(private val resultSet: ResultSet) {
         val list = ArrayList<T>()
         while (resultSet.next()) {
             val filler = Filler.create<T>(querySource)
-            querySource.columns.forEach { (column, name) ->
+            querySource.declares.forEach { (column, name) ->
                 filler.set(column, resultSet.getObject(name))
             }
             list += filler.getInstance()

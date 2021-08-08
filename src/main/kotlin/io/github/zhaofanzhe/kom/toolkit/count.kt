@@ -7,7 +7,7 @@ import io.github.zhaofanzhe.kom.express.functions.Function
 
 fun count(column: Column<*>): Function<Number> {
     return Function {
-        it.declare = FunctionDeclareExpress(it)
-        it.func = CountFunctionExpress(column.columnExpress())
+        it.declareExpress = FunctionDeclareExpress(it)
+        it.functionExpress = CountFunctionExpress(column.columnExpress())
     }
 }

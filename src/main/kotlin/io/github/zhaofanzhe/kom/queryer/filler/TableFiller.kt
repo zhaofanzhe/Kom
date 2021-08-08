@@ -8,16 +8,23 @@ import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
 
 @Suppress("UNCHECKED_CAST")
-open class TableFiller<T:Any>(private val instance: T) : Filler<T> {
+open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
 
     override fun set(declare: Declare<*>, value: Any?) {
 
-        if (declare !is Column<*>){
+        var root = declare
+
+        while (true) {
+            val prototype = root.prototype() ?: break
+            root = prototype
+        }
+
+        if (root !is Column<*>) {
             throw KomException("declare is not Column")
         }
 
         val optional = instance::class.memberProperties.stream()
-            .filter { it.name == declare.fieldName() }
+            .filter { it.name == root.fieldName() }
             .filter { it != null }
             .findAny()
 

@@ -1,32 +1,41 @@
 package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.express.declare.ColumnDeclareExpress
+import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 
-abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableName: String = "") {
+abstract class Table<T : Any>(private val kClass: KClass<T>, private val tableName: String = "") : ITable<T> {
 
     private val columns = mutableListOf<Column<*>>()
 
-    internal fun columns(): List<Column<*>> {
+    override fun declares(): List<Declare<*>> {
         return columns.toList()
     }
 
-    internal fun declares(): Array<DeclareExpress> {
+    override fun declareExpress(): Array<DeclareExpress> {
         return columns.map { ColumnDeclareExpress(it) }.toTypedArray()
     }
 
-    internal fun tableName(): String {
+    override fun tableName(): String {
         if (tableName != "") {
             return tableName
         }
         return Naming.toTableName(Naming.toEntityName(kClass))
     }
 
-    internal fun entityClass(): KClass<T> {
+    override fun entityClass(): KClass<T> {
         return this.kClass
+    }
+
+    override fun source(): Any? {
+        val entityClass = this.entityClass()
+        if (entityClass == Tuple::class){
+            return entityClass
+        }
+        return this
     }
 
     fun <U> column(

@@ -8,15 +8,29 @@ class Tuple(private val querySource: QuerySource) {
 
     private val map = HashMap<Declare<*>, Any?>()
 
+    private fun find(declare: Declare<*>): Declare<*>? {
+        for (entry in map) {
+            var root: Declare<*>? = entry.key
+            while (true) {
+                if (root == null) break
+                if (root === declare) {
+                    return entry.key
+                }
+                root = root.prototype()
+            }
+        }
+        return null
+    }
+
     @Suppress("UNCHECKED_CAST")
     operator fun <T> get(declare: Declare<T>): T? {
-        return map[declare] as T
+        return map[find(declare)] as? T
     }
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Any> get(table: Table<T>): T {
         val filler = Filler.create<T>(querySource.to(table))
-        table.columns().forEach {
+        table.declares().forEach {
             filler.set(it, this[it])
         }
         return filler.getInstance()

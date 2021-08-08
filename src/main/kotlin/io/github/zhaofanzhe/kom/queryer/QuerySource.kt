@@ -1,25 +1,31 @@
 package io.github.zhaofanzhe.kom.queryer
 
-import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.declare.Declare
 
 class QuerySource(
     private val context: Context,
-    private val source: Any
+    private val select: Array<Declare<*>>,
+    private val source: Any,
 ) {
 
-    internal val columns: Map<Declare<*>, String> by lazy {
-        val columns = mutableMapOf<Declare<*>, String>()
+    val declares: Map<Declare<*>, String> by lazy {
+
+        val map = mutableMapOf<Declare<*>, String>()
         context.columnAliasGenerator.columns.forEach { it ->
             it.value.forEach {
-                columns[it.key] = it.value
+                map[it.key] = it.value
             }
         }
         context.columnAliasGenerator.others.forEach {
-            columns[it.key] = it.value
+            map[it.key] = it.value
         }
-        columns
+
+        val list = mutableMapOf<Declare<*>, String>()
+        select.forEach {
+            list[it] = map[it]!!
+        }
+        list
     }
 
     internal fun source(): Any {
@@ -29,6 +35,7 @@ class QuerySource(
     internal fun to(source: Any): QuerySource {
         return QuerySource(
             context = context,
+            select = select,
             source = source,
         )
     }

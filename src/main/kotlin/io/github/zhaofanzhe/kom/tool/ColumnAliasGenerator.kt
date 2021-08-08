@@ -1,6 +1,7 @@
 package io.github.zhaofanzhe.kom.tool
 
 import io.github.zhaofanzhe.kom.express.Column
+import io.github.zhaofanzhe.kom.express.ITable
 import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import kotlin.reflect.KClass
@@ -8,7 +9,7 @@ import kotlin.reflect.KClass
 @Suppress("MemberVisibilityCanBePrivate")
 class ColumnAliasGenerator(private val tableAliasGenerator: TableAliasGenerator) {
 
-    internal val columns = mutableMapOf<Table<*>, MutableMap<Column<*>, String>>()
+    internal val columns = mutableMapOf<ITable<*>, MutableMap<Column<*>, String>>()
 
     internal val others = mutableMapOf<Declare<*>, String>()
 

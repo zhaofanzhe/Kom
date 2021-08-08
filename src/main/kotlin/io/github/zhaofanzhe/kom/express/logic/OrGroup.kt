@@ -4,7 +4,7 @@ import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
 
-@Suppress("DuplicatedCode")
+@Suppress("DuplicatedCode", "MemberVisibilityCanBePrivate")
 class OrGroup : LogicExpress<Boolean>() {
 
     private val exprs = mutableListOf<LogicExpress<*>>()
@@ -27,7 +27,7 @@ class OrGroup : LogicExpress<Boolean>() {
 
             val layer = logicLayer
             val otherLayer = it.logicLayer
-            if (layer > 0) {
+            if (expressBuilder.isNotEmpty()) {
                 expressBuilder.append(" or ")
             }
             if (otherLayer >= layer) {

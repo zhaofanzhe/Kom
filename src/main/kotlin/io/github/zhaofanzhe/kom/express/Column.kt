@@ -4,10 +4,12 @@ import io.github.zhaofanzhe.kom.express.declare.ColumnDeclareExpress
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
+@Suppress("MemberVisibilityCanBePrivate")
 data class Column<T>(
-    private val table: Table<*>,
+    private val table: ITable<*>,
     private val columnName: String,
     private val fieldName: String,
+    private val prototype: Declare<T>? = null,
 ) : Declare<T> {
 
     internal fun columnName(): String {
@@ -18,7 +20,7 @@ data class Column<T>(
         return fieldName
     }
 
-    internal fun table(): Table<*> {
+    internal fun table(): ITable<*> {
         return table
     }
 
@@ -26,12 +28,26 @@ data class Column<T>(
         return ColumnExpress(this)
     }
 
-    override fun declare(): DeclareExpress {
+    override fun declareExpress(): DeclareExpress {
         return ColumnDeclareExpress(this)
     }
 
+    override fun isPrototypeMatch(declare: Declare<T>): Boolean {
+        if (this.prototype == null) return false
+        if (this.prototype == declare) return true
+        return this.prototype.isPrototypeMatch(declare)
+    }
+
+    override fun prototype(): Declare<T>? {
+        return prototype
+    }
+
+    override fun clone(table: ITable<*>): Declare<T> {
+        return Column(table, columnName, fieldName, this)
+    }
+
     override fun toString(): String {
-        return """${table.tableName()}.${columnName}"""
+        return columnName
     }
 
 }
