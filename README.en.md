@@ -27,3 +27,11 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 [Query statement | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
 
 [Insert statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+
+### Database support
+
+* [X] Mariadb [Tested|Mariadb10.5.9]
+* [X] MySQL [Not tested, should be supported]
+* [ ] PostgreSQL [Not tested, should not be supported]
+* [ ] Oracle [Not tested]
+* [ ] Other... [Waiting to add]

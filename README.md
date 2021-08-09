@@ -27,3 +27,11 @@
 [查询语句 | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
 
 [插入语句 | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+
+### 数据库支持
+
+* [X] Mariadb [已测试|Mariadb10.5.9]
+* [X] MySQL [未测试,应该支持]
+* [ ] PostgreSQL [未测试，应该不支持]
+* [ ] Oracle [未测试]
+* [ ] 其他... [等待补充]
