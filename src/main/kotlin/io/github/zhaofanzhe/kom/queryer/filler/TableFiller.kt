@@ -21,7 +21,7 @@ open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
             root = prototype
         }
 
-        if (root !is Column<*>) {
+        if (root !is Column<*,*>) {
             throw KomException("declare is not Column")
         }
 

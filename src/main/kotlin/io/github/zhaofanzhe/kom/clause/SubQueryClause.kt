@@ -22,16 +22,20 @@ class SubQueryClause<T : Any>(
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
         result += "("
-        result += express.generate(context)
+        generateUnenclosed(context, result)
         result += ")"
         return result
+    }
+
+    fun generateUnenclosed(context: Context, result: ExpressResult) {
+        result += express.generate(context)
     }
 
     override fun refs(): List<ITable<*>> {
         return tables
     }
 
-    override fun singlePrimaryKey(): Column<*>? {
+    override fun singlePrimaryKey(): Column<T, *>? {
         // nothing to do
         return null
     }

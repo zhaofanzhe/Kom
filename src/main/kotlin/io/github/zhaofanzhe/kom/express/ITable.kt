@@ -34,7 +34,7 @@ interface ITable<T : Any> {
      * 获取单主键
      * 如果复合主键不会返回
      */
-    fun singlePrimaryKey(): Column<*>?
+    fun singlePrimaryKey(): Column<T,*>?
 
     /**
      * 获取查询数量引用

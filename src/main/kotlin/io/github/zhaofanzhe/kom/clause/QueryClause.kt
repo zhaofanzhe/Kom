@@ -93,7 +93,7 @@ class QueryClause<T : Any>(
         return this
     }
 
-    fun groupBy(vararg columns: Column<*>): QueryClause<T> {
+    fun groupBy(vararg columns: Column<T,*>): QueryClause<T> {
         this.groupBy = GroupByClause(*columns)
         return this
     }
@@ -117,7 +117,7 @@ class QueryClause<T : Any>(
         return this
     }
 
-    fun subQuery(): ITable<T> {
+    fun subQuery(): SubQueryClause<T> {
         if (table == null) {
             throw KomException("""no have "from table"""")
         }
@@ -137,8 +137,7 @@ class QueryClause<T : Any>(
         val count = table.count()
         val result = QueryClause<Void>(queryer)
             .select(count)
-            .from(table)
-            .fetchOne() ?: return 0
+            .from(table).fetchOne() ?: return 0
         return result[count]?.toLong() ?: 0
     }
 
@@ -173,9 +172,9 @@ class QueryClause<T : Any>(
         val runtime = context.runtime
 
         val tables = mutableListOf<ITable<*>>()
-
         tables.add(table!!)
         tables.addAll(joinTables)
+
         val declares = mutableListOf<Declare<*>>()
         declares.addAll(table!!.declares())
         joinTables.forEach { declares.addAll(it.declares()) }

@@ -19,7 +19,7 @@ class Context {
      */
     fun <T : Any> currentTable(table: ITable<T>): ITable<T> {
         if (runtime == null) throw KomException("runtime not fund.")
-        return runtime!!.tableRuntime[table] as? ITable<T> ?: table
+        return runtime!!.tableRuntime[table] as? ITable<T> ?: throw KomException("not fund currentTable.")
     }
 
     /**

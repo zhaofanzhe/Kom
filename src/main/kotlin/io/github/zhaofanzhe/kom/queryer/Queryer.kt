@@ -26,4 +26,16 @@ class Queryer(private val connectionFactory: ConnectionFactory) {
         )
     }
 
+    fun execute(sql: String, params: List<Any>): Int {
+        val connection = connectionFactory.getConnection()
+
+        val prepareStatement = connection.prepareStatement(sql)
+
+        params.forEachIndexed { index, value ->
+            prepareStatement.setObject(index + 1, value)
+        }
+
+        return prepareStatement.executeUpdate()
+    }
+
 }

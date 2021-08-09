@@ -2,7 +2,7 @@ package io.github.zhaofanzhe.kom.clause
 
 import io.github.zhaofanzhe.kom.express.*
 
-class SortExpress(private val column: Column<*>, private val genre: Genre) : Express() {
+class SortExpress(private val column: Column<*,*>, private val genre: Genre) : Express() {
 
     enum class Genre {
         ASC, DESC;

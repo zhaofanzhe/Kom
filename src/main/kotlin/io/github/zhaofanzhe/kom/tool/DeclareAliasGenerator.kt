@@ -13,7 +13,7 @@ class DeclareAliasGenerator(private val tableAliasGenerator: TableAliasGenerator
 
     internal val othersGenerator = AliasGenerator()
 
-    fun generate(column: Column<*>): String {
+    fun generate(column: Column<*,*>): String {
         val table = column.table
         return columns.getOrPut(table) {
             mutableMapOf()
@@ -23,7 +23,7 @@ class DeclareAliasGenerator(private val tableAliasGenerator: TableAliasGenerator
     }
 
     fun generate(declare: Declare<*>): String {
-        if (declare is Column<*>){
+        if (declare is Column<*,*>){
             return generate(declare)
         }
         return others.getOrPut(declare) {

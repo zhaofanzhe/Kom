@@ -3,7 +3,7 @@ package io.github.zhaofanzhe.kom.clause
 import io.github.zhaofanzhe.kom.express.*
 
 @Suppress("PrivatePropertyName")
-class GroupByClause(private vararg val columns: Column<*>) : Clause() {
+class GroupByClause(private vararg val columns: Column<*,*>) : Clause() {
 
     private val GROUP_BY = "\ngroup by "
 

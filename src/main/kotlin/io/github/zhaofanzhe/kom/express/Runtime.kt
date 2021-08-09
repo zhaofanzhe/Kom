@@ -22,8 +22,9 @@ class Runtime(
     private fun setTableRuntime(tables: List<ITable<*>>) {
         tables.forEach { root ->
             this.tableRuntime[root] = root
-            val refs = root.refs() ?: return
-            refs.forEach { setTableRuntime(root, it) }
+            root.refs()?.forEach {
+                setTableRuntime(root, it)
+            }
         }
     }
 
@@ -32,8 +33,9 @@ class Runtime(
      */
     private fun setTableRuntime(root: ITable<*>, table: ITable<*>) {
         tableRuntime[table] = root
-        val refs = table.refs() ?: return
-        refs.forEach { setTableRuntime(root, it) }
+        table.refs()?.forEach {
+            setTableRuntime(root, it)
+        }
     }
 
     /**

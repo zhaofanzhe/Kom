@@ -9,8 +9,14 @@ import io.github.zhaofanzhe.kom.queryer.Queryer
 
 class Database(private val connectionFactory: ConnectionFactory) {
 
+    private val queryer = Queryer(connectionFactory)
+
+    fun <T : Any> insert(table: Table<T>): InsertClause<T> {
+        return InsertClause(queryer, table)
+    }
+
     private fun query(): QueryClause<*> {
-        return QueryClause<Void>(Queryer(connectionFactory))
+        return QueryClause<Void>(queryer)
     }
 
     fun <U : Any> select(table: ITable<U>): QueryClause<U> {
