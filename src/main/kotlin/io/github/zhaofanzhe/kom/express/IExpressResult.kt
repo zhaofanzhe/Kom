@@ -13,6 +13,6 @@ interface IExpressResult {
     /**
      * 获取参数
      */
-    fun params(): List<Any>
+    fun params(): List<Any?>
 
 }

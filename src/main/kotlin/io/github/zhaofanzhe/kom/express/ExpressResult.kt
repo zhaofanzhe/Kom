@@ -9,9 +9,9 @@ class ExpressResult : IExpressResult {
 
     private val express = StringBuilder()
 
-    private val params = mutableListOf<Any>()
+    private val params = mutableListOf<Any?>()
 
-    fun append(express: String, vararg args: Any) {
+    fun append(express: String, vararg args: Any?) {
         this.express.append(express)
         this.params.addAll(args)
     }
@@ -45,7 +45,7 @@ class ExpressResult : IExpressResult {
         return this.express.toString()
     }
 
-    override fun params(): List<Any> {
+    override fun params(): List<Any?> {
         return this.params
     }
 

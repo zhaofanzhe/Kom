@@ -2,10 +2,10 @@ package io.github.zhaofanzhe.kom.clause
 
 import io.github.zhaofanzhe.kom.express.*
 
-class JoinClause<T : Any>(
+class JoinClause<Q:Clause>(
     private val genre: Genre,
     private val table: ITable<*>,
-    private val clause: QueryClause<T>,
+    private val clause: JoinClauseLink<Q>,
 ) : Express() {
 
     private lateinit var express: LogicExpress<Boolean>
@@ -17,7 +17,7 @@ class JoinClause<T : Any>(
         FULL("\nfull join ");
     }
 
-    fun on(express: LogicExpress<Boolean>): QueryClause<T> {
+    fun on(express: LogicExpress<Boolean>): Q {
         this.express = express
         return clause.join(this, table)
     }

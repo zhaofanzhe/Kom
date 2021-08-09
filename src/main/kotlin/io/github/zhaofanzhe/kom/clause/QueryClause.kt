@@ -3,8 +3,6 @@ package io.github.zhaofanzhe.kom.clause
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
-import io.github.zhaofanzhe.kom.express.functions.Function
-import io.github.zhaofanzhe.kom.express.identifier.Identifier
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import kotlin.reflect.KClass
@@ -12,7 +10,7 @@ import kotlin.reflect.KClass
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 class QueryClause<T : Any>(
     private val queryer: Queryer,
-) : Clause() {
+) : Clause(),JoinClauseLink<QueryClause<T>> {
 
     private var select: SelectClause? = null
 
@@ -24,7 +22,7 @@ class QueryClause<T : Any>(
 
     private var table: ITable<*>? = null
 
-    private var joins: MutableList<JoinClause<*>> = mutableListOf()
+    private var joins: MutableList<JoinClause<QueryClause<T>>> = mutableListOf()
 
     private var joinTables: MutableList<ITable<*>> = mutableListOf()
 
@@ -66,25 +64,25 @@ class QueryClause<T : Any>(
         return this
     }
 
-    internal fun join(clause: JoinClause<*>, table: ITable<*>): QueryClause<T> {
+    override fun join(clause: JoinClause<QueryClause<T>>, table: ITable<*>): QueryClause<T> {
         joins.add(clause)
         joinTables.add(table)
         return this
     }
 
-    fun innerJoin(table: ITable<*>): JoinClause<T> {
+    fun innerJoin(table: ITable<*>): JoinClause<QueryClause<T>> {
         return JoinClause(JoinClause.Genre.INNER, table, this)
     }
 
-    fun leftJoin(table: ITable<*>): JoinClause<T> {
+    fun leftJoin(table: ITable<*>): JoinClause<QueryClause<T>> {
         return JoinClause(JoinClause.Genre.LEFT, table, this)
     }
 
-    fun rightJoin(table: ITable<*>): JoinClause<T> {
+    fun rightJoin(table: ITable<*>): JoinClause<QueryClause<T>> {
         return JoinClause(JoinClause.Genre.RIGHT, table, this)
     }
 
-    fun fullJoin(table: ITable<*>): JoinClause<T> {
+    fun fullJoin(table: ITable<*>): JoinClause<QueryClause<T>> {
         return JoinClause(JoinClause.Genre.FULL, table, this)
     }
 

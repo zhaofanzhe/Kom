@@ -10,7 +10,7 @@ class Queryer(private val connectionFactory: ConnectionFactory) {
     /**
      * 执行查询
      */
-    fun executeQuery(sql: String, params: List<Any>): QueryResult {
+    fun executeQuery(sql: String, params: List<Any?>): QueryResult {
         val connection = connectionFactory.getConnection()
 
         val prepareStatement = connection.prepareStatement(sql)
@@ -26,7 +26,7 @@ class Queryer(private val connectionFactory: ConnectionFactory) {
         )
     }
 
-    fun execute(sql: String, params: List<Any>): Int {
+    fun execute(sql: String, params: List<Any?>): Int {
         val connection = connectionFactory.getConnection()
 
         val prepareStatement = connection.prepareStatement(sql)

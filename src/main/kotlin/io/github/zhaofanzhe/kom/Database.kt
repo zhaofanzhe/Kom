@@ -15,6 +15,10 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return InsertClause(queryer, table)
     }
 
+    fun <T : Any> update(table: Table<T>): UpdateClause<T> {
+        return UpdateClause(queryer, table)
+    }
+
     private fun query(): QueryClause<*> {
         return QueryClause<Void>(queryer)
     }
