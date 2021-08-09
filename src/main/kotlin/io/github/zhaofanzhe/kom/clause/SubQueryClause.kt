@@ -31,4 +31,9 @@ class SubQueryClause<T : Any>(
         return tables
     }
 
+    override fun singlePrimaryKey(): Column<*>? {
+        // nothing to do
+        return null
+    }
+
 }

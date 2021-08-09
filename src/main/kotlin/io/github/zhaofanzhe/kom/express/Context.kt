@@ -19,7 +19,7 @@ class Context {
      */
     fun <T : Any> currentTable(table: ITable<T>): ITable<T> {
         if (runtime == null) throw KomException("runtime not fund.")
-        return runtime!!.tableRuntime[table] as? ITable<T> ?: throw KomException("""not fund table "$table".""")
+        return runtime!!.tableRuntime[table] as? ITable<T> ?: table
     }
 
     /**
@@ -41,7 +41,7 @@ class Context {
      */
     fun <T : Any> currentDeclare(declare: Declare<T>): Declare<T> {
         if (runtime == null) throw KomException("runtime not fund.")
-        return runtime!!.declareRuntime[declare] as? Declare<T> ?: throw KomException("""not fund declare "$declare".""")
+        return runtime!!.declareRuntime[declare] as? Declare<T> ?: declare
     }
 
     /**

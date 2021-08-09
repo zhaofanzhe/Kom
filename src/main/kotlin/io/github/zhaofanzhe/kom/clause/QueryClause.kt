@@ -1,7 +1,10 @@
 package io.github.zhaofanzhe.kom.clause
 
+import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
+import io.github.zhaofanzhe.kom.express.functions.Function
+import io.github.zhaofanzhe.kom.express.identifier.Identifier
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import kotlin.reflect.KClass
@@ -115,6 +118,9 @@ class QueryClause<T : Any>(
     }
 
     fun subQuery(): ITable<T> {
+        if (table == null) {
+            throw KomException("""no have "from table"""")
+        }
         val tables = mutableListOf<ITable<*>>()
         tables.add(table!!)
         tables.addAll(joinTables)
@@ -124,6 +130,16 @@ class QueryClause<T : Any>(
             entityClass = selectTable?.entityClass as? KClass<T> ?: Tuple::class as KClass<T>,
             tables = tables,
         )
+    }
+
+    fun count(): Long {
+        val table = subQuery()
+        val count = table.count()
+        val result = QueryClause<Void>(queryer)
+            .select(count)
+            .from(table)
+            .fetchOne() ?: return 0
+        return result[count]?.toLong() ?: 0
     }
 
     fun fetchOne(): T? {
@@ -149,6 +165,10 @@ class QueryClause<T : Any>(
     }
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
+
+        if (table == null) {
+            throw KomException("""no have "from table"""")
+        }
 
         val runtime = context.runtime
 

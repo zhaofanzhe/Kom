@@ -2,10 +2,7 @@ package io.github.zhaofanzhe.kom
 
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.express.Table
-import io.github.zhaofanzhe.kom.toolkit.and
-import io.github.zhaofanzhe.kom.toolkit.eq
-import io.github.zhaofanzhe.kom.toolkit.gt
-import io.github.zhaofanzhe.kom.toolkit.lt
+import io.github.zhaofanzhe.kom.toolkit.*
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -42,28 +39,40 @@ fun main() {
     val users = Users()
     val address = Addresses()
 
-    val t1 = database.selectFrom(users)
-        .where(and {
-            and(users.id gt 1)
-        }).subQuery()
+    val c1 = count(users.id)
 
-    val express = database.select(users,address)
-        .from(t1)
-        .leftJoin(address)
-        .on(and {
-            and(users.id eq address.userId)
-        })
+    val express = database.select(c1, users.username).from(users)
 
     println(express)
+    println(express.fetchOne())
+    println(express.count())
 
-    val list = express.fetchAll()
+//    val t1 = database.selectFrom(users)
+//        .where(and {
+//            and(users.id gt 1)
+//        }).subQuery()
 
-    println(list)
+//    val c1 = count(users.id)
+//
+//    val express = database.select(c1,users.username)
+//        .from(t1)
+//        .leftJoin(address)
+//        .on(and {
+//            and(users.id eq address.userId)
+//        })
+//
+//    println(express)
+//
+//    val list = express.fetchAll()
+//
+//    println(list)
+//
+//    list.forEach {
+//        println(it[c1])
+//        println(it[users])
+//    }
 
-    list.forEach {
-        println(it[users])
-        println(it[address])
-    }
+//    println(express.count())
 
 }
 
