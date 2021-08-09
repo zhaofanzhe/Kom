@@ -23,4 +23,9 @@ class CompareLogicExpress(
         }
         return result
     }
+
+    override fun hasLogic(): Boolean {
+        return true
+    }
+
 }

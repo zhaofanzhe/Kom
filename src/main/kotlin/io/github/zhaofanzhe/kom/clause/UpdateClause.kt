@@ -16,7 +16,7 @@ class UpdateClause<T : Any>(
 
     private val updates = mutableMapOf<Column<*, *>, Any?>()
 
-    private var where: LogicExpress<Boolean>? = null
+    private var where: WhereClause? = null
 
     override fun join(clause: JoinClause<UpdateClause<T>>, table: ITable<*>): UpdateClause<T> {
         joins.add(clause)
@@ -46,18 +46,17 @@ class UpdateClause<T : Any>(
     }
 
     fun where(clause: LogicExpress<Boolean>): UpdateClause<T> {
-        this.where = clause
+        this.where = WhereClause(clause)
         return this
     }
 
     fun execute(): Int {
+        if (updates.isEmpty()) throw KomException("no call set().")
         val result = generate(Context())
         return queryer.execute(result.express(), result.params())
     }
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
-
-        if (updates.isEmpty()) throw KomException("no call set().")
 
         val runtime = context.runtime
 
@@ -93,10 +92,7 @@ class UpdateClause<T : Any>(
             result.append("?", updates[column])
         }
 
-        if (where != null) {
-            result += "\nwhere "
-            result += where!!.generate(context)
-        }
+        result += where?.generate(context)
 
         if (runtime != null) {
             context.runtime = runtime

@@ -15,7 +15,7 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
     * [X] Query statement
     * [X] Insert statement
     * [X] Update statement
-    * [ ] Delete statement
+    * [X] Delete statement
 * [ ] model
     * [ ] Query
     * [ ] Create
@@ -27,6 +27,10 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 [Query statement | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
 
 [Insert statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+
+[Update statement | Update.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Update.kt)
+
+[Delete statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
 
 ### Database support
 

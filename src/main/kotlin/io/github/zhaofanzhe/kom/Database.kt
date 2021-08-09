@@ -19,6 +19,10 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return UpdateClause(queryer, table)
     }
 
+    fun <T : Any> delete(table: Table<T>): DeleteClause<T> {
+        return DeleteClause(queryer, table)
+    }
+
     private fun query(): QueryClause<*> {
         return QueryClause<Void>(queryer)
     }

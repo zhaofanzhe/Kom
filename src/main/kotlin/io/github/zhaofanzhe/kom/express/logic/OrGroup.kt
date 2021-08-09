@@ -44,4 +44,8 @@ class OrGroup : LogicExpress<Boolean>() {
         return result
     }
 
+    override fun hasLogic(): Boolean {
+        return exprs.isNotEmpty()
+    }
+
 }

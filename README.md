@@ -15,7 +15,7 @@
     * [X] 查询语句
     * [X] 插入语句
     * [X] 更新语句
-    * [ ] 删除语句
+    * [X] 删除语句
 * [ ] 模型
     * [ ] 查询
     * [ ] 创建
@@ -27,6 +27,10 @@
 [查询语句 | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
 
 [插入语句 | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+
+[更新语句 | Update.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Update.kt)
+
+[删除语句 statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
 
 ### 数据库支持
 
