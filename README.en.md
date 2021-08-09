@@ -14,7 +14,7 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 * [ ] DSL
     * [X] Query statement
     * [X] Insert statement
-    * [ ] Update statement
+    * [X] Update statement
     * [ ] Delete statement
 * [ ] model
     * [ ] Query
