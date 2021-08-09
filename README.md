@@ -30,7 +30,7 @@
 
 [更新语句 | Update.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Update.kt)
 
-[删除语句 statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
+[删除语句 | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
 
 ### 数据库支持
 
