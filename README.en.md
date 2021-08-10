@@ -54,6 +54,4 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 
 * [X] Mariadb [Tested|Mariadb10.5.9]
 * [X] MySQL [Not tested, should be supported]
-* [ ] PostgreSQL [Not tested, should not be supported]
-* [ ] Oracle [Not tested]
 * [ ] Other... [Waiting to add]
