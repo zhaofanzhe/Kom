@@ -2,6 +2,8 @@
 
 [中文](./README.md) | English (Google translation)
 
+[![Release](https://jitpack.io/v/zhaofanzhe/Kom.svg)](https://jitpack.io/#zhaofanzhe/Kom)
+
 ## Explain
 The current progress is just a toy. Interested people can join in.
 
