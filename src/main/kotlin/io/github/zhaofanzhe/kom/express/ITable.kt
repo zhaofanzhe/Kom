@@ -31,18 +31,17 @@ interface ITable<T : Any> {
     fun refs(): List<ITable<*>>?
 
     /**
-     * 获取单主键
      * 如果复合主键不会返回
      */
-    fun singlePrimaryKey(): Column<T,*>?
+    fun primaryKeys(): List<Column<T,*>>
 
     /**
      * 获取查询数量引用
      */
     fun count(): Function<Number> {
-        val primaryKey = singlePrimaryKey()
-        val args: Array<Any> = if (primaryKey != null) {
-            arrayOf(primaryKey)
+        val primaryKeys = primaryKeys()
+        val args: Array<Any> = if (primaryKeys.size == 1) {
+            arrayOf(primaryKeys)
         } else {
             arrayOf(Identifier<Number>(this, "*"))
         }

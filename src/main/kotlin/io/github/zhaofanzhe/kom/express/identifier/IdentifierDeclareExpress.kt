@@ -7,7 +7,7 @@ import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
 class IdentifierDeclareExpress<T : Any>(
     private val identifier: Identifier<T>,
-) : DeclareExpress<T>() {
+) : DeclareExpress() {
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
         result += identifier.identifier

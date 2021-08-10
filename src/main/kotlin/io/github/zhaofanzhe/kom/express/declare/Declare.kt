@@ -8,12 +8,12 @@ import io.github.zhaofanzhe.kom.express.ITable
  *  - 字段
  *  - 函数
  */
-interface Declare<T : Any> {
+interface Declare<T : Any?> {
 
     /**
      * 声明表达式
      */
-    fun declare(): DeclareExpress<T>
+    fun declare(): DeclareExpress
 
     /**
      * 普通表达式

@@ -23,13 +23,13 @@ class InsertClause<T : Any>(
             field = value
         }
 
-    private var mode1Columns = mutableMapOf<Column<T, *>, Any>()
+    private var mode1Columns = mutableMapOf<Column<T, *>, Any?>()
 
     private var mode2columns: List<Column<T, *>>? = null
 
     private var mode2SubQueryClause: SubQueryClause<*>? = null
 
-    fun <U : Any> set(column: Column<T, U>, value: U): InsertClause<T> {
+    fun <U : Any?> set(column: Column<T, U>, value: U): InsertClause<T> {
         this.mode = 1
         mode1Columns[column] = value
         return this
@@ -86,7 +86,7 @@ class InsertClause<T : Any>(
                 if (index > 0) {
                     result += ", "
                 }
-                result.append("?", mode1Columns[column]!!)
+                result.append("?", mode1Columns[column])
             }
             result += ")"
         } else {

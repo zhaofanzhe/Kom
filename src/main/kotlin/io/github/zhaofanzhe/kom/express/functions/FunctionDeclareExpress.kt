@@ -7,9 +7,9 @@ import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
 @Suppress("DuplicatedCode")
-class FunctionDeclareExpress<T : Any>(
+class FunctionDeclareExpress(
     private val declare: Declare<*>
-) : DeclareExpress<T>() {
+) : DeclareExpress() {
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
         result += declare.express().generate(context)

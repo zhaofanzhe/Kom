@@ -39,7 +39,7 @@ class Context {
     /**
      * 当前环境表列
      */
-    fun <T : Any> currentDeclare(declare: Declare<T>): Declare<T> {
+    fun <T : Any?> currentDeclare(declare: Declare<T>): Declare<T> {
         if (runtime == null) throw KomException("runtime not fund.")
         return runtime!!.declareRuntime[declare] as? Declare<T> ?: declare
     }
@@ -47,7 +47,7 @@ class Context {
     /**
      * 当前环境列名
      */
-    fun <T : Any> currentDeclareName(declare: Declare<T>): String {
+    fun <T : Any?> currentDeclareName(declare: Declare<T>): String {
         val current = currentDeclare(declare)
         val ref = current.ref
         if (ref != null) {
@@ -59,7 +59,7 @@ class Context {
     /**
      * 当前环境列别名
      */
-    fun <T : Any> currentDeclareAlias(declare: Declare<T>): String {
+    fun <T : Any?> currentDeclareAlias(declare: Declare<T>): String {
         val current = currentDeclare(declare)
         return declareAliasGenerator.generate(current)
     }

@@ -7,9 +7,9 @@ import io.github.zhaofanzhe.kom.express.IExpressResult
 /**
  * 字段定义表达式
  */
-class DeclareStatementExpress<T : Any>(
+class DeclareStatementExpress<T : Any?>(
     private val column: Declare<T>,
-) : DeclareExpress<T>() {
+) : DeclareExpress() {
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
         result.append(context.currentTableAlias(column.table))

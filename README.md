@@ -11,26 +11,30 @@
 
 # 计划表
 
-* [ ] DSL
+* [X] DSL
     * [X] 查询语句
     * [X] 插入语句
     * [X] 更新语句
     * [X] 删除语句
 * [ ] 模型
     * [ ] 查询
-    * [ ] 创建
+    * [X] 创建
     * [ ] 保存
-    * [ ] 删除
+    * [X] 删除
 
 ### 例子
 
-[查询语句 | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
+[查询语句 | DSLQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLQuery.kt)
 
-[插入语句 | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+[插入语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLInsert.kt)
 
-[更新语句 | Update.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Update.kt)
+[更新语句 | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
 
-[删除语句 | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
+[删除语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+
+[模型创建 | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+
+[模型删除 | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
 
 ### 数据库支持
 

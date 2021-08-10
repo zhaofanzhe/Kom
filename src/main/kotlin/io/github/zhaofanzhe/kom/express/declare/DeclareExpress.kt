@@ -8,4 +8,4 @@ import io.github.zhaofanzhe.kom.express.Express
  *  - select [user.username as user_0__username]
  *  - select [count(*) as __col_0]
  */
-abstract class DeclareExpress<T:Any> : Express()
+abstract class DeclareExpress : Express()

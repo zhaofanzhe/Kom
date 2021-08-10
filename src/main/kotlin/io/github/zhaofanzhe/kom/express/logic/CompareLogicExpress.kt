@@ -4,8 +4,8 @@ import io.github.zhaofanzhe.kom.express.*
 
 class CompareLogicExpress(
     private val operator: String,
-    private val left: Any,
-    private val right: Any,
+    private val left: Any?,
+    private val right: Any?,
 ) : LogicExpress<Boolean>() {
 
     @Suppress("DuplicatedCode")

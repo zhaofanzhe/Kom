@@ -11,26 +11,30 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 
 # Task
 
-* [ ] DSL
+* [X] DSL
     * [X] Query statement
     * [X] Insert statement
     * [X] Update statement
     * [X] Delete statement
 * [ ] model
     * [ ] Query
-    * [ ] Create
+    * [X] Create
     * [ ] Save
-    * [ ] Delete
+    * [X] Delete
 
 ### Example
 
-[Query statement | Query.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Query.kt)
+[Query statement | DSLQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLQuery.kt)
 
-[Insert statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Insert.kt)
+[Insert statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLInsert.kt)
 
-[Update statement | Update.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Update.kt)
+[Update statement | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
 
-[Delete statement | Insert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/Delete.kt)
+[Delete statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+
+[model create | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+
+[model delete | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
 
 ### Database support
 

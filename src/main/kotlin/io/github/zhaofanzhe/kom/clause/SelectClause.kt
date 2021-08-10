@@ -6,7 +6,7 @@ import io.github.zhaofanzhe.kom.express.IExpressResult
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 
 class SelectClause(
-    private val exprs: List<DeclareExpress<*>>
+    private val exprs: List<DeclareExpress>
 ) : Clause() {
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {

@@ -21,7 +21,7 @@ open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
             root = prototype
         }
 
-        if (root !is Column<*,*>) {
+        if (root !is Column<*, *>) {
             throw KomException("declare is not Column")
         }
 
@@ -36,13 +36,11 @@ open class TableFiller<T : Any>(private val instance: T) : Filler<T> {
 
         val property = optional.get() as KMutableProperty1<Any, Any?>
 
-        val isAccessible = property.isAccessible
-
-        if (!isAccessible) property.isAccessible = true
+        property.isAccessible = true
 
         property.set(instance, value)
 
-        if (!isAccessible) property.isAccessible = false
+        property.isAccessible = false
 
     }
 

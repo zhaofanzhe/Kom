@@ -1,6 +1,7 @@
 package io.github.zhaofanzhe.kom
 
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
+import io.github.zhaofanzhe.kom.entity.Entity
 import io.github.zhaofanzhe.kom.express.Table
 import java.sql.Connection
 import java.sql.DriverManager
@@ -8,7 +9,7 @@ import java.sql.DriverManager
 data class User(
     var id: Int = 0,
     var username: String = "",
-) {
+) : Entity<Users>(Users::class) {
     constructor() : this(id = 0, username = "")
 }
 
@@ -21,7 +22,7 @@ data class Address(
     var id: Int = 0,
     var address: String = "",
     var userId: Int = 0,
-) {
+) : Entity<Addresses>(Addresses::class) {
     constructor() : this(id = 0, address = "", userId = 0)
 }
 

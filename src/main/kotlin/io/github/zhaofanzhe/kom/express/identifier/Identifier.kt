@@ -10,7 +10,7 @@ class Identifier<T : Any>(
     val identifier: String,
 ) : Declare<T> {
 
-    override fun declare(): DeclareExpress<T> {
+    override fun declare(): DeclareExpress {
         return IdentifierDeclareExpress(this)
     }
 

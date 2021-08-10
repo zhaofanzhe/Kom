@@ -9,7 +9,7 @@ class DeclareRef<T : Any>(
     override val ref: Declare<T>? = null,
 ) : Declare<T> {
 
-    override fun declare(): DeclareExpress<T> {
+    override fun declare(): DeclareExpress {
         return DeclareStatementExpress(this)
     }
 

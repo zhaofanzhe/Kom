@@ -12,9 +12,9 @@ abstract class Table<T : Any>(
     override val tableName: String = Naming.toTableName(Naming.toEntityName(entityClass))
 ) : ITable<T> {
 
-    private var columns = mutableListOf<Column<T,*>>()
+    private var columns = mutableListOf<Column<T, *>>()
 
-    private val primaryKeys = mutableListOf<Column<T,*>>()
+    private val primaryKeys = mutableListOf<Column<T, *>>()
 
     override fun declares(): List<Declare<*>> {
         return columns
@@ -24,13 +24,16 @@ abstract class Table<T : Any>(
         property: KMutableProperty1<T, U>,
         columnName: String = Naming.toColumnName(property.name),
         primaryKey: Boolean = false,
-    ): Column<T,U> {
-        val column = Column<T,U>(
+    ): Column<T, U> {
+        val column = Column<T, U>(
             name = columnName,
             fieldName = property.name,
             table = this
         )
         columns.add(column)
+        if (primaryKey) {
+            primaryKeys += columns
+        }
         return column
     }
 
@@ -39,11 +42,8 @@ abstract class Table<T : Any>(
         return null
     }
 
-    override fun singlePrimaryKey(): Column<T,*>? {
-        if (primaryKeys.size == 1) {
-            return primaryKeys[0]
-        }
-        return null
+    override fun primaryKeys(): List<Column<T, *>> {
+        return primaryKeys
     }
 
 }

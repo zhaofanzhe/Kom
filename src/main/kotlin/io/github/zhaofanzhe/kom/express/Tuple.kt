@@ -24,8 +24,8 @@ class Tuple(private val source: QuerySource) {
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T:Any> get(declare: Declare<T>): T? {
-        return map[find(declare)] as? T
+    operator fun <T:Any?> get(declare: Declare<T>): T {
+        return map[find(declare)] as T
     }
 
     @Suppress("UNCHECKED_CAST")
