@@ -1,9 +1,9 @@
 package io.github.zhaofanzhe.kom
 
-import io.github.zhaofanzhe.kom.clause.DeleteClause
-import io.github.zhaofanzhe.kom.clause.InsertClause
-import io.github.zhaofanzhe.kom.clause.QueryClause
-import io.github.zhaofanzhe.kom.clause.UpdateClause
+import io.github.zhaofanzhe.kom.clause.dml.DeleteClause
+import io.github.zhaofanzhe.kom.clause.dml.InsertClause
+import io.github.zhaofanzhe.kom.clause.dml.QueryClause
+import io.github.zhaofanzhe.kom.clause.dml.UpdateClause
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.entity.Entity
 import io.github.zhaofanzhe.kom.express.*

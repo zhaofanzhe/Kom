@@ -1,5 +1,6 @@
-package io.github.zhaofanzhe.kom.clause
+package io.github.zhaofanzhe.kom.clause.dml
 
+import io.github.zhaofanzhe.kom.clause.Clause
 import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.ExpressResult
 import io.github.zhaofanzhe.kom.express.declare.DeclareExpress

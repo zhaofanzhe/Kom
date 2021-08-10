@@ -1,6 +1,7 @@
-package io.github.zhaofanzhe.kom.clause
+package io.github.zhaofanzhe.kom.clause.dml
 
 import io.github.zhaofanzhe.kom.KomException
+import io.github.zhaofanzhe.kom.clause.Clause
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource

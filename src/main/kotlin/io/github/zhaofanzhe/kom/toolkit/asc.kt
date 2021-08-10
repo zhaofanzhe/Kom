@@ -1,7 +1,7 @@
 package io.github.zhaofanzhe.kom.toolkit
 
 import io.github.zhaofanzhe.kom.express.Column
-import io.github.zhaofanzhe.kom.clause.SortExpress
+import io.github.zhaofanzhe.kom.clause.dml.SortExpress
 
 /**
  * select * from user order by [id asc]
