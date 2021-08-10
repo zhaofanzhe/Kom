@@ -3,9 +3,13 @@
 package io.github.zhaofanzhe.kom.queryer
 
 import io.github.zhaofanzhe.kom.queryer.filler.Filler
+import java.sql.Connection
 import java.sql.ResultSet
 
-class QueryResult(private val resultSet: ResultSet) {
+class QueryResult(
+    private val resultSet: ResultSet,
+    private val connection: Connection,
+) {
 
     fun <T : Any> fetchOne(source: QuerySource): T? {
         if (!resultSet.next()) {
@@ -15,6 +19,7 @@ class QueryResult(private val resultSet: ResultSet) {
         source.declares.forEach { (column, name) ->
             filler.set(column, resultSet.getObject(name))
         }
+        connection.close()
         return filler.getInstance()
     }
 
@@ -27,6 +32,7 @@ class QueryResult(private val resultSet: ResultSet) {
             }
             list += filler.getInstance()
         }
+        connection.close()
         return list
     }
 

@@ -23,6 +23,7 @@ class Queryer(private val connectionFactory: ConnectionFactory) {
 
         return QueryResult(
             resultSet = resultSet,
+            connection = connection,
         )
     }
 
@@ -35,7 +36,9 @@ class Queryer(private val connectionFactory: ConnectionFactory) {
             prepareStatement.setObject(index + 1, value)
         }
 
-        return prepareStatement.executeUpdate()
+        val result = prepareStatement.executeUpdate()
+        connection.close()
+        return result
     }
 
 }

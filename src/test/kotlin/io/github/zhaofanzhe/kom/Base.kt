@@ -33,10 +33,9 @@ class Addresses : Table<Address>(Address::class) {
 }
 
 fun getDatabase(): Database {
-    val connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo", "root", "123456")
     return Database(object : ConnectionFactory {
         override fun getConnection(): Connection {
-            return connection
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo", "root", "123456")
         }
     })
 }
