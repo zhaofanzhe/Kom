@@ -3,8 +3,8 @@ package io.github.zhaofanzhe.kom.clause
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
-import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.queryer.QuerySource
+import io.github.zhaofanzhe.kom.queryer.Queryer
 import kotlin.reflect.KClass
 
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
@@ -190,7 +190,7 @@ class QueryClause<T : Any>(
         if (limit != null) {
             limit?.generate(context, result)
             if (offset != null) {
-               offset?.generate(context, result)
+                offset?.generate(context, result)
             }
         }
 

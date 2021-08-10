@@ -14,7 +14,7 @@ import io.github.zhaofanzhe.kom.toolkit.and
 import io.github.zhaofanzhe.kom.toolkit.eq
 
 @Suppress("UNCHECKED_CAST", "DuplicatedCode")
-class Database(private val connectionFactory: ConnectionFactory) {
+class Database(connectionFactory: ConnectionFactory) {
 
     private val queryer = Queryer(connectionFactory)
 

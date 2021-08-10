@@ -14,7 +14,6 @@ class QuerySource(
 
     val declares: Map<Declare<*>, String> by lazy {
         val declares = mutableMapOf<Declare<*>, String>()
-        println("----------")
         select.forEach {
             declares[it] = context.currentDeclareAlias(it)
         }
