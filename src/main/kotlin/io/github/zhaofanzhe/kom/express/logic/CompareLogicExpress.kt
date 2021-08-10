@@ -1,6 +1,9 @@
 package io.github.zhaofanzhe.kom.express.logic
 
-import io.github.zhaofanzhe.kom.express.*
+import io.github.zhaofanzhe.kom.express.Context
+import io.github.zhaofanzhe.kom.express.Express
+import io.github.zhaofanzhe.kom.express.ExpressResult
+import io.github.zhaofanzhe.kom.express.LogicExpress
 
 class CompareLogicExpress(
     private val operator: String,
@@ -9,19 +12,18 @@ class CompareLogicExpress(
 ) : LogicExpress<Boolean>() {
 
     @Suppress("DuplicatedCode")
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         if (left is Express) {
-            result += left.generate(context)
+            left.generate(context, result)
         } else {
-            result.append("?",left)
+            result.append("?", left)
         }
         result += """ $operator """
         if (right is Express) {
-            result += right.generate(context)
+            right.generate(context, result)
         } else {
-            result.append("?",right)
+            result.append("?", right)
         }
-        return result
     }
 
     override fun hasLogic(): Boolean {

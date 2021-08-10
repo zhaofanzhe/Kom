@@ -2,7 +2,6 @@ package io.github.zhaofanzhe.kom.express.logic
 
 import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.ExpressResult
-import io.github.zhaofanzhe.kom.express.IExpressResult
 import io.github.zhaofanzhe.kom.express.LogicExpress
 
 
@@ -25,10 +24,8 @@ class OrGroup : LogicExpress<Boolean>() {
         or(scope)
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         exprs.forEachIndexed { index, express ->
-            val rst = express.generate(context)
-
             val layer = logicLayer
             val otherLayer = express.logicLayer
             if (index > 0) {
@@ -40,12 +37,11 @@ class OrGroup : LogicExpress<Boolean>() {
             if (otherLayer > 0) {
                 result += "("
             }
-            result += rst
+            express.generate(context,result)
             if (otherLayer > 0) {
                 result += ")"
             }
         }
-        return result
     }
 
     override fun hasLogic(): Boolean {

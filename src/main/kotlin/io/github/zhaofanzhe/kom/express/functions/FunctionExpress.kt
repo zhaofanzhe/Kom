@@ -3,7 +3,6 @@ package io.github.zhaofanzhe.kom.express.functions
 import io.github.zhaofanzhe.kom.express.Context
 import io.github.zhaofanzhe.kom.express.Express
 import io.github.zhaofanzhe.kom.express.ExpressResult
-import io.github.zhaofanzhe.kom.express.IExpressResult
 import io.github.zhaofanzhe.kom.express.declare.Declare
 
 class FunctionExpress(
@@ -11,7 +10,7 @@ class FunctionExpress(
     private val args: Array<Any>,
 ) : Express() {
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
 
         result += name
         result += "("
@@ -22,10 +21,10 @@ class FunctionExpress(
             }
             when (value) {
                 is Express -> {
-                    result += value.generate(context)
+                    value.generate(context, result)
                 }
                 is Declare<*> -> {
-                    result += value.express().generate(context)
+                    value.express().generate(context, result)
                 }
                 else -> {
                     result.append("?", value)
@@ -34,7 +33,6 @@ class FunctionExpress(
         }
 
         result += ")"
-        return result
     }
 
 }

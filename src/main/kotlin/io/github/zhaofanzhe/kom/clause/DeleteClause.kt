@@ -44,11 +44,12 @@ class DeleteClause<T : Any>(
     }
 
     fun execute(): Int {
-        val result = generate(Context())
+        val result = ExpressResult()
+        generate(Context(), result)
         return queryer.execute(result.express(), result.params())
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
 
         val runtime = context.runtime
 
@@ -69,15 +70,13 @@ class DeleteClause<T : Any>(
         result += " as "
         result += context.currentTableAlias(table)
 
-        joins.forEach { result += it.generate(context) }
+        joins.forEach { it.generate(context, result) }
 
-        result += where?.generate(context)
+        where?.generate(context, result)
 
         if (runtime != null) {
             context.runtime = runtime
         }
-
-        return result
     }
 
 }

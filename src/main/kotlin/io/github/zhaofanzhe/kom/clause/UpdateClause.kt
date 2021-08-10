@@ -5,6 +5,7 @@ import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer
 
+@Suppress("DuplicatedCode")
 class UpdateClause<T : Any>(
     private val queryer: Queryer,
     private val table: Table<T>,
@@ -52,11 +53,12 @@ class UpdateClause<T : Any>(
 
     fun execute(): Int {
         if (updates.isEmpty()) throw KomException("no call set().")
-        val result = generate(Context())
+        val result = ExpressResult()
+        generate(Context(), result)
         return queryer.execute(result.express(), result.params())
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
 
         val runtime = context.runtime
 
@@ -76,7 +78,7 @@ class UpdateClause<T : Any>(
         result += context.currentTableAlias(table)
 
         if (joins.isNotEmpty()) {
-            joins.forEach { result += it.generate(context) }
+            joins.forEach { it.generate(context,result) }
         }
 
         result += "\n set "
@@ -92,13 +94,11 @@ class UpdateClause<T : Any>(
             result.append("?", updates[column])
         }
 
-        result += where?.generate(context)
+        where?.generate(context,result)
 
         if (runtime != null) {
             context.runtime = runtime
         }
-
-        return result
     }
 
 }

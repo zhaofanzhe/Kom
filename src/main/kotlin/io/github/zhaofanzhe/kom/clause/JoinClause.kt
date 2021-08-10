@@ -2,7 +2,7 @@ package io.github.zhaofanzhe.kom.clause
 
 import io.github.zhaofanzhe.kom.express.*
 
-class JoinClause<Q:Clause>(
+class JoinClause<Q : Clause>(
     private val genre: Genre,
     private val table: ITable<*>,
     private val clause: JoinClauseLink<Q>,
@@ -22,19 +22,18 @@ class JoinClause<Q:Clause>(
         return clause.join(this, table)
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         result += genre.join
 
         if (table is Express) {
-            result += table.generate(context)
+            table.generate(context, result)
         } else {
             result += table.tableName
         }
         result += " as "
         result += context.currentTableAlias(table)
         result += " on "
-        result += express.generate(context)
-        return result
+        express.generate(context, result)
     }
 
 }

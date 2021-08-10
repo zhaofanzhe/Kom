@@ -20,15 +20,14 @@ class SubQueryClause<T : Any>(
         return this.declares
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         result += "("
         generateUnenclosed(context, result)
         result += ")"
-        return result
     }
 
     fun generateUnenclosed(context: Context, result: ExpressResult) {
-        result += express.generate(context)
+        express.generate(context, result)
     }
 
     override fun refs(): List<ITable<*>> {

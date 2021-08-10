@@ -8,6 +8,6 @@ interface IExpress {
     /**
      * 生成表达式结果
      */
-    fun generate(context: Context): IExpressResult
+    fun generate(context: Context, result: ExpressResult)
 
 }

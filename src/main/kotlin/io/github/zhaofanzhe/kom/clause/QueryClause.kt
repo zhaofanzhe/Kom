@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 class QueryClause<T : Any>(
     private val queryer: Queryer,
-) : Clause(),JoinClauseLink<QueryClause<T>> {
+) : Clause(), JoinClauseLink<QueryClause<T>> {
 
     private var select: SelectClause? = null
 
@@ -91,7 +91,7 @@ class QueryClause<T : Any>(
         return this
     }
 
-    fun groupBy(vararg columns: Column<T,*>): QueryClause<T> {
+    fun groupBy(vararg columns: Column<T, *>): QueryClause<T> {
         this.groupBy = GroupByClause(*columns)
         return this
     }
@@ -136,12 +136,13 @@ class QueryClause<T : Any>(
         val result = QueryClause<Void>(queryer)
             .select(count)
             .from(table).fetchOne() ?: return 0
-        return result[count]?.toLong() ?: 0
+        return result[count].toLong() ?: 0
     }
 
     fun fetchOne(): T? {
         val context = Context()
-        val result = generate(context)
+        val result = ExpressResult()
+        generate(context, result)
         val source = QuerySource(
             context = context,
             select = declares,
@@ -152,7 +153,8 @@ class QueryClause<T : Any>(
 
     fun fetchAll(): List<T> {
         val context = Context()
-        val result = generate(context)
+        val result = ExpressResult()
+        generate(context, result)
         val source = QuerySource(
             context = context,
             select = declares,
@@ -161,7 +163,7 @@ class QueryClause<T : Any>(
         return queryer.executeQuery(result.express(), result.params()).fetchAll(source)
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
 
         if (table == null) {
             throw KomException("""no have "from table"""")
@@ -179,24 +181,22 @@ class QueryClause<T : Any>(
 
         context.runtime = Runtime(tables, declares)
 
-        result += select?.generate(context)
-        result += from?.generate(context)
-        result += joins.map { it.generate(context) }
-        result += where?.generate(context)
-        result += groupBy?.generate(context)
-        result += orderBy?.generate(context)
+        select?.generate(context, result)
+        from?.generate(context, result)
+        joins.forEach { it.generate(context, result) }
+        where?.generate(context, result)
+        groupBy?.generate(context, result)
+        orderBy?.generate(context, result)
         if (limit != null) {
-            result += limit?.generate(context)
+            limit?.generate(context, result)
             if (offset != null) {
-                result += offset?.generate(context)
+               offset?.generate(context, result)
             }
         }
 
         if (runtime != null) {
             context.runtime = runtime
         }
-
-        return result
     }
 
 }

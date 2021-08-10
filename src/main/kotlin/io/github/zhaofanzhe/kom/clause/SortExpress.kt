@@ -2,7 +2,7 @@ package io.github.zhaofanzhe.kom.clause
 
 import io.github.zhaofanzhe.kom.express.*
 
-class SortExpress(private val column: Column<*,*>, private val genre: Genre) : Express() {
+class SortExpress(private val column: Column<*, *>, private val genre: Genre) : Express() {
 
     enum class Genre {
         ASC, DESC;
@@ -15,11 +15,10 @@ class SortExpress(private val column: Column<*,*>, private val genre: Genre) : E
         }
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
-        result += column.express().generate(context)
+    override fun generate(context: Context, result: ExpressResult) {
+        column.express().generate(context, result)
         result += " "
         result += genre.toString()
-        return result
     }
 
 }

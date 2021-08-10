@@ -7,12 +7,11 @@ class GroupByClause(private vararg val columns: Column<*,*>) : Clause() {
 
     private val GROUP_BY = "\ngroup by "
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         if (columns.isNotEmpty()) {
             result += GROUP_BY
-            result += columns.map { it.express().generate(context) }
+            columns.forEach { it.express().generate(context,result) }
         }
-        return result
     }
 
 }

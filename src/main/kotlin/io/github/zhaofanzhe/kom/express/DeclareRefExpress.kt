@@ -6,11 +6,10 @@ class DeclareRefExpress(
     private val declare: Declare<*>,
 ): Express() {
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         result += context.currentTableAlias(declare.table)
         result += "."
         result += context.currentDeclareName(declare)
-        return result
     }
 
 }

@@ -52,11 +52,12 @@ class InsertClause<T : Any>(
     }
 
     fun execute(): Boolean {
-        val result = generate(Context())
+        val result = ExpressResult()
+       generate(Context(),result)
         return queryer.execute(result.express(), result.params()) == 1
     }
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
 
         when (mode) {
             0 -> throw KomException("mode un init")
@@ -91,16 +92,15 @@ class InsertClause<T : Any>(
             result += ")"
         } else {
             result += "("
-            mode2columns!!.forEachIndexed { index, column ->
+            mode2columns?.forEachIndexed { index, column ->
                 if (index > 0) {
                     result += ", "
                 }
                 result += column.name
             }
             result += ") \n"
-            mode2SubQueryClause!!.generateUnenclosed(context, result)
+            mode2SubQueryClause?.generateUnenclosed(context, result)
         }
-        return result
     }
 
 }

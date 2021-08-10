@@ -6,13 +6,12 @@ class WhereClause(
     private val express: LogicExpress<Boolean>
 ) : Clause() {
 
-    override fun generate(context: Context, result: ExpressResult): IExpressResult {
+    override fun generate(context: Context, result: ExpressResult) {
         println(express.notNullAndHasLogic())
         if (express.notNullAndHasLogic()){
             result += "\nwhere "
-            result += express.generate(context)
+            express.generate(context,result)
         }
-        return result
     }
 
 }
