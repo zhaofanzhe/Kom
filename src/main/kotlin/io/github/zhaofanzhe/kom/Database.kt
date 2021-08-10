@@ -1,10 +1,15 @@
 package io.github.zhaofanzhe.kom
 
-import io.github.zhaofanzhe.kom.clause.*
+import io.github.zhaofanzhe.kom.clause.DeleteClause
+import io.github.zhaofanzhe.kom.clause.InsertClause
+import io.github.zhaofanzhe.kom.clause.QueryClause
+import io.github.zhaofanzhe.kom.clause.UpdateClause
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.entity.Entity
+import io.github.zhaofanzhe.kom.express.Column
+import io.github.zhaofanzhe.kom.express.ITable
+import io.github.zhaofanzhe.kom.express.Table
 import io.github.zhaofanzhe.kom.express.Tuple
-import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.ColumnTool
@@ -59,7 +64,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
         primaryKeys.forEach { primaryKey ->
             // 过滤掉主键零值字段
-            if (ColumnTool.isZeroValue(values[primaryKey.fieldName])) {
+            if (ColumnTool.isZeroValue(primaryKey, values[primaryKey.fieldName])) {
                 columns = columns.filter { primaryKey != it }
             }
         }
@@ -77,7 +82,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
 
         return delete(table)
             .where(and {
-                primaryKeys.forEach { primaryKey->
+                primaryKeys.forEach { primaryKey ->
                     and(primaryKey eq values[primaryKey.fieldName])
                 }
             }).execute()

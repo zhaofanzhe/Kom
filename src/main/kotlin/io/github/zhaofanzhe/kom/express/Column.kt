@@ -7,8 +7,9 @@ import io.github.zhaofanzhe.kom.express.declare.DeclareExpress
 class Column<U : Any, T : Any?>(
     override val name: String,
     val fieldName: String,
+    val nullable: Boolean,
     override val table: ITable<*>,
-    override val ref: Column<U,T>? = null,
+    override val ref: Column<U, T>? = null,
 ) : Declare<T> {
 
     override fun declare(): DeclareExpress {
@@ -23,6 +24,7 @@ class Column<U : Any, T : Any?>(
         return Column(
             name = name,
             fieldName = fieldName,
+            nullable = nullable,
             table = table,
             ref = this,
         )

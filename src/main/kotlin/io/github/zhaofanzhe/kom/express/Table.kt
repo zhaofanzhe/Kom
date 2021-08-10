@@ -28,6 +28,7 @@ abstract class Table<T : Any>(
         val column = Column<T, U>(
             name = columnName,
             fieldName = property.name,
+            nullable = property.returnType.isMarkedNullable,
             table = this
         )
         columns.add(column)

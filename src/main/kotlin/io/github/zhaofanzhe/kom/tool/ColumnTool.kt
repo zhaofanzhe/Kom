@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.tool
 
+import io.github.zhaofanzhe.kom.express.Column
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -23,8 +24,9 @@ object ColumnTool {
         LocalTime::class to LocalTime.MIN,
     )
 
-    fun isZeroValue(value: Any?): Boolean {
+    fun isZeroValue(column:Column<*,*>,value: Any?): Boolean {
         if (value == null) return true
+        if (!column.nullable) return false
         return zeroValues[value::class] == value
     }
 
