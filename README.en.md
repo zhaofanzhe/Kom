@@ -12,15 +12,25 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 # Task
 
 * [X] DSL
-    * [X] Query statement
-    * [X] Insert statement
-    * [X] Update statement
-    * [X] Delete statement
+  * [X] Query statement
+  * [X] Insert statement
+  * [X] Update statement
+  * [X] Delete statement
 * [X] Model
-    * [X] Query
-    * [X] Create
-    * [X] Save
-    * [X] Delete
+  * [X] Query
+  * [X] Create
+  * [X] Save
+  * [X] Delete
+* [ ] express
+  * [X] and [ and ] [ and ]
+  * [X] or [ or ] [ or ]
+  * [X] equal [ = ] [ eq ]
+  * [X] not equal to [ != ] [ ne ]
+  * [X] more than the [ > ] [ gt ]
+  * [X] greater or equal to [ >= ] [ geo ]
+  * [X] Less than [ < ] [ lt ]
+  * [X] Less than or equal to [ <= ] [ loe ]
+  * [ ] other...
 
 ### Example
 
