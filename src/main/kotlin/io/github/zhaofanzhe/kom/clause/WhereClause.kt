@@ -7,6 +7,7 @@ class WhereClause(
 ) : Clause() {
 
     override fun generate(context: Context, result: ExpressResult): IExpressResult {
+        println(express.notNullAndHasLogic())
         if (express.notNullAndHasLogic()){
             result += "\nwhere "
             result += express.generate(context)

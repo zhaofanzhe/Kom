@@ -11,6 +11,10 @@ class OrGroup : LogicExpress<Boolean>() {
 
     private val exprs = mutableListOf<LogicExpress<*>>()
 
+    operator fun plusAssign(other: LogicExpress<Boolean>){
+        or(other)
+    }
+
     fun or(other: LogicExpress<Boolean>) {
         exprs += other
     }

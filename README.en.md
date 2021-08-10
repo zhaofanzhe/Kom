@@ -16,8 +16,8 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
     * [X] Insert statement
     * [X] Update statement
     * [X] Delete statement
-* [ ] model
-    * [ ] Query
+* [X] Model
+    * [X] Query
     * [X] Create
     * [X] Save
     * [X] Delete
@@ -31,6 +31,8 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 [Update statement | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
 
 [Delete statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+
+[model query | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelQuery.kt)
 
 [model create | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
 

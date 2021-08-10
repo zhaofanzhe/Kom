@@ -16,8 +16,8 @@
     * [X] 插入语句
     * [X] 更新语句
     * [X] 删除语句
-* [ ] 模型
-    * [ ] 查询
+* [X] 模型
+    * [X] 查询
     * [X] 创建
     * [X] 保存
     * [X] 删除
@@ -31,6 +31,8 @@
 [更新语句 | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
 
 [删除语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+
+[模型查询 | ModelQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelQuery.kt)
 
 [模型创建 | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
 

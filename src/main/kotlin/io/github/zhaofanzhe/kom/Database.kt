@@ -6,10 +6,7 @@ import io.github.zhaofanzhe.kom.clause.QueryClause
 import io.github.zhaofanzhe.kom.clause.UpdateClause
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.entity.Entity
-import io.github.zhaofanzhe.kom.express.Column
-import io.github.zhaofanzhe.kom.express.ITable
-import io.github.zhaofanzhe.kom.express.Table
-import io.github.zhaofanzhe.kom.express.Tuple
+import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import io.github.zhaofanzhe.kom.tool.ColumnTool
@@ -80,7 +77,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         val values = entity.values()
         val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
 
-        if (primaryKeys.map { ColumnTool.isZeroValue(it,values[it.fieldName]) }.any { it }) {
+        if (primaryKeys.map { ColumnTool.isZeroValue(it, values[it.fieldName]) }.any { it }) {
             throw KomException("""has primaryKey is zero value.""")
         }
 
@@ -99,7 +96,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
 
         // all primaryKey is zero value.
-        if (primaryKeys.map { ColumnTool.isZeroValue(it,values[it.fieldName]) }.all { it }) {
+        if (primaryKeys.map { ColumnTool.isZeroValue(it, values[it.fieldName]) }.all { it }) {
             return create(entity)
         }
 
@@ -108,7 +105,7 @@ class Database(private val connectionFactory: ConnectionFactory) {
         var express = update(table)
             .where(and {
                 primaryKeys.forEach { primaryKey ->
-                    if (!ColumnTool.isZeroValue(primaryKey,values[primaryKey.fieldName])){
+                    if (!ColumnTool.isZeroValue(primaryKey, values[primaryKey.fieldName])) {
                         throw KomException("""primaryKey "$primaryKey" is a zero value.""")
                     }
                     and(primaryKey eq values[primaryKey.fieldName])
@@ -120,6 +117,14 @@ class Database(private val connectionFactory: ConnectionFactory) {
         }
 
         return express.execute() == 1
+    }
+
+    fun <T : Any, Q : Table<T>> fetchOne(table: Q, where: (Q) -> LogicExpress<Boolean>): T? {
+        return selectFrom(table).where(where(table)).fetchOne()
+    }
+
+    fun <T : Any, Q : Table<T>> fetchAll(table: Q, where: (Q) -> LogicExpress<Boolean>): List<T> {
+        return selectFrom(table).where(where(table)).fetchAll()
     }
 
 }

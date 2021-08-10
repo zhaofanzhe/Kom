@@ -11,6 +11,10 @@ class AndGroup : LogicExpress<Boolean>() {
 
     private val exprs = mutableListOf<LogicExpress<*>>()
 
+    operator fun plusAssign(other: LogicExpress<Boolean>){
+        this.and(other)
+    }
+
     fun and(other: LogicExpress<Boolean>) {
         exprs += other
     }
