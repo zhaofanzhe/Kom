@@ -25,8 +25,14 @@ object ColumnTool {
     )
 
     fun isZeroValue(column:Column<*,*>,value: Any?): Boolean {
-        if (value == null) return true
-        if (!column.nullable) return false
+        if (value == null){
+            return true
+        }
+
+        if (column.nullable){
+            return false
+        }
+
         return zeroValues[value::class] == value
     }
 

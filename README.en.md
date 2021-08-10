@@ -19,7 +19,7 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 * [ ] model
     * [ ] Query
     * [X] Create
-    * [ ] Save
+    * [X] Save
     * [X] Delete
 
 ### Example
@@ -33,6 +33,8 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 [Delete statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
 
 [model create | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+
+[model save | ModelSave.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelSave.kt)
 
 [model delete | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
 

@@ -19,7 +19,7 @@
 * [ ] 模型
     * [ ] 查询
     * [X] 创建
-    * [ ] 保存
+    * [X] 保存
     * [X] 删除
 
 ### 例子
@@ -33,6 +33,8 @@
 [删除语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
 
 [模型创建 | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+
+[模型创建 | ModelSave.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelSave.kt)
 
 [模型删除 | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
 

@@ -16,7 +16,7 @@ import io.github.zhaofanzhe.kom.tool.ColumnTool
 import io.github.zhaofanzhe.kom.toolkit.and
 import io.github.zhaofanzhe.kom.toolkit.eq
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "DuplicatedCode")
 class Database(private val connectionFactory: ConnectionFactory) {
 
     private val queryer = Queryer(connectionFactory)
@@ -75,17 +75,51 @@ class Database(private val connectionFactory: ConnectionFactory) {
         return express.execute()
     }
 
-    fun delete(entity: Entity<*>): Int {
+    fun delete(entity: Entity<*>): Boolean {
         val table = entity.newTable()
         val values = entity.values()
         val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
+
+        if (primaryKeys.map { ColumnTool.isZeroValue(it,values[it.fieldName]) }.any { it }) {
+            throw KomException("""has primaryKey is zero value.""")
+        }
 
         return delete(table)
             .where(and {
                 primaryKeys.forEach { primaryKey ->
                     and(primaryKey eq values[primaryKey.fieldName])
                 }
-            }).execute()
+            }).execute() == 1
+    }
+
+    fun save(entity: Entity<*>): Boolean {
+        val table = entity.newTable()
+        var columns = table.declares().map { it as Column<Any, Any?> }
+        val values = entity.values()
+        val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
+
+        // all primaryKey is zero value.
+        if (primaryKeys.map { ColumnTool.isZeroValue(it,values[it.fieldName]) }.all { it }) {
+            return create(entity)
+        }
+
+        columns = columns.filter { !primaryKeys.contains(it) }
+
+        var express = update(table)
+            .where(and {
+                primaryKeys.forEach { primaryKey ->
+                    if (!ColumnTool.isZeroValue(primaryKey,values[primaryKey.fieldName])){
+                        throw KomException("""primaryKey "$primaryKey" is a zero value.""")
+                    }
+                    and(primaryKey eq values[primaryKey.fieldName])
+                }
+            })
+
+        columns.forEach {
+            express = express.set(it, values[it.fieldName])
+        }
+
+        return express.execute() == 1
     }
 
 }
