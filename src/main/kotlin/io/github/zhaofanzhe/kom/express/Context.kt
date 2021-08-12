@@ -1,12 +1,16 @@
 package io.github.zhaofanzhe.kom.express
 
 import io.github.zhaofanzhe.kom.KomException
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.tool.DeclareAliasGenerator
 import io.github.zhaofanzhe.kom.tool.TableAliasGenerator
+import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
-class Context {
+class Context(
+    val flavor: Flavor
+) {
 
     private val tableAliasGenerator = TableAliasGenerator()
 
@@ -26,7 +30,7 @@ class Context {
      * 当前环境表名
      */
     fun <T : Any> currentTableName(table: ITable<T>): String {
-        return table.tableName
+        return flavor.tableName(table.tableName)
     }
 
     /**

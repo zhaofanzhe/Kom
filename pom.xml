@@ -19,11 +19,20 @@
 
     <dependencies>
 
-        <!-- mysql 驱动 -->
+        <!-- MySQL 驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.22</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- PostgreSQL 驱动 -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.23</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

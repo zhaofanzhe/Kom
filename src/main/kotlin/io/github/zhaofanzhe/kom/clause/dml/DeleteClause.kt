@@ -1,6 +1,7 @@
 package io.github.zhaofanzhe.kom.clause.dml
 
 import io.github.zhaofanzhe.kom.clause.Clause
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer
@@ -8,6 +9,7 @@ import io.github.zhaofanzhe.kom.queryer.Queryer
 @Suppress("DuplicatedCode")
 class DeleteClause<T : Any>(
     private val queryer: Queryer,
+    private val flavor: Flavor,
     private val table: Table<T>,
 ) : Clause(), JoinClauseLink<DeleteClause<T>> {
 
@@ -46,7 +48,7 @@ class DeleteClause<T : Any>(
 
     fun execute(): Int {
         val result = ExpressResult()
-        generate(Context(), result)
+        generate(Context(flavor), result)
         return queryer.execute(result.express(), result.params())
     }
 

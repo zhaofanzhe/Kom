@@ -2,6 +2,7 @@ package io.github.zhaofanzhe.kom.clause.dml
 
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.clause.Clause
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.QuerySource
@@ -11,6 +12,7 @@ import kotlin.reflect.KClass
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 class QueryClause<T : Any>(
     private val queryer: Queryer,
+    private val flavor: Flavor,
 ) : Clause(), JoinClauseLink<QueryClause<T>> {
 
     private var select: SelectClause? = null
@@ -134,14 +136,17 @@ class QueryClause<T : Any>(
     fun count(): Long {
         val table = subQuery()
         val count = table.count()
-        val result = QueryClause<Void>(queryer)
-            .select(count)
+        val clause = QueryClause<Void>(
+            queryer = queryer,
+            flavor = flavor,
+        )
+        val result = clause.select(count)
             .from(table).fetchOne() ?: return 0
         return result[count].toLong() ?: 0
     }
 
     fun fetchOne(): T? {
-        val context = Context()
+        val context = Context(flavor)
         val result = ExpressResult()
         generate(context, result)
         val source = QuerySource(
@@ -153,7 +158,7 @@ class QueryClause<T : Any>(
     }
 
     fun fetchAll(): List<T> {
-        val context = Context()
+        val context = Context(flavor)
         val result = ExpressResult()
         generate(context, result)
         val source = QuerySource(
@@ -161,6 +166,7 @@ class QueryClause<T : Any>(
             select = declares,
             table = selectTable,
         )
+        println(result.express())
         return queryer.executeQuery(result.express(), result.params()).fetchAll(source)
     }
 

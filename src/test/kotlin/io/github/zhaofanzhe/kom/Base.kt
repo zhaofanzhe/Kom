@@ -32,10 +32,15 @@ class Addresses : Table<Address>(Address::class) {
     var userId = column(Address::userId)
 }
 
-fun getDatabase(): Database {
-    return Database(object : ConnectionFactory {
+fun getConnectionFactory():ConnectionFactory{
+    return object : ConnectionFactory {
         override fun getConnection(): Connection {
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo", "root", "123456")
+            return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/demo", "postgres", "123456")
+//            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo", "root", "123456")
         }
-    })
+    }
+}
+
+fun getDatabase(): Database {
+    return Database(getConnectionFactory())
 }

@@ -21,7 +21,6 @@ fun main() {
         .on(and {
             and(users.id eq address.userId)
         })
-        .limit(10, 5)
 
     println(express)
 

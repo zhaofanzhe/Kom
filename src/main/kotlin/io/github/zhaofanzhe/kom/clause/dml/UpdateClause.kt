@@ -2,6 +2,7 @@ package io.github.zhaofanzhe.kom.clause.dml
 
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.clause.Clause
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
 import io.github.zhaofanzhe.kom.queryer.Queryer
@@ -9,6 +10,7 @@ import io.github.zhaofanzhe.kom.queryer.Queryer
 @Suppress("DuplicatedCode")
 class UpdateClause<T : Any>(
     private val queryer: Queryer,
+    private val flavor: Flavor,
     private val table: Table<T>,
 ) : Clause(), JoinClauseLink<UpdateClause<T>> {
 
@@ -55,7 +57,7 @@ class UpdateClause<T : Any>(
     fun execute(): Int {
         if (updates.isEmpty()) throw KomException("no call set().")
         val result = ExpressResult()
-        generate(Context(), result)
+        generate(Context(flavor), result)
         return queryer.execute(result.express(), result.params())
     }
 

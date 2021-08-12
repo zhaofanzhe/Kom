@@ -4,6 +4,7 @@ import io.github.zhaofanzhe.kom.clause.dml.DeleteClause
 import io.github.zhaofanzhe.kom.clause.dml.InsertClause
 import io.github.zhaofanzhe.kom.clause.dml.QueryClause
 import io.github.zhaofanzhe.kom.clause.dml.UpdateClause
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
 import io.github.zhaofanzhe.kom.entity.Entity
 import io.github.zhaofanzhe.kom.express.*
@@ -14,26 +15,31 @@ import io.github.zhaofanzhe.kom.toolkit.and
 import io.github.zhaofanzhe.kom.toolkit.eq
 
 @Suppress("UNCHECKED_CAST", "DuplicatedCode")
-class Database(connectionFactory: ConnectionFactory) {
+class Database(factory: ConnectionFactory) {
 
-    private val queryer = Queryer(connectionFactory)
+    private val queryer = Queryer(factory)
+
+    private val flavor = Flavor.getFlavor(factory = factory)
 
     // DSL
 
     fun <T : Any> insert(table: Table<T>): InsertClause<T> {
-        return InsertClause(queryer, table)
+        return InsertClause(queryer, flavor, table)
     }
 
     fun <T : Any> update(table: Table<T>): UpdateClause<T> {
-        return UpdateClause(queryer, table)
+        return UpdateClause(queryer, flavor, table)
     }
 
     fun <T : Any> delete(table: Table<T>): DeleteClause<T> {
-        return DeleteClause(queryer, table)
+        return DeleteClause(queryer, flavor, table)
     }
 
     private fun query(): QueryClause<*> {
-        return QueryClause<Void>(queryer)
+        return QueryClause<Void>(
+            queryer = queryer,
+            flavor = flavor,
+        )
     }
 
     fun <U : Any> select(table: ITable<U>): QueryClause<U> {
