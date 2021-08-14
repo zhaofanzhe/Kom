@@ -6,6 +6,7 @@ import io.github.zhaofanzhe.kom.express.identifier.Identifier
 import io.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
+import kotlin.reflect.jvm.jvmErasure
 
 abstract class Table<T : Any>(
     override val entityClass: KClass<T>,
@@ -14,8 +15,6 @@ abstract class Table<T : Any>(
 
     private var columns = mutableListOf<Column<T, *>>()
 
-    private val primaryKeys = mutableListOf<Column<T, *>>()
-
     override fun declares(): List<Declare<*>> {
         return columns
     }
@@ -23,18 +22,15 @@ abstract class Table<T : Any>(
     fun <U : Any> column(
         property: KMutableProperty1<T, U>,
         columnName: String = Naming.toColumnName(property.name),
-        primaryKey: Boolean = false,
     ): Column<T, U> {
         val column = Column<T, U>(
+            clazz = property.returnType.jvmErasure,
             name = columnName,
             fieldName = property.name,
             nullable = property.returnType.isMarkedNullable,
             table = this
         )
         columns.add(column)
-        if (primaryKey) {
-            primaryKeys += columns
-        }
         return column
     }
 
@@ -44,7 +40,7 @@ abstract class Table<T : Any>(
     }
 
     override fun primaryKeys(): List<Column<T, *>> {
-        return primaryKeys
+        return columns.filter { it.primaryKey }
     }
 
 }

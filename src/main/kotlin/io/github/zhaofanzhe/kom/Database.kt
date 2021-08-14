@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom
 
+import io.github.zhaofanzhe.kom.clause.ddl.CreateTableClause
 import io.github.zhaofanzhe.kom.clause.dml.DeleteClause
 import io.github.zhaofanzhe.kom.clause.dml.InsertClause
 import io.github.zhaofanzhe.kom.clause.dml.QueryClause
@@ -131,6 +132,12 @@ class Database(factory: ConnectionFactory) {
 
     fun <T : Any, Q : Table<T>> fetchAll(table: Q, where: (Q) -> LogicExpress<Boolean>): List<T> {
         return selectFrom(table).where(where(table)).fetchAll()
+    }
+
+    // ddl
+
+    fun <T : Any> createTable(table: Table<T>): CreateTableClause<T> {
+        return CreateTableClause(queryer, flavor, table)
     }
 
 }

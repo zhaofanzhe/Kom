@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom.support.mysql
 
+import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.flavor.Flavor
 import java.sql.Time
 import java.time.LocalDate
@@ -13,10 +14,10 @@ open class MySQLFlavor : Flavor {
     private val types = mapOf<KClass<*>, String>(
         Char::class to "char",
         String::class to "varchar(255)",
-        Byte::class to "int(11)",
-        Short::class to "int(11)",
-        Int::class to "int(11)",
-        Long::class to "int(11)",
+        Byte::class to "tinyint",
+        Short::class to "smallint",
+        Int::class to "integer",
+        Long::class to "bigint",
         Boolean::class to "boolean",
         Double::class to "double",
         Float::class to "float",
@@ -26,16 +27,23 @@ open class MySQLFlavor : Flavor {
         LocalTime::class to "time",
     )
 
-    override fun types(): Map<KClass<*>, String> {
-        return types
+    override fun typedef(column: Column<*, *>): String? {
+        val type = types[column.clazz] ?: return null
+        val autoIncrement = if (column.autoInc){
+            "auto_increment"
+        } else {
+            null
+        }
+        val nullable = if (column.nullable){
+            "default null"
+        } else {
+            "not null"
+        }
+        return listOfNotNull(type, autoIncrement, nullable).joinToString(separator = " ")
     }
 
-    override fun type(type: KClass<*>): String? {
-        return types[type]
-    }
-
-    override fun tableName(table: String): String {
-        return "`${table}`"
+    override fun name(name: String): String {
+        return "`${name}`"
     }
 
 }

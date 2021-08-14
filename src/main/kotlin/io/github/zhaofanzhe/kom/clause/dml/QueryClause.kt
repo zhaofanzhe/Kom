@@ -2,9 +2,9 @@ package io.github.zhaofanzhe.kom.clause.dml
 
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.clause.Clause
-import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.express.*
 import io.github.zhaofanzhe.kom.express.declare.Declare
+import io.github.zhaofanzhe.kom.flavor.Flavor
 import io.github.zhaofanzhe.kom.queryer.QuerySource
 import io.github.zhaofanzhe.kom.queryer.Queryer
 import kotlin.reflect.KClass
@@ -204,6 +204,13 @@ class QueryClause<T : Any>(
         if (runtime != null) {
             context.runtime = runtime
         }
+    }
+
+    override fun toString(): String {
+        val context = Context(flavor)
+        val result = ExpressResult()
+        generate(context, result)
+        return result.express()
     }
 
 }

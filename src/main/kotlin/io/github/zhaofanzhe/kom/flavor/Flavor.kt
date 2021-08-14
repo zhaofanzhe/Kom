@@ -2,6 +2,7 @@ package io.github.zhaofanzhe.kom.flavor
 
 import io.github.zhaofanzhe.kom.KomException
 import io.github.zhaofanzhe.kom.connection.ConnectionFactory
+import io.github.zhaofanzhe.kom.express.Column
 import io.github.zhaofanzhe.kom.support.mariadb.MariaDBFlavor
 import io.github.zhaofanzhe.kom.support.mysql.MySQLFlavor
 import io.github.zhaofanzhe.kom.support.postgresql.PostgreSQLFlavor
@@ -33,11 +34,8 @@ interface Flavor {
     }
 
     // 获取类型信息
-    fun types(): Map<KClass<*>, String>
+    fun typedef(column:Column<*,*>): String?
 
-    // 获取类型信息
-    fun type(type: KClass<*>): String?
-
-    fun tableName(table: String): String
+    fun name(name: String): String
 
 }

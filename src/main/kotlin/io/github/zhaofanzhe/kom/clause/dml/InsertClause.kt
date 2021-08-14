@@ -106,4 +106,11 @@ class InsertClause<T : Any>(
         }
     }
 
+    override fun toString(): String {
+        val context = Context(flavor)
+        val result = ExpressResult()
+        generate(context, result)
+        return result.express()
+    }
+
 }
