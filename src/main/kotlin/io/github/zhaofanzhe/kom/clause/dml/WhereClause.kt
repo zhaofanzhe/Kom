@@ -8,8 +8,7 @@ class WhereClause(
 ) : Clause() {
 
     override fun generate(context: Context, result: ExpressResult) {
-        println(express.notNullAndHasLogic())
-        if (express.notNullAndHasLogic()){
+        if (express.hasLogic()){
             result += "\nwhere "
             express.generate(context,result)
         }

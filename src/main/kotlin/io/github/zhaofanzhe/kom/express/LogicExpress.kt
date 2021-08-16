@@ -8,7 +8,3 @@ abstract class LogicExpress<T> : Express() {
     internal abstract fun hasLogic(): Boolean
 
 }
-
-fun LogicExpress<*>?.notNullAndHasLogic(): Boolean {
-    return this != null && this.hasLogic()
-}
