@@ -40,7 +40,7 @@ class PostgreSQLFlavor : Flavor {
             type = serials[type] ?: throw KomException("cant cast autoInc.")
         }
         return if (column.nullable) {
-            "$type default null"
+            "$type null default null"
         } else {
             "$type not null"
         }

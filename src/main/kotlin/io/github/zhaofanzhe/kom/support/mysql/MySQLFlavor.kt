@@ -35,7 +35,7 @@ open class MySQLFlavor : Flavor {
             null
         }
         val nullable = if (column.nullable){
-            "default null"
+            "null default null"
         } else {
             "not null"
         }
