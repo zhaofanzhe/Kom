@@ -5,19 +5,21 @@
 [![Release](https://jitpack.io/v/zhaofanzhe/Kom.svg)](https://jitpack.io/#zhaofanzhe/Kom)
 
 ## Explain
-The current progress is just a toy. Interested people can join in.
-
-Update from time to time.
+Single table CRUD, custom DSL for data query.
 
 If you have any questions, please contact me via [Issues](https://github.com/zhaofanzhe/Kom/issues)
 
 # Task
 
 * [X] DSL
-  * [X] Query statement
-  * [X] Insert statement
-  * [X] Update statement
-  * [X] Delete statement
+  * [X] DML
+    * [X] Query statement
+    * [X] Insert statement
+    * [X] Update statement
+    * [X] Delete statement
+  * [ ] DDL
+    * [X] Create Table statement
+    * [X] Drop Table statement
 * [X] Model
   * [X] Query
   * [X] Create
@@ -44,6 +46,10 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 
 [Delete statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
 
+[Create Table statement | CreateTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/CreateTable.kt)
+
+[Drop Table statement| DropTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/DropTable.kt)
+
 [model query | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelQuery.kt)
 
 [model create | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
@@ -56,4 +62,5 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 
 * [X] Mariadb [Tested|Mariadb10.5.9]
 * [X] MySQL [Not tested, should be supported]
+* [X] PostgreSQL [Basic tested.]
 * [ ] Other... [Waiting to add]
