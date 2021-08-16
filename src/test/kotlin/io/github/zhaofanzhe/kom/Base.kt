@@ -16,7 +16,7 @@ data class User(
 }
 
 class Users : Table<User>(User::class) {
-    val id = column(User::id).primaryKey().autoInc()
+    val id = column(User::id).primaryKey().autoIncrement()
     val username = column(User::username).unique()
     val add1 = column(User::add1).unique("address")
     val add2 = column(User::add2).unique("address")
@@ -31,7 +31,7 @@ data class Address(
 }
 
 class Addresses : Table<Address>(Address::class) {
-    var id = column(Address::id).primaryKey().autoInc()
+    var id = column(Address::id).primaryKey().autoIncrement()
     var address = column(Address::address)
     var userId = column(Address::userId)
 }

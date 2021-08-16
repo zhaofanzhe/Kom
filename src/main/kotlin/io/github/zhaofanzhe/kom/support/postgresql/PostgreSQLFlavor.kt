@@ -36,7 +36,7 @@ class PostgreSQLFlavor : Flavor {
 
     override fun typedef(column: Column<*, *>): String? {
         var type = types[column.clazz] ?: return null
-        if (column.autoInc) {
+        if (column.autoIncrement) {
             type = serials[type] ?: throw KomException("cant cast autoInc.")
         }
         return if (column.nullable) {

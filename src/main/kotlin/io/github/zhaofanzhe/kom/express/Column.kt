@@ -18,7 +18,7 @@ class Column<U : Any, T : Any?>(
     internal var primaryKey: Boolean = false
         private set
 
-    internal var autoInc: Boolean = false
+    internal var autoIncrement: Boolean = false
         private set
 
     internal var unique: Boolean = false
@@ -51,8 +51,8 @@ class Column<U : Any, T : Any?>(
         return this
     }
 
-    fun autoInc(): Column<U, T> {
-        this.autoInc = true
+    fun autoIncrement(): Column<U, T> {
+        this.autoIncrement = true
         return this
     }
 

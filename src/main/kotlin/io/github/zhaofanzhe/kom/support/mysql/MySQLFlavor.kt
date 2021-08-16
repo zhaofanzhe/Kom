@@ -29,7 +29,7 @@ open class MySQLFlavor : Flavor {
 
     override fun typedef(column: Column<*, *>): String? {
         val type = types[column.clazz] ?: return null
-        val autoIncrement = if (column.autoInc){
+        val autoIncrement = if (column.autoIncrement){
             "auto_increment"
         } else {
             null
