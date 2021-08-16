@@ -1,10 +1,11 @@
-package io.github.zhaofanzhe.kom.support.postgresql
+package io.github.zhaofanzhe.kom.support.mysql
 
 import io.github.zhaofanzhe.kom.Users
+import io.github.zhaofanzhe.kom.getMysqlDatabase
 import io.github.zhaofanzhe.kom.getPostgreDatabase
 
 fun main() {
-    val database = getPostgreDatabase()
+    val database = getMysqlDatabase()
 
     val clause = database.createTable(Users())
 

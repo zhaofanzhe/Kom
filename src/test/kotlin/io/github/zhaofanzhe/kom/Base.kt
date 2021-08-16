@@ -37,14 +37,33 @@ class Addresses : Table<Address>(Address::class) {
 }
 
 fun getConnectionFactory(): ConnectionFactory {
+    return getMySQLConnectionFactory()
+}
+
+fun getMySQLConnectionFactory(): ConnectionFactory {
     return object : ConnectionFactory {
         override fun getConnection(): Connection {
-//            return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/demo", "postgres", "123456")
             return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/demo", "root", "123456")
         }
     }
 }
 
+fun getPostgreSQLConnectionFactory(): ConnectionFactory {
+    return object : ConnectionFactory {
+        override fun getConnection(): Connection {
+            return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/demo", "postgres", "123456")
+        }
+    }
+}
+
 fun getDatabase(): Database {
-    return Database(getConnectionFactory())
+    return getMysqlDatabase()
+}
+
+fun getMysqlDatabase(): Database {
+    return Database(getMySQLConnectionFactory())
+}
+
+fun getPostgreDatabase(): Database {
+    return Database(getPostgreSQLConnectionFactory())
 }

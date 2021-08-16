@@ -6,7 +6,7 @@ import io.github.zhaofanzhe.kom.getPostgreDatabase
 fun main() {
     val database = getPostgreDatabase()
 
-    val clause = database.createTable(Users())
+    val clause = database.dropTable(Users())
 
     println(clause)
 
