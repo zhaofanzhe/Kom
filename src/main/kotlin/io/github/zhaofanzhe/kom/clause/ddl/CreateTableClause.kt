@@ -20,7 +20,7 @@ class CreateTableClause<T : Any>(
         val flavor = context.flavor
         result += "create table "
         result += flavor.name(table.tableName)
-        val columns = table.declares().map { it as Column<T, *> }
+        val columns = table.declares() as List<Column<T, *>>
         result += "("
         columns.forEachIndexed { index, column ->
             if (index > 0) {
@@ -31,6 +31,7 @@ class CreateTableClause<T : Any>(
             result += " "
             result += flavor.typedef(column) ?: throw KomException("Unable to resolve class ${column.clazz}.")
         }
+        // 主键约束
         val primaryKeys = table.primaryKeys()
         if (primaryKeys.isNotEmpty()) {
             result += ", "
@@ -47,15 +48,44 @@ class CreateTableClause<T : Any>(
             result += ")"
         }
 
+        // 默认 unique 约束
+        columns.filter { it.unique && it.uniqueKey == null }.forEach {
+            result += ", "
+            result += "\n\t"
+            result += "constraint "
+            result += """${table.tableName}_unique_${it.name}"""
+            result += " unique ("
+            result += flavor.name(it.name)
+            result += ")"
+        }
+
+        // 自定义 unique 约束
+        columns.filter { it.unique && it.uniqueKey != null && it.uniqueKey != "" }
+            .map { it.uniqueKey }.distinct()
+            .filterNotNull()
+            .forEach { uniqueKey ->
+                val list = columns.filter { it.uniqueKey == uniqueKey }
+                result += ", "
+                result += "\n\t"
+                result += "constraint "
+                result += """${table.tableName}_unique_${uniqueKey}"""
+                result += " unique ("
+                list.forEachIndexed { index, column ->
+                    if (index > 0) {
+                        result += ", "
+                    }
+                    result += flavor.name(column.name)
+                }
+                result += ")"
+            }
+
         result += "\n)"
     }
 
     fun execute(): Int {
         val result = ExpressResult()
         generate(Context(flavor), result)
-        println(result.express())
-//        return queryer.execute(result.express(), result.params())
-        return 0;
+        return queryer.execute(result.express(), result.params())
     }
 
     override fun toString(): String {
