@@ -166,7 +166,6 @@ class QueryClause<T : Any>(
             select = declares,
             table = selectTable,
         )
-        println(result.express())
         return queryer.executeQuery(result.express(), result.params()).fetchAll(source)
     }
 
