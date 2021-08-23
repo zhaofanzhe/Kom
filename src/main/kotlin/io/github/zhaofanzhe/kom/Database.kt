@@ -114,7 +114,7 @@ class Database(factory: ConnectionFactory) {
         var express = update(table)
             .where(and {
                 primaryKeys.forEach { primaryKey ->
-                    if (!ColumnTool.isZeroValue(primaryKey, values[primaryKey.fieldName])) {
+                    if (ColumnTool.isZeroValue(primaryKey, values[primaryKey.fieldName])) {
                         throw KomException("""primaryKey "$primaryKey" is a zero value.""")
                     }
                     and(primaryKey eq values[primaryKey.fieldName])
