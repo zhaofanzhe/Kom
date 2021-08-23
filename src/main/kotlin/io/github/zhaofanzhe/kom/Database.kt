@@ -1,5 +1,6 @@
 package io.github.zhaofanzhe.kom
 
+import io.github.zhaofanzhe.kom.clause.ddl.AlterTableClause
 import io.github.zhaofanzhe.kom.clause.ddl.CreateTableClause
 import io.github.zhaofanzhe.kom.clause.ddl.DropTableClause
 import io.github.zhaofanzhe.kom.clause.dml.DeleteClause
@@ -143,6 +144,10 @@ class Database(factory: ConnectionFactory) {
 
     fun <T : Any> dropTable(table: Table<T>): DropTableClause<T> {
         return DropTableClause(queryer, flavor, table)
+    }
+
+    fun <T : Any> alterTable(table: Table<T>): AlterTableClause<T> {
+        return AlterTableClause(queryer, flavor, table)
     }
 
 }
