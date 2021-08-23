@@ -9,8 +9,6 @@ import java.sql.DriverManager
 data class User(
     var id: Int = 0,
     var username: String = "",
-    var add1: String = "",
-    var add2: String = "",
 ) : Entity<Users>(Users::class) {
     constructor() : this(id = 0, username = "")
 }
