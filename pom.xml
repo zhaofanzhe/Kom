@@ -16,7 +16,7 @@
 
     <packaging>pom</packaging>
 
-    <name>Kom</name>
+    <name>kom</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
