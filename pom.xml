@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.zhaofanzhe.kom</groupId>
+    <groupId>com.github.zhaofanzhe.kom</groupId>
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -55,19 +55,19 @@
         <dependencies>
 
             <dependency>
-                <groupId>io.github.zhaofanzhe.kom</groupId>
+                <groupId>com.github.zhaofanzhe.kom</groupId>
                 <artifactId>kom-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>io.github.zhaofanzhe.kom</groupId>
+                <groupId>com.github.zhaofanzhe.kom</groupId>
                 <artifactId>kom-support-mysql</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>io.github.zhaofanzhe.kom</groupId>
+                <groupId>com.github.zhaofanzhe.kom</groupId>
                 <artifactId>kom-support-postgresql</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
