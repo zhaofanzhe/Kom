@@ -1,5 +1,6 @@
 package com.github.zhaofanzhe.kom.support.mysql
 
+import com.github.zhaofanzhe.kom.KomException
 import com.github.zhaofanzhe.kom.express.Column
 import com.github.zhaofanzhe.kom.flavor.Flavor
 import java.sql.Time
@@ -29,14 +30,21 @@ open class MySQLFlavor : Flavor {
         LocalTime::class to "time",
     )
 
+    @Suppress("UNCHECKED_CAST")
     override fun typedef(column: Column<*, *>): String? {
         val type = types[column.clazz] ?: return null
-        val autoIncrement = if (column.autoIncrement){
+        val autoIncrement = if (column.autoIncrement) {
+            if (!column.primaryKey) {
+                throw KomException("auto increment required primary key.")
+            }
+            if ((column.table.declares() as List<Column<*, *>>).filter { it.autoIncrement }.count() > 1) {
+                throw KomException("there can be only one auto column.")
+            }
             "auto_increment"
         } else {
             null
         }
-        val nullable = if (column.nullable){
+        val nullable = if (column.nullable) {
             "null default null"
         } else {
             "not null"

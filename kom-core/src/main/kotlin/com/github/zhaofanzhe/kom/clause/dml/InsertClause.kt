@@ -4,6 +4,7 @@ import com.github.zhaofanzhe.kom.KomException
 import com.github.zhaofanzhe.kom.clause.Clause
 import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.express.*
+import com.github.zhaofanzhe.kom.queryer.QuerySource
 import com.github.zhaofanzhe.kom.queryer.Queryer
 
 @Suppress("UNCHECKED_CAST")
@@ -56,8 +57,16 @@ class InsertClause<T : Any>(
 
     fun execute(): Boolean {
         val result = ExpressResult()
-       generate(Context(flavor),result)
-        return queryer.execute(result.express(), result.params()) == 1
+        generate(Context(flavor), result)
+        return queryer.execute(result.express(), result.params()) > 0
+    }
+
+    fun executePrimaryKey(): Long {
+        val result = ExpressResult()
+        val context = Context(flavor)
+        generate(context, result)
+        return queryer.executeCreate(result.express(), result.params()).fetchPrimaryKey()
+            ?: throw KomException("not fund result.")
     }
 
     override fun generate(context: Context, result: ExpressResult) {

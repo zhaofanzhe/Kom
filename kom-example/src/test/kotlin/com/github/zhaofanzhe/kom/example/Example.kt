@@ -1,6 +1,5 @@
 package com.github.zhaofanzhe.kom.example
 
-import com.github.zhaofanzhe.kom.Database
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.entity.Entity
 import com.github.zhaofanzhe.kom.express.Table
@@ -19,9 +18,12 @@ fun main() {
 
     // 单表CRUD
     // 目前插入数据，目前没有做主键的回填
-    database.create(User(id = 1, username = "张三"))
-    database.create(User(id = 2, username = "李四"))
-    database.create(User(id = 3, username = "王五"))
+    val zhangSan = User(username = "张三")
+    val liSi = User(username = "李四")
+    val wangWu = User(username = "王五")
+    database.create(zhangSan)
+    database.create(liSi)
+    database.create(wangWu)
     database.create(Address(address = "北京", userId = 1))
     database.create(Address(address = "上海", userId = 1))
     database.create(Address(address = "广州", userId = 2))

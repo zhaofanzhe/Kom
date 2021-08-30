@@ -7,8 +7,8 @@ import java.sql.Connection
 import java.sql.ResultSet
 
 class QueryResult(
-    private val resultSet: ResultSet,
     private val connection: Connection,
+    private val resultSet: ResultSet,
 ) {
 
     fun <T : Any> fetchOne(source: QuerySource): T? {
@@ -34,6 +34,20 @@ class QueryResult(
         }
         connection.close()
         return list
+    }
+
+    fun fetchPrimaryKey(): Long? {
+
+        if (!resultSet.next()) {
+            return null
+        }
+
+        val result = resultSet.getLong("GENERATED_KEY")
+
+        connection.close()
+
+        return result
+
     }
 
 }

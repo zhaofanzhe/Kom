@@ -7,12 +7,13 @@ import com.github.zhaofanzhe.kom.clause.dml.DeleteClause
 import com.github.zhaofanzhe.kom.clause.dml.InsertClause
 import com.github.zhaofanzhe.kom.clause.dml.QueryClause
 import com.github.zhaofanzhe.kom.clause.dml.UpdateClause
-import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.entity.Entity
 import com.github.zhaofanzhe.kom.express.*
 import com.github.zhaofanzhe.kom.express.declare.Declare
+import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.queryer.Queryer
+import com.github.zhaofanzhe.kom.queryer.filler.TableFiller
 import com.github.zhaofanzhe.kom.tool.ColumnTool
 import com.github.zhaofanzhe.kom.toolkit.and
 import com.github.zhaofanzhe.kom.toolkit.eq
@@ -78,7 +79,20 @@ class Database(factory: ConnectionFactory) {
         columns.forEach {
             express = express.set(it, values[it.fieldName])
         }
-        return express.execute()
+        val result = express.executePrimaryKey()
+        val filler = TableFiller(entity)
+        primaryKeys.filter { it.autoIncrement }.forEach {
+            filler.set(
+                it, when (it.clazz) {
+                    Byte::class -> result.toByte()
+                    Short::class -> result.toShort()
+                    Int::class -> result.toInt()
+                    Long::class -> result
+                    else -> throw KomException("argument type mismatch")
+                }
+            )
+        }
+        return true
     }
 
     fun delete(entity: Entity<*>): Boolean {

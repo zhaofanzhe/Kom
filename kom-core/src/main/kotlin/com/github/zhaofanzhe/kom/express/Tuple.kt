@@ -24,7 +24,7 @@ class Tuple(private val source: QuerySource) {
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T:Any?> get(declare: Declare<T>): T {
+    operator fun <T : Any?> get(declare: Declare<T>): T {
         return map[find(declare)] as T
     }
 
@@ -43,6 +43,10 @@ class Tuple(private val source: QuerySource) {
 
     override fun toString(): String {
         return map.toString()
+    }
+
+    fun columnKeys(): MutableSet<Column<*,*>> {
+        return this.map.keys.filterIsInstance<Column<*, *>>().toMutableSet()
     }
 
 }

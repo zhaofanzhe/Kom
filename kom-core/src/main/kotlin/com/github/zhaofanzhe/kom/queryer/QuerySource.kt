@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 
 class QuerySource(
     private val context: Context,
-    private val table: ITable<*>?,
+    internal val table: ITable<*>?,
     private val select: List<Declare<*>>,
 ) {
 
