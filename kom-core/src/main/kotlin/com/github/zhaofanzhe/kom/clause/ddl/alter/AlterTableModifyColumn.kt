@@ -15,7 +15,8 @@ class AlterTableModifyColumn<T : Any>(
         result += "modify "
         result += flavor.name(column.name)
         result += " "
-        result += flavor.typedef(column) ?: throw KomException("Unable to resolve class ${column.clazz}.")
+        result += flavor.typedef(column, column.table.primaryKeys().size)
+            ?: throw KomException("Unable to resolve class ${column.clazz}.")
     }
 
 }

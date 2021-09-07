@@ -36,16 +36,22 @@ class PostgreSQLFlavor : Flavor {
         "bigint" to "bigserial",
     )
 
-    override fun typedef(column: Column<*, *>): String? {
+    override fun typedef(column: Column<*, *>, primaryKeySize: Int): String? {
         var type = types[column.clazz] ?: return null
         if (column.autoIncrement) {
             type = serials[type] ?: throw KomException("cant cast autoInc.")
         }
-        return if (column.nullable) {
-            "$type null default null"
+        val primaryKey = if (column.primaryKey && primaryKeySize == 1) {
+            "primary key"
         } else {
-            "$type not null"
+            null
         }
+        val nullable = if (column.nullable) {
+            "null default null"
+        } else {
+            "not null"
+        }
+        return listOfNotNull(type, primaryKey, nullable).joinToString(separator = " ")
     }
 
     private val reservedWords = listOf(

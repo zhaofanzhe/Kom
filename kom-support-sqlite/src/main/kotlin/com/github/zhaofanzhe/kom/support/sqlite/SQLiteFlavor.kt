@@ -29,13 +29,19 @@ class SQLiteFlavor : Flavor {
         LocalTime::class to "text",
     )
 
-    override fun typedef(column: Column<*, *>): String? {
+    override fun typedef(column: Column<*, *>, primaryKeySize:Int): String? {
         val type = types[column.clazz] ?: return null
-        return if (column.nullable) {
-            "$type null default null"
+        val primaryKey = if (column.primaryKey && primaryKeySize == 1) {
+            "primary key"
         } else {
-            "$type not null"
+            null
         }
+        val nullable = if (column.nullable) {
+            "null default null"
+        } else {
+            "not null"
+        }
+        return listOfNotNull(type, primaryKey, nullable).joinToString(separator = " ")
     }
 
     override fun name(name: String): String {

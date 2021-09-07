@@ -31,7 +31,7 @@ open class MySQLFlavor : Flavor {
     )
 
     @Suppress("UNCHECKED_CAST")
-    override fun typedef(column: Column<*, *>): String? {
+    override fun typedef(column: Column<*, *>, primaryKeySize: Int): String? {
         val type = types[column.clazz] ?: return null
         val autoIncrement = if (column.autoIncrement) {
             if (!column.primaryKey) {
@@ -45,11 +45,16 @@ open class MySQLFlavor : Flavor {
             null
         }
         val nullable = if (column.nullable) {
-            "null default null"
+            "null"
         } else {
             "not null"
         }
-        return listOfNotNull(type, autoIncrement, nullable).joinToString(separator = " ")
+        val primaryKey = if (column.primaryKey && primaryKeySize == 1) {
+            "primary key"
+        } else {
+            null
+        }
+        return listOfNotNull(type, autoIncrement, nullable, primaryKey).joinToString(separator = " ")
     }
 
     private val reservedWords = arrayOf(

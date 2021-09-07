@@ -32,6 +32,12 @@
 
         <dependency>
             <groupId>com.github.zhaofanzhe.kom</groupId>
+            <artifactId>kom-support-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.zhaofanzhe.kom</groupId>
             <artifactId>kom-support-sqlite</artifactId>
             <scope>runtime</scope>
         </dependency>

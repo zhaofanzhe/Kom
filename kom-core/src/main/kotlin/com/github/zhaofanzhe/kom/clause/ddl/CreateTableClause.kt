@@ -21,6 +21,7 @@ class CreateTableClause<T : Any>(
         result += "create table "
         result += flavor.name(table.tableName)
         val columns = table.declares() as List<Column<T, *>>
+        val primaryKeys = table.primaryKeys()
         result += "("
         columns.forEachIndexed { index, column ->
             if (index > 0) {
@@ -29,11 +30,10 @@ class CreateTableClause<T : Any>(
             result += "\n\t"
             result += flavor.name(column.name)
             result += " "
-            result += flavor.typedef(column) ?: throw KomException("Unable to resolve class ${column.clazz}.")
+            result += flavor.typedef(column, primaryKeys.size)
+                ?: throw KomException("Unable to resolve class ${column.clazz}.")
         }
-        // 主键约束
-        val primaryKeys = table.primaryKeys()
-        if (primaryKeys.isNotEmpty()) {
+        if (primaryKeys.size >= 2) {
             result += ", "
             result += "\n\t"
             result += "constraint "
