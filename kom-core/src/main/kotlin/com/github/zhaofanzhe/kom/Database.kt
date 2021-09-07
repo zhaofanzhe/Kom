@@ -101,7 +101,7 @@ class Database(factory: ConnectionFactory) {
         val primaryKeys = table.primaryKeys() as List<Column<Any, Any?>>
 
         if (primaryKeys.map { ColumnTool.isZeroValue(it, values[it.fieldName]) }.any { it }) {
-            throw com.github.zhaofanzhe.kom.KomException("""has primaryKey is zero value.""")
+            throw KomException("""has primaryKey is zero value.""")
         }
 
         return delete(table)
@@ -129,7 +129,7 @@ class Database(factory: ConnectionFactory) {
             .where(and {
                 primaryKeys.forEach { primaryKey ->
                     if (ColumnTool.isZeroValue(primaryKey, values[primaryKey.fieldName])) {
-                        throw com.github.zhaofanzhe.kom.KomException("""primaryKey "$primaryKey" is a zero value.""")
+                        throw KomException("""primaryKey "$primaryKey" is a zero value.""")
                     }
                     and(primaryKey eq values[primaryKey.fieldName])
                 }

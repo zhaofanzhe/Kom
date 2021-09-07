@@ -42,7 +42,12 @@ class QueryResult(
             return null
         }
 
-        val result = resultSet.getLong("GENERATED_KEY")
+        /**
+         * Mysql,MariaDB,PostgreSQL: "GENERATED_KEY"
+         * SQLite: "last_insert_rowid()"
+         * currently used temporarily the number 1.
+         */
+        val result = resultSet.getLong(1)
 
         connection.close()
 

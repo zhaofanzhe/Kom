@@ -3,14 +3,14 @@ package com.github.zhaofanzhe.kom.example
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.entity.Entity
 import com.github.zhaofanzhe.kom.express.Table
-import com.github.zhaofanzhe.kom.getMysqlDatabase
+import com.github.zhaofanzhe.kom.getSQLiteDatabase
 import com.github.zhaofanzhe.kom.toolkit.eq
 import com.github.zhaofanzhe.kom.toolkit.like
 import java.sql.Connection
 import java.sql.DriverManager
 
 fun main() {
-    val database = getMysqlDatabase()
+    val database = getSQLiteDatabase()
 
     // 创建表[目前不支持自动迁移]
     database.createTable(Users()).execute()
@@ -24,10 +24,10 @@ fun main() {
     database.create(zhangSan)
     database.create(liSi)
     database.create(wangWu)
-    database.create(Address(address = "北京", userId = 1))
-    database.create(Address(address = "上海", userId = 1))
-    database.create(Address(address = "广州", userId = 2))
-    database.create(Address(address = "深圳", userId = 3))
+    database.create(Address(address = "北京", userId = zhangSan.id))
+    database.create(Address(address = "上海", userId = zhangSan.id))
+    database.create(Address(address = "广州", userId = liSi.id))
+    database.create(Address(address = "深圳", userId = wangWu.id))
 
     val user = database.fetchOne(Users()) { it.username eq "王五" }
 
