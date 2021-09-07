@@ -12,12 +12,9 @@ interface Flavor {
         fun getFlavor(factory: ConnectionFactory): Flavor {
             val connection = factory.getConnection()
             val productName = connection.metaData.databaseProductName
-//            val productVersion = connection.metaData.databaseProductVersion
             connection.close()
 
             val loader = ServiceLoader.load(Flavor::class.java).toList()
-
-            println(loader)
 
             return loader.firstOrNull { it.productName == productName }
                 ?: throw KomException("Unknown productName: $productName")

@@ -52,14 +52,26 @@ fun getPostgreSQLConnectionFactory(): ConnectionFactory {
     }
 }
 
-fun getDatabase(): com.github.zhaofanzhe.kom.Database {
+fun getSQLiteConnectionFactory(): ConnectionFactory {
+    return object : ConnectionFactory {
+        override fun getConnection(): Connection {
+            return DriverManager.getConnection("jdbc:sqlite:/Users/arthur/test.db", "", "")
+        }
+    }
+}
+
+fun getDatabase(): Database {
     return getMysqlDatabase()
 }
 
-fun getMysqlDatabase(): com.github.zhaofanzhe.kom.Database {
-    return com.github.zhaofanzhe.kom.Database(getMySQLConnectionFactory())
+fun getMysqlDatabase(): Database {
+    return Database(getMySQLConnectionFactory())
 }
 
-fun getPostgreDatabase(): com.github.zhaofanzhe.kom.Database {
-    return com.github.zhaofanzhe.kom.Database(getPostgreSQLConnectionFactory())
+fun getPostgreSQLDatabase(): Database {
+    return Database(getPostgreSQLConnectionFactory())
+}
+
+fun getSQLiteDatabase(): Database {
+    return Database(getSQLiteConnectionFactory())
 }

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kom-example</artifactId>
+    <artifactId>kom-support-sqlite</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -21,40 +21,13 @@
         <dependency>
             <groupId>com.github.zhaofanzhe.kom</groupId>
             <artifactId>kom-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.zhaofanzhe.kom</groupId>
-            <artifactId>kom-support-mysql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.zhaofanzhe.kom</groupId>
-            <artifactId>kom-support-sqlite</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- MySQL 驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- PostgreSQL 驱动 -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- SQLite 驱动 -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
