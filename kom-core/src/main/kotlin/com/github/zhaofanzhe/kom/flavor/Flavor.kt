@@ -24,8 +24,11 @@ interface Flavor {
 
     val productName: String
 
-    // 获取类型信息
-    fun typedef(column: Column<*, *>): String?
+    /**
+     * 获取类型信息
+     * @param column 列信息
+     */
+    fun typedef(column: Column<*, *>, primaryKeySize: Int): String?
 
     fun name(name: String): String
 

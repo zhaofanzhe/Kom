@@ -3,6 +3,8 @@ package com.github.zhaofanzhe.kom.example
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.entity.Entity
 import com.github.zhaofanzhe.kom.express.Table
+import com.github.zhaofanzhe.kom.getMysqlDatabase
+import com.github.zhaofanzhe.kom.getPostgreSQLDatabase
 import com.github.zhaofanzhe.kom.getSQLiteDatabase
 import com.github.zhaofanzhe.kom.toolkit.eq
 import com.github.zhaofanzhe.kom.toolkit.like
@@ -10,11 +12,15 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 fun main() {
-    val database = getSQLiteDatabase()
+    val database = getPostgreSQLDatabase()
 
     // 创建表[目前不支持自动迁移]
-    database.createTable(Users()).execute()
-    database.createTable(Addresses()).execute()
+//    database.createTable(Users()).execute()
+//    database.createTable(Addresses()).execute()
+
+    println(database.createTable(Users()))
+    println(database.createTable(Addresses()))
+    return
 
     // 单表CRUD
     // 目前插入数据，目前没有做主键的回填
