@@ -39,25 +39,25 @@
 
 ### 例子
 
-[查询语句 | DSLQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLQuery.kt)
+[查询语句 | DSLQuery.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLQuery.kt)
 
-[插入语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLInsert.kt)
+[插入语句 | DSLInsert.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLInsert.kt)
 
-[更新语句 | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
+[更新语句 | DSLUpdate.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLUpdate.kt)
 
-[删除语句 | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+[删除语句 | DSLInsert.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLDelete.kt)
 
-[创建表语句 | CreateTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/CreateTable.kt)
+[创建表语句 | CreateTable.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/support/mysql/CreateTable.kt)
 
-[删除表语句 | DropTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/DropTable.kt)
+[删除表语句 | DropTable.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/support/mysql/DropTable.kt)
 
-[模型查询 | ModelQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelQuery.kt)
+[模型查询 | ModelQuery.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelQuery.kt)
 
-[模型创建 | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+[模型创建 | ModelCreate.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelCreate.kt)
 
-[模型创建 | ModelSave.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelSave.kt)
+[模型创建 | ModelSave.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelSave.kt)
 
-[模型删除 | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
+[模型删除 | ModelDelete.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelDelete.kt)
 
 ### 数据库支持
 

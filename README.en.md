@@ -38,25 +38,25 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 
 ### Example
 
-[Query statement | DSLQuery.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLQuery.kt)
+[Query statement | DSLQuery.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLQuery.kt)
 
-[Insert statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLInsert.kt)
+[Insert statement | DSLInsert.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLInsert.kt)
 
-[Update statement | DSLUpdate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLUpdate.kt)
+[Update statement | DSLUpdate.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLUpdate.kt)
 
-[Delete statement | DSLInsert.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/DSLDelete.kt)
+[Delete statement | DSLInsert.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/DSLDelete.kt)
 
-[Create Table statement | CreateTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/CreateTable.kt)
+[Create Table statement | CreateTable.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/support/mysql/CreateTable.kt)
 
-[Drop Table statement| DropTable.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/support/mysql/DropTable.kt)
+[Drop Table statement| DropTable.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/support/mysql/DropTable.kt)
 
-[model query | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelQuery.kt)
+[model query | ModelCreate.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelQuery.kt)
 
-[model create | ModelCreate.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelCreate.kt)
+[model create | ModelCreate.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelCreate.kt)
 
-[model save | ModelSave.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelSave.kt)
+[model save | ModelSave.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelSave.kt)
 
-[model delete | ModelDelete.kt](./src/test/kotlin/io/github/zhaofanzhe/kom/ModelDelete.kt)
+[model delete | ModelDelete.kt](./kom-example/src/test/kotlin/com/github/zhaofanzhe/kom/ModelDelete.kt)
 
 ### Database support
 
