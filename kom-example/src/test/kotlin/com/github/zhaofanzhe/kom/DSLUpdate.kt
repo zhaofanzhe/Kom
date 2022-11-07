@@ -12,7 +12,7 @@ fun main() {
     val express = database.update(users)
         .leftJoin(address)
         .on(address.userId eq users.id)
-        .set(address.address,"哈哈哈")
+        .set(address.address, "哈哈哈")
         .where(users.id eq 1)
 
     println(express)

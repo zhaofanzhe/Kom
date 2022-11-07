@@ -1,6 +1,9 @@
 package com.github.zhaofanzhe.kom.clause.dml
 
-import com.github.zhaofanzhe.kom.express.*
+import com.github.zhaofanzhe.kom.express.Column
+import com.github.zhaofanzhe.kom.express.Context
+import com.github.zhaofanzhe.kom.express.Express
+import com.github.zhaofanzhe.kom.express.ExpressResult
 
 class SortExpress(private val column: Column<*, *>, private val genre: Genre) : Express() {
 

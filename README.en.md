@@ -5,6 +5,7 @@
 [![Release](https://jitpack.io/v/zhaofanzhe/Kom.svg)](https://jitpack.io/#zhaofanzhe/Kom)
 
 ## Explain
+
 Single table CRUD, custom DSL for data query.
 
 If you have any questions, please contact me via [Issues](https://github.com/zhaofanzhe/Kom/issues)
@@ -12,29 +13,29 @@ If you have any questions, please contact me via [Issues](https://github.com/zha
 # Task
 
 * [X] DSL
-  * [X] DML
-    * [X] Query statement
-    * [X] Insert statement
-    * [X] Update statement
-    * [X] Delete statement
-  * [ ] DDL
-    * [X] Create Table statement
-    * [X] Drop Table statement
+    * [X] DML
+        * [X] Query statement
+        * [X] Insert statement
+        * [X] Update statement
+        * [X] Delete statement
+    * [ ] DDL
+        * [X] Create Table statement
+        * [X] Drop Table statement
 * [X] Model
-  * [X] Query
-  * [X] Create
-  * [X] Save
-  * [X] Delete
+    * [X] Query
+    * [X] Create
+    * [X] Save
+    * [X] Delete
 * [ ] express
-  * [X] and [ and ] [ and ]
-  * [X] or [ or ] [ or ]
-  * [X] equal [ = ] [ eq ]
-  * [X] not equal to [ != ] [ ne ]
-  * [X] more than the [ > ] [ gt ]
-  * [X] greater or equal to [ >= ] [ geo ]
-  * [X] Less than [ < ] [ lt ]
-  * [X] Less than or equal to [ <= ] [ loe ]
-  * [ ] other...
+    * [X] and [ and ] [ and ]
+    * [X] or [ or ] [ or ]
+    * [X] equal [ = ] [ eq ]
+    * [X] not equal to [ != ] [ ne ]
+    * [X] more than the [ > ] [ gt ]
+    * [X] greater or equal to [ >= ] [ geo ]
+    * [X] Less than [ < ] [ lt ]
+    * [X] Less than or equal to [ <= ] [ loe ]
+    * [ ] other...
 
 ### Example
 

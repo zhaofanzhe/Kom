@@ -10,7 +10,7 @@ class OrGroup : LogicExpress<Boolean>() {
 
     private val exprs = mutableListOf<LogicExpress<*>>()
 
-    operator fun plusAssign(other: LogicExpress<Boolean>){
+    operator fun plusAssign(other: LogicExpress<Boolean>) {
         or(other)
     }
 
@@ -37,7 +37,7 @@ class OrGroup : LogicExpress<Boolean>() {
             if (otherLayer > 0) {
                 result += "("
             }
-            express.generate(context,result)
+            express.generate(context, result)
             if (otherLayer > 0) {
                 result += ")"
             }

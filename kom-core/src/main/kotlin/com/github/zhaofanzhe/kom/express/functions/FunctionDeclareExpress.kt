@@ -11,7 +11,7 @@ class FunctionDeclareExpress(
 ) : DeclareExpress() {
 
     override fun generate(context: Context, result: ExpressResult) {
-        declare.express().generate(context,result)
+        declare.express().generate(context, result)
         result += " as "
         result += context.currentDeclareAlias(declare)
     }

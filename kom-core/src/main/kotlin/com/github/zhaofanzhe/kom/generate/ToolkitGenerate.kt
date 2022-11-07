@@ -1,7 +1,5 @@
 package com.github.zhaofanzhe.kom.generate
 
-import java.lang.StringBuilder
-
 class ToolkitGenerate(private vararg val args: List<String>, private val generate: (List<String>) -> String) {
 
     private val counters: Array<Int> = args.map { 0 }.toTypedArray()
@@ -22,13 +20,13 @@ class ToolkitGenerate(private vararg val args: List<String>, private val generat
 
         var cursor = 0
 
-        while (true){
-            if (cursor >= args.size){
+        while (true) {
+            if (cursor >= args.size) {
                 eof = true
                 break
             }
             counters[cursor]++
-            if (counters[cursor] >= args[cursor].size){
+            if (counters[cursor] >= args[cursor].size) {
                 counters[cursor] = 0
                 cursor++
                 continue

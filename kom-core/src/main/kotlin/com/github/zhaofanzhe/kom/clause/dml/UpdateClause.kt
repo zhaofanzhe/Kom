@@ -2,9 +2,9 @@ package com.github.zhaofanzhe.kom.clause.dml
 
 import com.github.zhaofanzhe.kom.KomException
 import com.github.zhaofanzhe.kom.clause.Clause
-import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.express.*
 import com.github.zhaofanzhe.kom.express.declare.Declare
+import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.queryer.Queryer
 
 @Suppress("DuplicatedCode")
@@ -81,7 +81,7 @@ class UpdateClause<T : Any>(
         result += context.currentTableAlias(table)
 
         if (joins.isNotEmpty()) {
-            joins.forEach { it.generate(context,result) }
+            joins.forEach { it.generate(context, result) }
         }
 
         result += "\n set "
@@ -97,7 +97,7 @@ class UpdateClause<T : Any>(
             result.append("?", updates[column])
         }
 
-        where?.generate(context,result)
+        where?.generate(context, result)
 
         if (runtime != null) {
             context.runtime = runtime

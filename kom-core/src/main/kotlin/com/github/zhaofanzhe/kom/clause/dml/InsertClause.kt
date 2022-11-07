@@ -2,9 +2,8 @@ package com.github.zhaofanzhe.kom.clause.dml
 
 import com.github.zhaofanzhe.kom.KomException
 import com.github.zhaofanzhe.kom.clause.Clause
-import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.express.*
-import com.github.zhaofanzhe.kom.queryer.QuerySource
+import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.queryer.Queryer
 
 @Suppress("UNCHECKED_CAST")
@@ -76,6 +75,7 @@ class InsertClause<T : Any>(
             1 -> {
                 if (this.mode1Columns.isEmpty()) throw KomException("not set column.")
             }
+
             2 -> {
                 if (this.mode2columns == null) throw KomException("no call columns().")
                 if (this.mode2SubQueryClause == null) throw KomException("no call select().")

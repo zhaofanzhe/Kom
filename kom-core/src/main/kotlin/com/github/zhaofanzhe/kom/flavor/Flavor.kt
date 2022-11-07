@@ -3,7 +3,7 @@ package com.github.zhaofanzhe.kom.flavor
 import com.github.zhaofanzhe.kom.KomException
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.express.Column
-import java.util.ServiceLoader
+import java.util.*
 
 interface Flavor {
 

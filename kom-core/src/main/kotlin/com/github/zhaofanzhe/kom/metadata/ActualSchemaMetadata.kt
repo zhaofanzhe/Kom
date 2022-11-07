@@ -13,9 +13,9 @@ class ActualSchemaMetadata(
 
     private val tables = mutableMapOf<String, ActualTableMetadata>()
 
-    val databaseProductName:String
+    val databaseProductName: String
 
-    val databaseProductVersion:String
+    val databaseProductVersion: String
 
     init {
         val connection = factory.getConnection()

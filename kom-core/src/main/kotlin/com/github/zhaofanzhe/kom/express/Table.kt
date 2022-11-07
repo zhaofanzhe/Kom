@@ -1,8 +1,6 @@
 package com.github.zhaofanzhe.kom.express
 
 import com.github.zhaofanzhe.kom.express.declare.Declare
-import com.github.zhaofanzhe.kom.express.functions.Function
-import com.github.zhaofanzhe.kom.express.identifier.Identifier
 import com.github.zhaofanzhe.kom.naming.Naming
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1

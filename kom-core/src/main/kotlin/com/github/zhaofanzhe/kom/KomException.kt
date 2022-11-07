@@ -1,8 +1,6 @@
 package com.github.zhaofanzhe.kom
 
-import java.lang.RuntimeException
-
-class KomException :RuntimeException{
+class KomException : RuntimeException {
     constructor() : super()
     constructor(message: String?) : super(message)
     constructor(message: String?, cause: Throwable?) : super(message, cause)

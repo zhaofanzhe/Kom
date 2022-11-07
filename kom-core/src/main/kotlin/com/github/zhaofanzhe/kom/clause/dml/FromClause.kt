@@ -12,7 +12,7 @@ class FromClause(
     override fun generate(context: Context, result: ExpressResult) {
         result += "\nfrom "
         if (table is Clause) {
-            table.generate(context,result)
+            table.generate(context, result)
         } else {
             result += context.currentTableName(table)
         }

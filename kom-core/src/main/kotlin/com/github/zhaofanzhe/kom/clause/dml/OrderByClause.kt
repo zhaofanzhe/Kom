@@ -13,10 +13,10 @@ class OrderByClause(private vararg val exprs: SortExpress) : Clause() {
         if (exprs.isNotEmpty()) {
             result.append(ORDER_BY)
             exprs.forEachIndexed { index, express ->
-                if (index>0){
+                if (index > 0) {
                     result += ", "
                 }
-                express.generate(context,result)
+                express.generate(context, result)
             }
         }
     }

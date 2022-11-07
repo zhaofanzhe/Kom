@@ -45,7 +45,7 @@ class Tuple(private val source: QuerySource) {
         return map.toString()
     }
 
-    fun columnKeys(): MutableSet<Column<*,*>> {
+    fun columnKeys(): MutableSet<Column<*, *>> {
         return this.map.keys.filterIsInstance<Column<*, *>>().toMutableSet()
     }
 

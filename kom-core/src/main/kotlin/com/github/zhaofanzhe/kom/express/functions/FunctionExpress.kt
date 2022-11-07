@@ -23,9 +23,11 @@ class FunctionExpress(
                 is Express -> {
                     value.generate(context, result)
                 }
+
                 is Declare<*> -> {
                     value.express().generate(context, result)
                 }
+
                 else -> {
                     result.append("?", value)
                 }

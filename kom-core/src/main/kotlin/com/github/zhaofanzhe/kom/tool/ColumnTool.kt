@@ -24,12 +24,12 @@ object ColumnTool {
         LocalTime::class to LocalTime.MIN,
     )
 
-    fun isZeroValue(column:Column<*,*>,value: Any?): Boolean {
-        if (value == null){
+    fun isZeroValue(column: Column<*, *>, value: Any?): Boolean {
+        if (value == null) {
             return true
         }
 
-        if (column.nullable){
+        if (column.nullable) {
             return false
         }
 

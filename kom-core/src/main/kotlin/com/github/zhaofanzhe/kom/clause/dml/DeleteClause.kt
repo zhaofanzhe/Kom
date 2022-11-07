@@ -1,9 +1,9 @@
 package com.github.zhaofanzhe.kom.clause.dml
 
 import com.github.zhaofanzhe.kom.clause.Clause
-import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.express.*
 import com.github.zhaofanzhe.kom.express.declare.Declare
+import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.queryer.Queryer
 
 @Suppress("DuplicatedCode")

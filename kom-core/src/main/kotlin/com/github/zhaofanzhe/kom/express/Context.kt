@@ -1,8 +1,8 @@
 package com.github.zhaofanzhe.kom.express
 
 import com.github.zhaofanzhe.kom.KomException
-import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.express.declare.Declare
+import com.github.zhaofanzhe.kom.flavor.Flavor
 import com.github.zhaofanzhe.kom.tool.DeclareAliasGenerator
 import com.github.zhaofanzhe.kom.tool.TableAliasGenerator
 

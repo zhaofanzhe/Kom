@@ -1,7 +1,6 @@
 package com.github.zhaofanzhe.kom.metadata
 
 import java.sql.Connection
-import java.sql.Types
 
 class ActualColumnMetadata(
     connection: Connection,

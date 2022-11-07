@@ -33,7 +33,7 @@ interface ITable<T : Any> {
     /**
      * 如果复合主键不会返回
      */
-    fun primaryKeys(): List<Column<T,*>>
+    fun primaryKeys(): List<Column<T, *>>
 
     /**
      * 获取查询数量引用

@@ -5,7 +5,6 @@ import com.github.zhaofanzhe.kom.express.ITable
 import com.github.zhaofanzhe.kom.express.declare.Declare
 import com.github.zhaofanzhe.kom.express.declare.DeclareExpress
 import com.github.zhaofanzhe.kom.express.declare.DeclareRef
-import java.lang.StringBuilder
 
 @Suppress("MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 class Function<T : Any>(

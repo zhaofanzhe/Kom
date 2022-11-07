@@ -1,7 +1,6 @@
 package com.github.zhaofanzhe.kom.naming
 
 import com.github.zhaofanzhe.kom.KomException
-import java.lang.StringBuilder
 import kotlin.reflect.KClass
 
 object Naming {

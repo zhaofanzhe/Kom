@@ -1,7 +1,5 @@
 package com.github.zhaofanzhe.kom.express
 
-import java.lang.StringBuilder
-
 /**
  * 表达式结果
  */

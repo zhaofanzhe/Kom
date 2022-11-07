@@ -17,6 +17,7 @@ interface Filler<T> {
                 Tuple::class -> {
                     TupleFiller(Tuple(source)) as Filler<T>
                 }
+
                 else -> {
                     TableFiller(newInstance(source.entityClass())) as Filler<T>
                 }

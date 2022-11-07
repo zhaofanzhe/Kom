@@ -12,10 +12,10 @@ class SelectClause(
     override fun generate(context: Context, result: ExpressResult) {
         result += "select "
         exprs.forEachIndexed { index, express ->
-            if (index > 0){
+            if (index > 0) {
                 result += ", "
             }
-            express.generate(context,result)
+            express.generate(context, result)
         }
     }
 

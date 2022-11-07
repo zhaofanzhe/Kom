@@ -3,7 +3,7 @@ package com.github.zhaofanzhe.kom.metadata
 /**
  * 表元数据
  */
-class TableMetadata:ITableMetadata {
+class TableMetadata : ITableMetadata {
 
     override val schemaName: String = ""
 

@@ -1,8 +1,8 @@
 package com.github.zhaofanzhe.kom.express
 
 import com.github.zhaofanzhe.kom.express.declare.Declare
-import com.github.zhaofanzhe.kom.express.declare.DeclareStatementExpress
 import com.github.zhaofanzhe.kom.express.declare.DeclareExpress
+import com.github.zhaofanzhe.kom.express.declare.DeclareStatementExpress
 import kotlin.reflect.KClass
 
 @Suppress("MemberVisibilityCanBePrivate")
