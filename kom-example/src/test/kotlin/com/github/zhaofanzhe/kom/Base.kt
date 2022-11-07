@@ -52,14 +52,14 @@ fun getPostgreSQLConnectionFactory(): ConnectionFactory {
     }
 }
 
-fun getDatabase(): com.github.zhaofanzhe.kom.Database {
+fun getDatabase(): Database {
     return getMysqlDatabase()
 }
 
-fun getMysqlDatabase(): com.github.zhaofanzhe.kom.Database {
-    return com.github.zhaofanzhe.kom.Database(getMySQLConnectionFactory())
+fun getMysqlDatabase(): Database {
+    return Database(getMySQLConnectionFactory())
 }
 
-fun getPostgreDatabase(): com.github.zhaofanzhe.kom.Database {
-    return com.github.zhaofanzhe.kom.Database(getPostgreSQLConnectionFactory())
+fun getPostgreDatabase(): Database {
+    return Database(getPostgreSQLConnectionFactory())
 }
