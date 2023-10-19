@@ -10,6 +10,7 @@
 
     <modules>
         <module>kom-core</module>
+        <module>kom-core-next</module>
         <module>kom-support-mysql</module>
         <module>kom-support-postgresql</module>
         <module>kom-example</module>
@@ -21,9 +22,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
