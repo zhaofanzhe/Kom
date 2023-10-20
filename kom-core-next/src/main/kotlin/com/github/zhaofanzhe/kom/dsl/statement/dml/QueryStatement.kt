@@ -1,9 +1,13 @@
-package com.github.zhaofanzhe.kom.dsl.statement
+package com.github.zhaofanzhe.kom.dsl.statement.dml
 
-import com.github.zhaofanzhe.kom.dsl.*
 import com.github.zhaofanzhe.kom.dsl.clause.*
-import com.github.zhaofanzhe.kom.dsl.core.*
+import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.express.SortExpress
+import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
+import com.github.zhaofanzhe.kom.dsl.statement.Statement
+import com.github.zhaofanzhe.kom.dsl.table.TableRef
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.toolkit.mergeBundles
 
 class QueryStatement : Statement {
 

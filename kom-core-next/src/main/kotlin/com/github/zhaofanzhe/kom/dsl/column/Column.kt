@@ -1,7 +1,9 @@
-package com.github.zhaofanzhe.kom.dsl
+package com.github.zhaofanzhe.kom.dsl.column
 
-import com.github.zhaofanzhe.kom.dsl.core.Express
-import com.github.zhaofanzhe.kom.dsl.core.Selectable
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.express.Express
+import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
+import com.github.zhaofanzhe.kom.dsl.table.Table
 
 class Column<R>(
     internal val table: Table,
@@ -15,8 +17,8 @@ class Column<R>(
     internal var comment: String? = null,
 ) : Selectable, Express<R> {
 
-    override fun generateSelectable(): String {
-        return "${this.table.tableName()}.`${this.name}`"
+    override fun generateSelectable(): Bundle {
+        return Bundle("${this.table.tableName()}.`${this.name}`")
     }
 
     override fun generateExpress(): Bundle {

@@ -1,4 +1,4 @@
-package com.github.zhaofanzhe.kom.dsl.core
+package com.github.zhaofanzhe.kom.dsl.table
 
 interface TableRef {
 

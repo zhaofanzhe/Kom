@@ -1,9 +1,8 @@
 package com.github.zhaofanzhe.kom.dsl.clause
 
-import com.github.zhaofanzhe.kom.dsl.Bundle
-import com.github.zhaofanzhe.kom.dsl.core.Clause
-import com.github.zhaofanzhe.kom.dsl.core.Express
-import com.github.zhaofanzhe.kom.dsl.core.TableRef
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.express.Express
+import com.github.zhaofanzhe.kom.dsl.table.TableRef
 
 class JoinClause(
     val joinType: String,

@@ -1,13 +1,18 @@
 package com.github.zhaofanzhe.kom
 
-import com.github.zhaofanzhe.kom.dsl.*
-import com.github.zhaofanzhe.kom.dsl.express.desc
+import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
+import com.github.zhaofanzhe.kom.dsl.column.comment
+import com.github.zhaofanzhe.kom.dsl.column.index
+import com.github.zhaofanzhe.kom.dsl.column.primaryKey
 import com.github.zhaofanzhe.kom.dsl.express.eq
-import com.github.zhaofanzhe.kom.dsl.express.param
-import com.github.zhaofanzhe.kom.dsl.statement.from
-import com.github.zhaofanzhe.kom.dsl.statement.leftJoin
-import com.github.zhaofanzhe.kom.dsl.statement.orderBy
-import com.github.zhaofanzhe.kom.dsl.statement.where
+import com.github.zhaofanzhe.kom.dsl.function.count
+import com.github.zhaofanzhe.kom.dsl.function.max
+import com.github.zhaofanzhe.kom.dsl.selectable.alias
+import com.github.zhaofanzhe.kom.dsl.statement.dml.from
+import com.github.zhaofanzhe.kom.dsl.statement.dml.leftJoin
+import com.github.zhaofanzhe.kom.dsl.table.Table
+import com.github.zhaofanzhe.kom.dsl.table.int
+import com.github.zhaofanzhe.kom.dsl.table.varchar
 
 class Users : Table("users") {
     val id = int("id").primaryKey().autoIncrement().comment("ID")
@@ -30,14 +35,14 @@ fun main() {
     val users = Users()
     val addresses = Addresses()
 
-    val statement =
-        database.select(users.id, users.username, addresses.province, addresses.province, addresses.district)
-            .from(users)
-            .leftJoin(addresses, addresses.userId eq users.id)
-            .where(useAnd {
-                use(users.id eq 1.param)
-            })
-            .orderBy(users.id.desc)
+    val statement = database
+        .select(
+            count(addresses.id).alias("总数"),
+            max(addresses.id).alias("最大"),
+            users.username.alias("用户名")
+        )
+        .from(users)
+        .leftJoin(addresses, addresses.userId eq users.id)
 
     val bundle = statement.generateStatement()
 

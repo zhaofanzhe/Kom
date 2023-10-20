@@ -1,15 +1,21 @@
 package com.github.zhaofanzhe.kom.dsl.clause
 
-import com.github.zhaofanzhe.kom.dsl.Bundle
-import com.github.zhaofanzhe.kom.dsl.core.Clause
-import com.github.zhaofanzhe.kom.dsl.core.Selectable
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 
 class SelectClause(
     private vararg val selectables: Selectable
 ) : Clause {
 
     override fun generateClause(): Bundle {
-        return Bundle("select ${selectables.joinToString(", ") { it.generateSelectable() }}")
+        val bundles = selectables.map { it.generateSelectable() }
+        val sql = "select ${bundles.joinToString(separator = ", ") { it.sql }}"
+        val args = mutableListOf<Any?>()
+        bundles.forEach { args.addAll(it.args) }
+        return Bundle(
+            sql = sql,
+            args = args,
+        )
     }
 
 }

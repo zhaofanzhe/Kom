@@ -1,8 +1,7 @@
 package com.github.zhaofanzhe.kom.dsl.express
 
-import com.github.zhaofanzhe.kom.dsl.Bundle
-import com.github.zhaofanzhe.kom.dsl.Column
-import com.github.zhaofanzhe.kom.dsl.core.Express
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.column.Column
 
 class SortExpress(
     val column: Column<*>,
@@ -21,7 +20,7 @@ class SortExpress(
 
     override fun generateExpress(): Bundle {
         return Bundle(
-            sql = "${this.column.generateSelectable()} ${this.sort}"
+            sql = "${this.column.generateSelectable().sql} ${this.sort}"
         )
     }
 

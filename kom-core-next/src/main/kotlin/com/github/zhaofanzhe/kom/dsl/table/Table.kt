@@ -1,6 +1,6 @@
-package com.github.zhaofanzhe.kom.dsl
+package com.github.zhaofanzhe.kom.dsl.table
 
-import com.github.zhaofanzhe.kom.dsl.core.TableRef
+import com.github.zhaofanzhe.kom.dsl.column.Column
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime

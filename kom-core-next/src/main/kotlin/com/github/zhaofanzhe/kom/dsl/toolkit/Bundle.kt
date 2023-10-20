@@ -1,4 +1,4 @@
-package com.github.zhaofanzhe.kom.dsl
+package com.github.zhaofanzhe.kom.dsl.toolkit
 
 class Bundle(
     val sql: String,
