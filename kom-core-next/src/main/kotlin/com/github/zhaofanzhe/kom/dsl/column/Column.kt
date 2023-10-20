@@ -1,9 +1,9 @@
 package com.github.zhaofanzhe.kom.dsl.column
 
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.table.Table
+import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
 
 class Column<R>(
     internal val table: Table,
@@ -15,17 +15,14 @@ class Column<R>(
     internal var nullable: Boolean = false,
     internal var unique: Boolean = false,
     internal var comment: String? = null,
-) : Selectable, Express<R> {
-
-    override fun generateSelectable(): Bundle {
-        return Bundle("${this.table.tableName()}.`${this.name}`")
-    }
+) : Express<R>, Selectable {
 
     override fun generateExpress(): Bundle {
-        return Bundle(
-            sql = "${this.table.tableName()}.`${this.name}`",
-            args = listOf()
-        )
+        return Bundle(sql = "${this.table.tableName()}.`${this.name}`")
+    }
+
+    override fun generateSelectable(): Bundle {
+        return generateExpress()
     }
 
 }

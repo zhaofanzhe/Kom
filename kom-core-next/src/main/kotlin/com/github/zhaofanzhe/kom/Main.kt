@@ -4,12 +4,13 @@ import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
 import com.github.zhaofanzhe.kom.dsl.column.comment
 import com.github.zhaofanzhe.kom.dsl.column.index
 import com.github.zhaofanzhe.kom.dsl.column.primaryKey
-import com.github.zhaofanzhe.kom.dsl.express.eq
+import com.github.zhaofanzhe.kom.dsl.express.gt
+import com.github.zhaofanzhe.kom.dsl.express.param
 import com.github.zhaofanzhe.kom.dsl.function.count
-import com.github.zhaofanzhe.kom.dsl.function.max
 import com.github.zhaofanzhe.kom.dsl.selectable.alias
 import com.github.zhaofanzhe.kom.dsl.statement.dml.from
-import com.github.zhaofanzhe.kom.dsl.statement.dml.leftJoin
+import com.github.zhaofanzhe.kom.dsl.statement.dml.groupBy
+import com.github.zhaofanzhe.kom.dsl.statement.dml.having
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
@@ -32,17 +33,16 @@ fun main() {
 
     val database = Database()
 
-    val users = Users()
     val addresses = Addresses()
 
     val statement = database
         .select(
-            count(addresses.id).alias("总数"),
-            max(addresses.id).alias("最大"),
-            users.username.alias("用户名")
+            addresses.userId.alias("用户ID"),
+            count(addresses.id).alias("地址数量"),
         )
-        .from(users)
-        .leftJoin(addresses, addresses.userId eq users.id)
+        .from(addresses)
+        .groupBy(addresses.userId)
+        .having(count(addresses.id) gt 2.param)
 
     val bundle = statement.generateStatement()
 

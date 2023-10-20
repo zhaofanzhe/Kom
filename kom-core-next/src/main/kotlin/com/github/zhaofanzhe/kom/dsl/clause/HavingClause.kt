@@ -1,11 +1,20 @@
 package com.github.zhaofanzhe.kom.dsl.clause
 
+import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
 
-class HavingClause : Clause {
+class HavingClause(
+    val express: Express<Boolean>
+) : Clause {
 
     override fun generateClause(): Bundle {
-        TODO("Not yet implemented")
+        val bundle = express.generateExpress()
+        val sql = "having ${bundle.sql}"
+        val args = bundle.args
+        return Bundle(
+            sql = sql,
+            args = args
+        )
     }
 
 }

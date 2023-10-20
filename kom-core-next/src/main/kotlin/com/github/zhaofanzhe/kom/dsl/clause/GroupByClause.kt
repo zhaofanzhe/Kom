@@ -1,11 +1,14 @@
 package com.github.zhaofanzhe.kom.dsl.clause
 
+import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
 
-class GroupByClause : Clause {
+class GroupByClause(
+    val columns: List<Column<*>>,
+) : Clause {
 
     override fun generateClause(): Bundle {
-        TODO("Not yet implemented")
+        return Bundle("group by ${columns.joinToString(separator = ", ") { it.generateSelectable().sql }}")
     }
 
 }

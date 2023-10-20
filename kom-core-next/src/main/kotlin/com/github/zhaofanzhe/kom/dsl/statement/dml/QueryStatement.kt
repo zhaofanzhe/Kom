@@ -1,6 +1,7 @@
 package com.github.zhaofanzhe.kom.dsl.statement.dml
 
 import com.github.zhaofanzhe.kom.dsl.clause.*
+import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.express.SortExpress
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
@@ -74,6 +75,14 @@ fun QueryStatement.leftJoin(tableRef: TableRef, fn: () -> Express<Boolean>): Que
     return join("left join", tableRef, fn())
 }
 
+fun QueryStatement.rightJoin(tableRef: TableRef, express: Express<Boolean>): QueryStatement {
+    return join("right join", tableRef, express)
+}
+
+fun QueryStatement.rightJoin(tableRef: TableRef, fn: () -> Express<Boolean>): QueryStatement {
+    return join("right join", tableRef, fn())
+}
+
 internal fun QueryStatement.where(clause: WhereClause): QueryStatement {
     this.where = clause
     return this
@@ -92,9 +101,21 @@ internal fun QueryStatement.groupBy(clause: GroupByClause): QueryStatement {
     return this
 }
 
+fun QueryStatement.groupBy(vararg columns: Column<*>): QueryStatement {
+    return groupBy(GroupByClause(columns.toList()))
+}
+
 internal fun QueryStatement.having(clause: HavingClause): QueryStatement {
     this.having = clause
     return this
+}
+
+fun QueryStatement.having(express: Express<Boolean>): QueryStatement {
+    return having(HavingClause(express))
+}
+
+fun QueryStatement.having(fn: () -> Express<Boolean>): QueryStatement {
+    return having(fn())
 }
 
 internal fun QueryStatement.orderBy(clause: OrderByClause): QueryStatement {
