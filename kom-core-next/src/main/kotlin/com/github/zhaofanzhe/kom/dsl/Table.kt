@@ -8,10 +8,9 @@ import java.time.LocalTime
 import kotlin.reflect.KClass
 
 open class Table(
-    internal val tableName: String,
-    internal var aliasName: String? = null,
+    internal val name: String,
+    internal var alias: String? = null,
 ) : TableRef {
-
 
     internal val columns: MutableList<Column<*>> = mutableListOf()
 
@@ -20,17 +19,17 @@ open class Table(
     internal val indexes: MutableMap<String, MutableList<Column<*>>> = mutableMapOf()
 
     override fun tableDefine(): String {
-        if (this.aliasName != null) {
-            return "`${this.tableName}` as `${this.aliasName}`"
+        if (this.alias != null) {
+            return "`${this.name}` as `${this.alias}`"
         }
-        return "`${this.tableName}`"
+        return "`${this.name}`"
     }
 
     override fun tableName(): String {
-        if (this.aliasName != null) {
-            return "`${this.aliasName}`"
+        if (this.alias != null) {
+            return "`${this.alias}`"
         }
-        return "`${this.tableName}`"
+        return "`${this.name}`"
     }
 
 }
@@ -42,7 +41,7 @@ inline fun <reified T : Table> T.alias(aliasName: String): T {
 fun <T : Table> T.alias(clazz: KClass<T>, aliasName: String): T {
     val constructor = clazz.constructors.find { it.parameters.isEmpty() } ?: throw RuntimeException("未找到默认构造器")
     val table = constructor.call()
-    table.aliasName = aliasName
+    table.alias = aliasName
     return table
 }
 

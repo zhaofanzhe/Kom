@@ -12,6 +12,7 @@ class Column<R>(
     internal var indexName: String? = null,
     internal var nullable: Boolean = false,
     internal var unique: Boolean = false,
+    internal var comment: String? = null,
 ) : Selectable, Express<R> {
 
     override fun generateSelectable(): String {
@@ -59,3 +60,7 @@ fun <R> Column<R>.unique(): Column<R> {
     return this
 }
 
+fun <R> Column<R>.comment(comment: String): Column<R> {
+    this.comment = comment
+    return this
+}
