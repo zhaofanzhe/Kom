@@ -6,4 +6,6 @@ interface Selectable {
 
     fun generateSelectable(): Bundle
 
+    fun flatName(): String? = null
+
 }

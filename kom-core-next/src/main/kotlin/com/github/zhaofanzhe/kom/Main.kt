@@ -1,52 +1,57 @@
 package com.github.zhaofanzhe.kom
 
+import com.github.zhaofanzhe.kom.connection.ConnectionFactory
+import com.github.zhaofanzhe.kom.core.flat
 import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
-import com.github.zhaofanzhe.kom.dsl.column.comment
-import com.github.zhaofanzhe.kom.dsl.column.index
 import com.github.zhaofanzhe.kom.dsl.column.primaryKey
-import com.github.zhaofanzhe.kom.dsl.express.gt
-import com.github.zhaofanzhe.kom.dsl.express.param
-import com.github.zhaofanzhe.kom.dsl.function.count
-import com.github.zhaofanzhe.kom.dsl.selectable.alias
+import com.github.zhaofanzhe.kom.dsl.column.unique
+import com.github.zhaofanzhe.kom.dsl.statement.dml.fetchAll
 import com.github.zhaofanzhe.kom.dsl.statement.dml.from
-import com.github.zhaofanzhe.kom.dsl.statement.dml.groupBy
-import com.github.zhaofanzhe.kom.dsl.statement.dml.having
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
+import java.sql.Connection
+import java.sql.DriverManager
+
+data class User(
+    var id: Int = 0,
+    var username: String = "",
+) {
+    constructor() : this(id = 0, username = "")
+}
 
 class Users : Table("users") {
-    val id = int("id").primaryKey().autoIncrement().comment("ID")
-    val username = varchar("username").index().comment("用户名")
-    val password = varchar("password").index().comment("密码")
+    val id = int("id").primaryKey().autoIncrement()
+    val username = varchar("username").unique()
 }
 
 class Addresses : Table("addresses") {
-    val id = int("id").primaryKey().autoIncrement().comment("ID")
-    val userId = int("user_id").index().comment("用户ID")
-    val province = varchar("province").comment("省")
-    val city = varchar("city").comment("市")
-    val district = varchar("district").comment("区")
+    var id = int("id").primaryKey().autoIncrement()
+    var address = varchar("address")
+    var userId = int("user_id")
+}
+
+fun getMySQLConnectionFactory(): ConnectionFactory {
+    return object : ConnectionFactory {
+        override fun getConnection(): Connection {
+            return DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/demo", "root", "123456")
+        }
+    }
 }
 
 fun main() {
 
-    val database = Database()
+    val database = Database(getMySQLConnectionFactory())
 
+    val users = Users()
     val addresses = Addresses()
 
-    val statement = database
-        .select(
-            addresses.userId.alias("用户ID"),
-            count(addresses.id).alias("地址数量"),
-        )
-        .from(addresses)
-        .groupBy(addresses.userId)
-        .having(count(addresses.id) gt 2.param)
+    val list = database
+        .select(users.id, users.username)
+        .from(users)
+        .fetchAll()
+        .flat<User>()
 
-    val bundle = statement.generateStatement()
-
-    println(bundle.sql)
-    println(bundle.args)
+    println(list)
 
 }

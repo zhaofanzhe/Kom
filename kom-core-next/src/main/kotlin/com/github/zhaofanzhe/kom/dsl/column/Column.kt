@@ -17,12 +17,23 @@ class Column<R>(
     internal var comment: String? = null,
 ) : Express<R>, Selectable {
 
+
+    private fun fullColumnName(): String {
+        return "${this.table.tableName()}.`${this.name}`"
+    }
+
     override fun generateExpress(): Bundle {
-        return Bundle(sql = "${this.table.tableName()}.`${this.name}`")
+        return Bundle(sql = fullColumnName())
     }
 
     override fun generateSelectable(): Bundle {
         return generateExpress()
+    }
+
+    override fun flatName(): String = this.name
+
+    override fun toString(): String {
+        return fullColumnName()
     }
 
 }

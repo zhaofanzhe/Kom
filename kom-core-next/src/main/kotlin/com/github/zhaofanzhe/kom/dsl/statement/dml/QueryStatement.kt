@@ -1,5 +1,6 @@
 package com.github.zhaofanzhe.kom.dsl.statement.dml
 
+import com.github.zhaofanzhe.kom.core.*
 import com.github.zhaofanzhe.kom.dsl.clause.*
 import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.express.Express
@@ -9,8 +10,11 @@ import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.TableRef
 import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
 import com.github.zhaofanzhe.kom.dsl.toolkit.mergeBundles
+import com.github.zhaofanzhe.kom.exception.KomException
 
-class QueryStatement : Statement {
+class QueryStatement(
+    internal val executor: Executor
+) : Statement {
 
     internal var select: SelectClause? = null
 
@@ -26,6 +30,8 @@ class QueryStatement : Statement {
 
     internal var orderBy: OrderByClause? = null
 
+    internal var limit: LimitClause? = null
+
     override fun generateStatement(): Bundle {
         val clauses = mutableListOf<Clause>()
         select?.let { clauses += it }
@@ -35,6 +41,7 @@ class QueryStatement : Statement {
         groupBy?.let { clauses += it }
         having?.let { clauses += it }
         orderBy?.let { clauses += it }
+        limit?.let { clauses += it }
         return mergeBundles(*clauses.map { it.generateClause() }.toTypedArray(), separator = "\r\n")
     }
 
@@ -46,7 +53,7 @@ internal fun QueryStatement.select(clause: SelectClause): QueryStatement {
 }
 
 fun QueryStatement.select(vararg selectables: Selectable): QueryStatement {
-    return select(SelectClause(*selectables))
+    return select(SelectClause(selectables.toList()))
 }
 
 internal fun QueryStatement.from(clause: FromClause): QueryStatement {
@@ -125,4 +132,42 @@ internal fun QueryStatement.orderBy(clause: OrderByClause): QueryStatement {
 
 fun QueryStatement.orderBy(vararg expresses: SortExpress): QueryStatement {
     return orderBy(OrderByClause(*expresses))
+}
+
+fun QueryStatement.limit(clause: LimitClause): QueryStatement {
+    this.limit = clause
+    return this
+}
+
+fun QueryStatement.limit(offset: Int, limit: Int): QueryStatement {
+    if (offset < 0) {
+        throw KomException("offset 不能小于 0")
+    }
+    if (limit <= 0) {
+        throw KomException("limit 不能小于等于 0")
+    }
+    return limit(LimitClause(offset, limit))
+}
+
+fun QueryStatement.limit(limit: Int): QueryStatement {
+    return limit(0, limit)
+}
+
+internal fun QueryStatement.execute(): QueryExecutor {
+    if (select == null) {
+        throw KomException("select 不能为空")
+    }
+    if (from == null) {
+        throw KomException("from 不能为空")
+    }
+    val bundle = generateStatement()
+    return this.executor.executeQuery(bundle, select!!.selectables)
+}
+
+fun QueryStatement.fetchOne(): QueryResult? {
+    return this.execute().fetchOne()
+}
+
+fun QueryStatement.fetchAll(): List<QueryResult> {
+    return this.execute().fetchAll()
 }
