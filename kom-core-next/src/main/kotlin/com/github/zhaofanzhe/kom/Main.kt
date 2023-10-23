@@ -5,18 +5,10 @@ import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
 import com.github.zhaofanzhe.kom.dsl.column.index
 import com.github.zhaofanzhe.kom.dsl.column.primaryKey
 import com.github.zhaofanzhe.kom.dsl.column.unique
-import com.github.zhaofanzhe.kom.dsl.express.eq
-import com.github.zhaofanzhe.kom.dsl.express.param
-import com.github.zhaofanzhe.kom.dsl.statement.ddl.addColumn
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.dropColumn
-import com.github.zhaofanzhe.kom.dsl.statement.ddl.modifyColumn
-import com.github.zhaofanzhe.kom.dsl.statement.dml.execute
-import com.github.zhaofanzhe.kom.dsl.statement.dml.where
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
-import com.github.zhaofanzhe.kom.dsl.toolkit.use
-import com.github.zhaofanzhe.kom.dsl.toolkit.useAnd
 import java.sql.Connection
 import java.sql.DriverManager
 

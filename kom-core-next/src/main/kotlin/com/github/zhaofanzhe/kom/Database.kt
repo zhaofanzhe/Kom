@@ -5,6 +5,7 @@ import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.AlterTableStatement
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.CreateTableStatement
+import com.github.zhaofanzhe.kom.dsl.statement.ddl.DropTableStatement
 import com.github.zhaofanzhe.kom.dsl.statement.dml.*
 import com.github.zhaofanzhe.kom.dsl.table.Table
 
@@ -38,4 +39,8 @@ fun Database.createTable(table: Table): CreateTableStatement {
 
 fun Database.alterTable(table: Table): AlterTableStatement {
     return AlterTableStatement(executor, table)
+}
+
+fun Database.dropTable(table: Table): DropTableStatement {
+    return DropTableStatement(executor, table)
 }

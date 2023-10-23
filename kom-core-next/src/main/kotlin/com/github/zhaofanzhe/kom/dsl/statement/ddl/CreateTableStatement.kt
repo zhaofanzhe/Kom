@@ -1,6 +1,7 @@
 package com.github.zhaofanzhe.kom.dsl.statement.ddl
 
 import com.github.zhaofanzhe.kom.core.Executor
+import com.github.zhaofanzhe.kom.core.execute
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
@@ -25,4 +26,8 @@ class CreateTableStatement(
         return Bundle(sql = sql)
     }
 
+}
+
+fun CreateTableStatement.execute(): Int {
+    return this.executor.execute(generateStatement())
 }
