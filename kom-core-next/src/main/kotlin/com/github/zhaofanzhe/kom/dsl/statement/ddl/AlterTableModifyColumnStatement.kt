@@ -4,7 +4,7 @@ import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.core.execute
 import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class AlterTableModifyColumnStatement(
     internal val executor: Executor,

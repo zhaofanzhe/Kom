@@ -7,7 +7,7 @@ import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class UpdateStatement(
     internal val executor: Executor,

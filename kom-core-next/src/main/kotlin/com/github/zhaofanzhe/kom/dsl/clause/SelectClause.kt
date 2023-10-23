@@ -1,7 +1,7 @@
 package com.github.zhaofanzhe.kom.dsl.clause
 
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class SelectClause(
     internal val selectables: List<Selectable>

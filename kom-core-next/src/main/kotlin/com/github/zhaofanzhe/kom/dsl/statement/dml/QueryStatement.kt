@@ -8,8 +8,8 @@ import com.github.zhaofanzhe.kom.dsl.express.SortExpress
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.TableRef
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
-import com.github.zhaofanzhe.kom.dsl.toolkit.mergeBundles
+import com.github.zhaofanzhe.kom.dsl.Bundle
+import com.github.zhaofanzhe.kom.dsl.mergeBundles
 import com.github.zhaofanzhe.kom.exception.KomException
 
 class QueryStatement(

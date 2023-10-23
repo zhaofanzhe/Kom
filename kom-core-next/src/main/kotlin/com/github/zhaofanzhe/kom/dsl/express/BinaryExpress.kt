@@ -1,7 +1,7 @@
 package com.github.zhaofanzhe.kom.dsl.express
 
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
-import com.github.zhaofanzhe.kom.dsl.toolkit.mergeBundles
+import com.github.zhaofanzhe.kom.dsl.Bundle
+import com.github.zhaofanzhe.kom.dsl.mergeBundles
 
 class BinaryExpress<R>(
     val op: String,

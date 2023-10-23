@@ -1,4 +1,4 @@
-package com.github.zhaofanzhe.kom.dsl.toolkit
+package com.github.zhaofanzhe.kom.dsl
 
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.express.ConditionExpress

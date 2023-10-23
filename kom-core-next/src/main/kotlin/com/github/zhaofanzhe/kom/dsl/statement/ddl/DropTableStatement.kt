@@ -4,7 +4,7 @@ import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.core.execute
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class DropTableStatement(
     val executor: Executor,

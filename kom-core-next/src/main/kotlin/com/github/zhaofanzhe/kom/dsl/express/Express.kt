@@ -1,6 +1,6 @@
 package com.github.zhaofanzhe.kom.dsl.express
 
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 interface Express<R> {
 

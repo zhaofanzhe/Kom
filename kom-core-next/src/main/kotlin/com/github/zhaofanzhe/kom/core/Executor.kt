@@ -2,7 +2,7 @@ package com.github.zhaofanzhe.kom.core
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class Executor(
     internal val factory: ConnectionFactory,

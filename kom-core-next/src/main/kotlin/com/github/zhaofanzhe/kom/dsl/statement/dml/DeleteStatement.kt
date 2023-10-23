@@ -6,7 +6,7 @@ import com.github.zhaofanzhe.kom.dsl.clause.WhereClause
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class DeleteStatement(
     internal val executor: Executor,

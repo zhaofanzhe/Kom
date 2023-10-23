@@ -3,7 +3,7 @@ package com.github.zhaofanzhe.kom.dsl.column
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.structure.ColumnStructure
 
 class Column<R>(
