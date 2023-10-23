@@ -11,9 +11,9 @@ class Column<R>(
     internal val type: String,
     internal var isPrimaryKey: Boolean = false,
     internal var isAutoIncrement: Boolean = false,
+    internal var isNullable: Boolean = false,
+    internal var isUnique: Boolean = false,
     internal var indexName: String? = null,
-    internal var nullable: Boolean = false,
-    internal var unique: Boolean = false,
     internal var comment: String? = null,
 ) : Express<R>, Selectable {
 
@@ -61,12 +61,12 @@ fun <R> Column<R>.index(indexName: String = this.name): Column<R> {
 }
 
 fun <R> Column<R>.nullable(): Column<R> {
-    this.nullable = true
+    this.isNullable = true
     return this
 }
 
 fun <R> Column<R>.unique(): Column<R> {
-    this.unique = true
+    this.isUnique = true
     return this
 }
 
