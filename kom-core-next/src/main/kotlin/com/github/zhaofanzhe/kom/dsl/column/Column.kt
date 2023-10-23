@@ -4,6 +4,7 @@ import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.toolkit.Bundle
+import com.github.zhaofanzhe.kom.structure.ColumnStructure
 
 class Column<R>(
     internal val table: Table,
@@ -73,4 +74,17 @@ fun <R> Column<R>.unique(): Column<R> {
 fun <R> Column<R>.comment(comment: String): Column<R> {
     this.comment = comment
     return this
+}
+
+fun Column<*>.toStructure(): ColumnStructure {
+    return ColumnStructure(
+        name = this.name,
+        type = this.type,
+        isPrimaryKey = this.isPrimaryKey,
+        isAutoIncrement = this.isAutoIncrement,
+        isNullable = this.isNullable,
+        isUnique = this.isUnique,
+        indexName = this.indexName,
+        comment = this.comment,
+    )
 }

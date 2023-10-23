@@ -1,6 +1,8 @@
 package com.github.zhaofanzhe.kom.dsl.table
 
 import com.github.zhaofanzhe.kom.dsl.column.Column
+import com.github.zhaofanzhe.kom.dsl.column.toStructure
+import com.github.zhaofanzhe.kom.structure.TableStructure
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -79,3 +81,11 @@ fun Table.datetime(name: String): Column<LocalDateTime> {
     return column(name, "datetime")
 }
 
+fun Table.toStructure(): TableStructure {
+    return TableStructure(
+        name = this.name,
+        columns = this.columns.map { it.toStructure() },
+        primaryKey = this.primaryKey.map { it.name },
+        indexes = this.indexes.map { entry -> entry.key to entry.value.map { it.name } }.toMap(),
+    )
+}
