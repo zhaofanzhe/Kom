@@ -3,10 +3,7 @@ package com.github.zhaofanzhe.kom
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
 import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
-import com.github.zhaofanzhe.kom.dsl.statement.dml.InsertStatement
-import com.github.zhaofanzhe.kom.dsl.statement.dml.QueryStatement
-import com.github.zhaofanzhe.kom.dsl.statement.dml.UpdateStatement
-import com.github.zhaofanzhe.kom.dsl.statement.dml.select
+import com.github.zhaofanzhe.kom.dsl.statement.dml.*
 import com.github.zhaofanzhe.kom.dsl.table.Table
 
 class Database(
@@ -23,6 +20,10 @@ fun Database.insert(table: Table): InsertStatement {
 
 fun Database.update(table: Table): UpdateStatement {
     return UpdateStatement(executor, table)
+}
+
+fun Database.delete(table: Table): DeleteStatement {
+    return DeleteStatement(executor, table)
 }
 
 fun Database.select(vararg selectables: Selectable): QueryStatement {

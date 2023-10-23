@@ -7,7 +7,6 @@ import com.github.zhaofanzhe.kom.dsl.column.unique
 import com.github.zhaofanzhe.kom.dsl.express.eq
 import com.github.zhaofanzhe.kom.dsl.express.param
 import com.github.zhaofanzhe.kom.dsl.statement.dml.execute
-import com.github.zhaofanzhe.kom.dsl.statement.dml.set
 import com.github.zhaofanzhe.kom.dsl.statement.dml.where
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
@@ -50,8 +49,10 @@ fun main() {
     val users = Users()
     val addresses = Addresses()
 
-    val statement = database.insert(users)
-        .set(users.username, "呵呵呵呵")
+    database.delete(users)
+        .where(useAnd {
+            use(users.id eq 1.param)
+        })
         .execute()
 
 }
