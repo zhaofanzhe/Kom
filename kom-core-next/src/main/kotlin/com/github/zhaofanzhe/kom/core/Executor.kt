@@ -15,3 +15,20 @@ fun Executor.executeQuery(bundle: Bundle, selectables: List<Selectable>): QueryE
         selectables = selectables,
     )
 }
+
+@Suppress("SqlSourceToSinkFlow")
+fun Executor.execute(bundle: Bundle): Int {
+    val connection = factory.getConnection()
+
+    val prepareStatement = connection.prepareStatement(bundle.sql)
+
+    bundle.args.forEachIndexed { index, value ->
+        prepareStatement.setObject(index + 1, value)
+    }
+
+    val result = prepareStatement.executeUpdate()
+
+    connection.close()
+
+    return result
+}

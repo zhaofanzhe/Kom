@@ -1,15 +1,19 @@
 package com.github.zhaofanzhe.kom
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
-import com.github.zhaofanzhe.kom.core.flat
 import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
 import com.github.zhaofanzhe.kom.dsl.column.primaryKey
 import com.github.zhaofanzhe.kom.dsl.column.unique
-import com.github.zhaofanzhe.kom.dsl.statement.dml.fetchAll
-import com.github.zhaofanzhe.kom.dsl.statement.dml.from
+import com.github.zhaofanzhe.kom.dsl.express.eq
+import com.github.zhaofanzhe.kom.dsl.express.param
+import com.github.zhaofanzhe.kom.dsl.statement.dml.execute
+import com.github.zhaofanzhe.kom.dsl.statement.dml.set
+import com.github.zhaofanzhe.kom.dsl.statement.dml.where
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
+import com.github.zhaofanzhe.kom.dsl.toolkit.use
+import com.github.zhaofanzhe.kom.dsl.toolkit.useAnd
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -46,12 +50,11 @@ fun main() {
     val users = Users()
     val addresses = Addresses()
 
-    val list = database
-        .select(users.id, users.username)
-        .from(users)
-        .fetchAll()
-        .flat<User>()
-
-    println(list)
+    database.update(users)
+        .set(users.username, "6666")
+        .where(useAnd {
+            use(users.id eq 1.param)
+        })
+        .execute()
 
 }
