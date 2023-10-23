@@ -50,11 +50,8 @@ fun main() {
     val users = Users()
     val addresses = Addresses()
 
-    database.update(users)
-        .set(users.username, "6666")
-        .where(useAnd {
-            use(users.id eq 1.param)
-        })
+    val statement = database.insert(users)
+        .set(users.username, "呵呵呵呵")
         .execute()
 
 }
