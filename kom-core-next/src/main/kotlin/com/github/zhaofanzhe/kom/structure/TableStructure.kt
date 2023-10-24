@@ -5,4 +5,5 @@ data class TableStructure(
     val columns: List<ColumnStructure>,
     val primaryKey: List<String>,
     val indexes: Map<String, List<String>>,
+    val uniqueIndexes: Map<String, List<String>>,
 )

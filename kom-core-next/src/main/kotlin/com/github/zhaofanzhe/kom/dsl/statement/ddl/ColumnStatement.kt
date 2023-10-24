@@ -1,8 +1,8 @@
 package com.github.zhaofanzhe.kom.dsl.statement.ddl
 
+import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
-import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class ColumnStatement(
     val column: Column<*>,
@@ -15,22 +15,19 @@ class ColumnStatement(
     companion object {
 
         fun generate(column: Column<*>): String {
-            var text = "`${column.name}` ${column.type}"
-            text += if (column.isNullable) {
-                " null"
+            val list = mutableListOf(column.name, column.type)
+            list += if (column.isNullable) {
+                "null"
             } else {
-                " not null"
-            }
-            if (column.isUnique) {
-                text += " unique"
+                "not null"
             }
             if (column.isAutoIncrement) {
-                text += " auto_increment"
+                list += "auto_increment"
             }
             if (column.comment != null) {
-                text += " comment '${column.comment}'"
+                list += "comment '${column.comment}'"
             }
-            return text
+            return list.joinToString(separator = " ")
         }
 
     }

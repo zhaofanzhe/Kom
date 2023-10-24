@@ -1,14 +1,12 @@
 package com.github.zhaofanzhe.kom
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
-import com.github.zhaofanzhe.kom.dsl.column.autoIncrement
-import com.github.zhaofanzhe.kom.dsl.column.index
-import com.github.zhaofanzhe.kom.dsl.column.primaryKey
-import com.github.zhaofanzhe.kom.dsl.column.unique
-import com.github.zhaofanzhe.kom.dsl.statement.ddl.dropColumn
+import com.github.zhaofanzhe.kom.dsl.column.*
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
+import com.github.zhaofanzhe.kom.toolkit.KomToolkit
+import com.github.zhaofanzhe.kom.toolkit.migrate
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -20,8 +18,9 @@ data class User(
 }
 
 class Users : Table("users") {
-    val id = int("id").primaryKey().autoIncrement()
-    val username = varchar("username").unique().index()
+    val id = int("id").primaryKey().autoIncrement().comment("编号")
+    val username = varchar("username").unique().comment("用户名")
+    val password = varchar("password").comment("密码")
 }
 
 class Addresses : Table("addresses") {
@@ -43,10 +42,7 @@ fun main() {
     val database = Database(getMySQLConnectionFactory())
 
     val users = Users()
-    val addresses = Addresses()
 
-    val statement = database.alterTable(users).dropColumn(users.username).generateStatement()
-
-    println(statement.sql)
+    KomToolkit.migrate(database, users)
 
 }

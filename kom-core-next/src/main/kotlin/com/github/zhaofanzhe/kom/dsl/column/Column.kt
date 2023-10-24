@@ -1,23 +1,19 @@
 package com.github.zhaofanzhe.kom.dsl.column
 
+import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.structure.ColumnStructure
 
 class Column<R>(
     internal val table: Table,
     internal val name: String,
     internal val type: String,
-    internal var isPrimaryKey: Boolean = false,
     internal var isAutoIncrement: Boolean = false,
     internal var isNullable: Boolean = false,
-    internal var isUnique: Boolean = false,
-    internal var indexName: String? = null,
     internal var comment: String? = null,
 ) : Express<R>, Selectable {
-
 
     private fun fullColumnName(): String {
         return "${this.table.tableName()}.`${this.name}`"
@@ -40,8 +36,6 @@ class Column<R>(
 }
 
 fun <R> Column<R>.primaryKey(): Column<R> {
-    if (this.isPrimaryKey) return this
-    this.isPrimaryKey = true
     this.table.primaryKey += this
     return this
 }
@@ -53,10 +47,8 @@ fun <R> Column<R>.autoIncrement(): Column<R> {
 }
 
 fun <R> Column<R>.index(indexName: String = this.name): Column<R> {
-    if (this.indexName != null) return this
-    this.indexName = indexName
     val columns =
-        this.table.indexes[indexName] ?: mutableListOf<Column<*>>().also { this.table.indexes += (indexName to it) }
+        this.table.indexes[indexName] ?: mutableSetOf<Column<*>>().also { this.table.indexes += (indexName to it) }
     columns += this
     return this
 }
@@ -66,8 +58,10 @@ fun <R> Column<R>.nullable(): Column<R> {
     return this
 }
 
-fun <R> Column<R>.unique(): Column<R> {
-    this.isUnique = true
+fun <R> Column<R>.unique(indexName: String = this.name): Column<R> {
+    val columns = this.table.uniqueIndexes[indexName]
+        ?: mutableSetOf<Column<*>>().also { this.table.uniqueIndexes += (indexName to it) }
+    columns += this
     return this
 }
 
@@ -80,11 +74,8 @@ fun Column<*>.toStructure(): ColumnStructure {
     return ColumnStructure(
         name = this.name,
         type = this.type,
-        isPrimaryKey = this.isPrimaryKey,
         isAutoIncrement = this.isAutoIncrement,
         isNullable = this.isNullable,
-        isUnique = this.isUnique,
-        indexName = this.indexName,
         comment = this.comment,
     )
 }

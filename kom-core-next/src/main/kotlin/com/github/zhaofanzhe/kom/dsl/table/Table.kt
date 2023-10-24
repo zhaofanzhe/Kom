@@ -16,9 +16,11 @@ open class Table(
 
     internal val columns: MutableList<Column<*>> = mutableListOf()
 
-    internal val primaryKey: MutableList<Column<*>> = mutableListOf()
+    internal val primaryKey: MutableSet<Column<*>> = mutableSetOf()
 
-    internal val indexes: MutableMap<String, MutableList<Column<*>>> = mutableMapOf()
+    internal val indexes: MutableMap<String, MutableSet<Column<*>>> = mutableMapOf()
+
+    internal val uniqueIndexes: MutableMap<String, MutableSet<Column<*>>> = mutableMapOf()
 
     override fun tableDefine(): String {
         if (this.alias != null) {
@@ -61,8 +63,8 @@ fun Table.char(name: String, size: Int = 256): Column<String> {
     return column(name, "char(${size})")
 }
 
-fun Table.int(name: String, size: Int = 11): Column<Int> {
-    return column(name, "int(${size})")
+fun Table.int(name: String): Column<Int> {
+    return column(name, "int")
 }
 
 fun Table.decimal(name: String, precision: Int = 13, scale: Int = 2): Column<BigDecimal> {
@@ -87,5 +89,6 @@ fun Table.toStructure(): TableStructure {
         columns = this.columns.map { it.toStructure() },
         primaryKey = this.primaryKey.map { it.name },
         indexes = this.indexes.map { entry -> entry.key to entry.value.map { it.name } }.toMap(),
+        uniqueIndexes = this.uniqueIndexes.map { entry -> entry.key to entry.value.map { it.name } }.toMap(),
     )
 }
