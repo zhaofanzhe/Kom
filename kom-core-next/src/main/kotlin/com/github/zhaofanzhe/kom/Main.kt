@@ -20,7 +20,7 @@ data class User(
 class Users : Table("users") {
     val id = int("id").primaryKey().autoIncrement().comment("编号")
     val username = varchar("username").unique().comment("用户名")
-    val password = varchar("password").comment("密码")
+    val password = varchar("password").comment("密码").index()
 }
 
 class Addresses : Table("addresses") {

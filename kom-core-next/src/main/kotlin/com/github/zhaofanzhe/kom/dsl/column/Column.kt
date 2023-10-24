@@ -35,21 +35,9 @@ class Column<R>(
 
 }
 
-fun <R> Column<R>.primaryKey(): Column<R> {
-    this.table.primaryKey += this
-    return this
-}
-
 fun <R> Column<R>.autoIncrement(): Column<R> {
     if (this.isAutoIncrement) return this
     this.isAutoIncrement = true
-    return this
-}
-
-fun <R> Column<R>.index(indexName: String = this.name): Column<R> {
-    val columns =
-        this.table.indexes[indexName] ?: mutableSetOf<Column<*>>().also { this.table.indexes += (indexName to it) }
-    columns += this
     return this
 }
 
@@ -58,15 +46,25 @@ fun <R> Column<R>.nullable(): Column<R> {
     return this
 }
 
-fun <R> Column<R>.unique(indexName: String = this.name): Column<R> {
-    val columns = this.table.uniqueIndexes[indexName]
-        ?: mutableSetOf<Column<*>>().also { this.table.uniqueIndexes += (indexName to it) }
-    columns += this
+fun <R> Column<R>.comment(comment: String): Column<R> {
+    this.comment = comment
     return this
 }
 
-fun <R> Column<R>.comment(comment: String): Column<R> {
-    this.comment = comment
+fun <R> Column<R>.primaryKey(): Column<R> {
+    this.table.primaryKey += this
+    return this
+}
+
+fun <R> Column<R>.index(indexName: String = this.name): Column<R> {
+    val finalIndexName = "${table.name}_${indexName}_index"
+    this.table.indexes.getOrPut(finalIndexName) { mutableSetOf() } += this
+    return this
+}
+
+fun <R> Column<R>.unique(indexName: String = this.name): Column<R> {
+    val finalIndexName = "${table.name}_${indexName}_uindex"
+    this.table.uniqueIndexes.getOrPut(finalIndexName) { mutableSetOf() } += this
     return this
 }
 

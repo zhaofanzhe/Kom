@@ -19,10 +19,10 @@ class CreateTableStatement(
         }
         list += "primary key (${this.table.primaryKey.joinToString(", ") { "`${it.name}`" }})"
         for (index in this.table.indexes) {
-            list += "index ${this.table.name}_${index.key}_index (${index.value.joinToString(separator = ", ") { "`${it.name}`" }})"
+            list += "index ${index.key} (${index.value.joinToString(separator = ", ") { "`${it.name}`" }})"
         }
         for (index in this.table.uniqueIndexes) {
-            list += "unique index ${this.table.name}_${index.key}_uindex (${index.value.joinToString(separator = ", ") { "`${it.name}`" }})"
+            list += "unique index ${index.key} (${index.value.joinToString(separator = ", ") { "`${it.name}`" }})"
         }
         sql += list.joinToString(separator = ", \r\n") { "    $it" }
         sql += "\r\n)"

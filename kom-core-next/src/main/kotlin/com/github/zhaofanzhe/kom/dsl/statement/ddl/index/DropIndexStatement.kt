@@ -1,24 +1,24 @@
-package com.github.zhaofanzhe.kom.dsl.statement.ddl
+package com.github.zhaofanzhe.kom.dsl.statement.ddl.index
 
 import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.core.execute
-import com.github.zhaofanzhe.kom.dsl.column.Column
-import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.Bundle
+import com.github.zhaofanzhe.kom.dsl.statement.Statement
+import com.github.zhaofanzhe.kom.dsl.statement.ddl.AlterTableStatement
 
-class AlterTableModifyColumnStatement(
+class DropIndexStatement(
     internal val executor: Executor,
     internal val statement: AlterTableStatement,
-    internal val column: Column<*>,
+    internal val indexName: String,
 ) : Statement {
 
     override fun generateStatement(): Bundle {
         val bundle = statement.generateStatement()
-        return Bundle("${bundle.sql} modify column ${ColumnStatement.generate(column)}")
+        return Bundle("${bundle.sql} drop index $indexName")
     }
 
 }
 
-fun AlterTableModifyColumnStatement.execute(): Int {
+fun DropIndexStatement.execute(): Int {
     return this.executor.execute(generateStatement())
 }

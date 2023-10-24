@@ -5,7 +5,10 @@ import com.github.zhaofanzhe.kom.alterTable
 import com.github.zhaofanzhe.kom.connection.execute
 import com.github.zhaofanzhe.kom.createTable
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.addColumn
+import com.github.zhaofanzhe.kom.dsl.statement.ddl.addIndex
+import com.github.zhaofanzhe.kom.dsl.statement.ddl.column.execute
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.execute
+import com.github.zhaofanzhe.kom.dsl.statement.ddl.index.execute
 import com.github.zhaofanzhe.kom.dsl.statement.ddl.modifyColumn
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.toStructure
@@ -68,13 +71,35 @@ fun KomToolkit.Companion.getTableStructure(connection: Connection, tableName: St
         )
     }
 
-    // TODO primaryKey indexes uniqueIndexes 暂未实现
+    val primaryKey = mutableListOf<String>()
+
+    val indexes = mutableMapOf<String, MutableList<String>>()
+
+    val uniqueIndexes = mutableMapOf<String, MutableList<String>>()
+
+    resultSet = connection.metaData.getIndexInfo(connection.catalog, connection.schema, tableName, false, false)
+
+    while (resultSet.next()) {
+        val indexName = resultSet.getString("INDEX_NAME")!!
+        val isUnique = resultSet.getString("NON_UNIQUE") == "0"
+        val columnName = resultSet.getString("COLUMN_NAME")!!
+        if (indexName == "PRIMARY") {
+            primaryKey += columnName
+            continue
+        }
+        if (isUnique) {
+            uniqueIndexes.getOrPut(indexName) { mutableListOf() } += columnName
+        } else {
+            indexes.getOrPut(indexName) { mutableListOf() } += columnName
+        }
+    }
+
     return TableStructure(
         name = tableName,
         columns = columns,
-        primaryKey = listOf(),
-        indexes = mapOf(),
-        uniqueIndexes = mapOf(),
+        primaryKey = primaryKey,
+        indexes = indexes,
+        uniqueIndexes = uniqueIndexes,
     )
 }
 
@@ -105,6 +130,20 @@ fun KomToolkit.Companion.migrate(database: Database, table: Table) {
             if (sourceColumn != targetColumn) {
                 val column = table.columns.find { it.name == sourceColumn.name }!!
                 database.alterTable(table).modifyColumn(column).execute()
+                continue
+            }
+        }
+        for ((key, _) in source.indexes) {
+            if (!target.indexes.containsKey(key)) {
+                val columns = table.indexes[key]!!
+                database.alterTable(table).addIndex(key, false, columns.toList()).execute()
+                continue
+            }
+        }
+        for ((key, _) in source.uniqueIndexes) {
+            if (!target.uniqueIndexes.containsKey(key)) {
+                val columns = table.uniqueIndexes[key]!!
+                database.alterTable(table).addIndex(key, true, columns.toList()).execute()
                 continue
             }
         }
