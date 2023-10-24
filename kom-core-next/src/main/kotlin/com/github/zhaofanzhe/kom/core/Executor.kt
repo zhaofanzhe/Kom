@@ -1,8 +1,9 @@
 package com.github.zhaofanzhe.kom.core
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
-import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import com.github.zhaofanzhe.kom.dsl.Bundle
+import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
+import java.sql.Statement
 
 class Executor(
     internal val factory: ConnectionFactory,
@@ -27,6 +28,31 @@ fun Executor.execute(bundle: Bundle): Int {
     }
 
     val result = prepareStatement.executeUpdate()
+
+    connection.close()
+
+    return result
+}
+
+@Suppress("SqlSourceToSinkFlow")
+fun Executor.executeCreate(bundle: Bundle): Long? {
+    val connection = factory.getConnection()
+
+    val prepareStatement = connection.prepareStatement(bundle.sql, Statement.RETURN_GENERATED_KEYS)
+
+    bundle.args.forEachIndexed { index, value ->
+        prepareStatement.setObject(index + 1, value)
+    }
+
+    prepareStatement.executeUpdate()
+
+    val generatedKeys = prepareStatement.generatedKeys
+
+    val result = if (generatedKeys.next()) {
+        generatedKeys.getLong(1)
+    } else {
+        null
+    }
 
     connection.close()
 
