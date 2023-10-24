@@ -1,6 +1,7 @@
 package com.github.zhaofanzhe.kom.core
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
+import com.github.zhaofanzhe.kom.connection.execute
 import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.dsl.selectable.Selectable
 import java.sql.ResultSet
@@ -13,22 +14,13 @@ class QueryExecutor(
 
 @Suppress("SqlSourceToSinkFlow")
 private fun <T> QueryExecutor.execute(fn: (resultSet: ResultSet) -> T): T {
-    val connection = factory.getConnection()
-
-    println(bundle.sql)
-    println(bundle.args)
-
-    val prepareStatement = connection.prepareStatement(bundle.sql)
-
-    bundle.args.forEachIndexed { index, value ->
-        prepareStatement.setObject(index + 1, value)
+    return factory.execute { connection ->
+        val prepareStatement = connection.prepareStatement(bundle.sql)
+        bundle.args.forEachIndexed { index, value ->
+            prepareStatement.setObject(index + 1, value)
+        }
+        return@execute fn(prepareStatement.executeQuery())
     }
-
-    val result = fn(prepareStatement.executeQuery())
-
-    connection.close()
-
-    return result
 }
 
 fun QueryExecutor.fetchOne(): QueryResult? {

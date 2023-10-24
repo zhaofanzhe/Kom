@@ -1,42 +1,19 @@
 package com.github.zhaofanzhe.kom.dsl.entity
 
 import com.github.zhaofanzhe.kom.Database
-import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.statement.dml.execute
 import com.github.zhaofanzhe.kom.dsl.statement.dml.set
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.insert
+import com.github.zhaofanzhe.kom.toolkit.*
 import kotlin.reflect.KClass
-import kotlin.reflect.KMutableProperty1
-import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.starProjectedType
-import kotlin.reflect.jvm.isAccessible
 
 open class Entity<T : Table>(
     internal val clazz: KClass<T>
 )
 
-@Suppress("UNCHECKED_CAST")
-private fun <T : Any> getPropertyValue(instance: T, name: String): Any? {
-    val property = instance::class.memberProperties.find { it.name == name }
-            as? KProperty1<Any, Any?> ?: return null
-    property.isAccessible = true
-    val value = property.get(instance)
-    property.isAccessible = false
-    return value
-}
-
-@Suppress("UNCHECKED_CAST")
-private fun <T : Any> setPropertyValue(instance: T, name: String, value: Any?) {
-    val property = instance::class.memberProperties.find { it.name == name }
-            as? KMutableProperty1<Any, Any?> ?: return
-    property.isAccessible = true
-    property.set(instance, value)
-    property.isAccessible = false
-}
-
-@Suppress("UNCHECKED_CAST")
 fun <T : Table> Database.create(entity: Entity<T>) {
 
     val constructor = entity.clazz.constructors.find { it.parameters.isEmpty() }
@@ -44,14 +21,13 @@ fun <T : Table> Database.create(entity: Entity<T>) {
 
     val table = constructor.call()
 
-    val entityProperties = entity::class.memberProperties
-        .mapNotNull { it as? KMutableProperty1<Any, Any?> }
+    val entityFieldNames = ReflectionUtil.getEntityFieldNames(entity)
 
     var expr = insert(table)
 
-    for (entityProperty in entityProperties) {
-        val column = getPropertyValue(table, entityProperty.name) as? Column<*> ?: continue
-        val value = getPropertyValue(entity, entityProperty.name)
+    for (entityFieldName in entityFieldNames) {
+        val column = ReflectionUtil.getTableColumn(table, entityFieldName) ?: continue
+        val value = ReflectionUtil.getFieldValue(entity, entityFieldName)
         expr = expr.set(column, value)
     }
 
@@ -72,7 +48,7 @@ fun <T : Table> Database.create(entity: Entity<T>) {
     }
 
     // table 中主键的 字段名
-    val fieldName = entity.clazz.memberProperties.find { getPropertyValue(table, it.name) == column }?.name ?: return
+    val fieldName = ReflectionUtil.getTableFieldName(table, column) ?: return
 
     // 主键类型
     val pkType = entity::class.memberProperties.find { it.name == fieldName }?.returnType ?: return
@@ -87,5 +63,5 @@ fun <T : Table> Database.create(entity: Entity<T>) {
     }
 
     // 主键回写
-    setPropertyValue(entity, fieldName, value)
+    ReflectionUtil.setFieldValue(entity, fieldName, value)
 }
