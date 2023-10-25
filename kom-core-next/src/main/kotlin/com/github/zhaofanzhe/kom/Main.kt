@@ -49,8 +49,6 @@ fun main() {
 
     val users = Users()
 
-//    database.insert(users)
-
     KomToolkit.migrate(database, users)
 
     val user = User()
