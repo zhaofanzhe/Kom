@@ -3,6 +3,7 @@ package com.github.zhaofanzhe.kom.toolkit
 import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.entity.Entity
 import com.github.zhaofanzhe.kom.dsl.table.Table
+import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.isSupertypeOf
@@ -17,6 +18,12 @@ class ReflectionUtil {
 
     companion object
 
+}
+
+fun <T : Any> ReflectionUtil.Companion.newInstance(clazz: KClass<T>): T {
+    val constructor = clazz.constructors.find { it.parameters.isEmpty() }
+        ?: throw RuntimeException("未找到默认构造器")
+    return constructor.call()
 }
 
 /**
@@ -54,6 +61,22 @@ fun ReflectionUtil.Companion.setFieldValue(instance: Any, field: String, value: 
             as? KMutableProperty1<Any, Any?> ?: return
     safeAccessibleScope(property) {
         set(instance, value)
+    }
+}
+
+/**
+ * 设置字段的值
+ */
+@Suppress("UNCHECKED_CAST")
+fun ReflectionUtil.Companion.setFieldValueWithConvert(instance: Any, field: String, value: Any?) {
+    val property = instance::class.memberProperties.find { it.name == field }
+            as? KMutableProperty1<Any, Any?> ?: return
+    safeAccessibleScope(property) {
+        if (value == null) {
+            set(instance, null)
+        } else {
+            set(instance, TypeConverter.convert(value, property.returnType.classifier as KClass<*>))
+        }
     }
 }
 

@@ -37,7 +37,7 @@ fun QueryExecutor.fetchOne(): QueryResult? {
         }
         val result = QueryResult()
         this.selectables.forEachIndexed { index, selectable ->
-            result[selectable] = resultSet.getObject(index);
+            result[selectable] = resultSet.getObject(index + 1)
         }
         return@execute result
     }

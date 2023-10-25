@@ -1,9 +1,14 @@
 package com.github.zhaofanzhe.kom
 
 import com.github.zhaofanzhe.kom.connection.ConnectionFactory
+import com.github.zhaofanzhe.kom.core.fill
 import com.github.zhaofanzhe.kom.dsl.column.*
 import com.github.zhaofanzhe.kom.dsl.entity.Entity
-import com.github.zhaofanzhe.kom.dsl.entity.create
+import com.github.zhaofanzhe.kom.dsl.entity.find
+import com.github.zhaofanzhe.kom.dsl.express.eq
+import com.github.zhaofanzhe.kom.dsl.express.param
+import com.github.zhaofanzhe.kom.dsl.statement.dml.fetchOne
+import com.github.zhaofanzhe.kom.dsl.statement.dml.where
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.datetime
 import com.github.zhaofanzhe.kom.dsl.table.int
@@ -19,11 +24,11 @@ open class BaseEntity<T : Table>(
     clazz: KClass<T>,
 ) : Entity<T>(clazz) {
 
-   var createdAt: LocalDateTime? = null
+    var createdAt: LocalDateTime? = null
 
-   var updateAt: LocalDateTime? = null
+    var updateAt: LocalDateTime? = null
 
-   var deleteAt: LocalDateTime? = null
+    var deleteAt: LocalDateTime? = null
 
 }
 
@@ -67,13 +72,9 @@ fun main() {
 
     KomToolkit.migrate(database, users)
 
-    val user = User()
-
-    user.username = "张三"
-
-    println(user)
-
-    database.create(user)
+    val user = database.selectFrom(users)
+        .where { users.id eq 1.param }
+        .fetchOne()?.fill<User>() ?: return
 
     println(user)
 

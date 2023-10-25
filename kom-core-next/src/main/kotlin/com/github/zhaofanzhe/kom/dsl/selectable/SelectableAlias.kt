@@ -18,8 +18,6 @@ class SelectableAlias(
         )
     }
 
-    override fun flatName(): String = alias
-
 }
 
 fun Selectable.alias(alias: String): SelectableAlias {

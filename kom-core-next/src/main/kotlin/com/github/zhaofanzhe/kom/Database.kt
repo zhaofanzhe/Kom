@@ -33,6 +33,10 @@ fun Database.select(vararg selectables: Selectable): QueryStatement {
     return QueryStatement(executor).apply { select(*selectables) }
 }
 
+fun Database.selectFrom(table: Table): QueryStatement {
+    return QueryStatement(executor).apply { select(*table.columns.toTypedArray()).from(table) }
+}
+
 fun Database.createTable(table: Table): CreateTableStatement {
     return CreateTableStatement(executor, table)
 }

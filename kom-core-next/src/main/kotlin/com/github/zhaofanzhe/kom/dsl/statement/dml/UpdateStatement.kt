@@ -14,7 +14,7 @@ class UpdateStatement(
     internal val table: Table,
 ) : Statement {
 
-    internal val defaultValues = mutableMapOf<Column<*>, Any?>()
+    internal val updateValues = mutableMapOf<Column<*>, Any?>()
 
     internal val values = mutableMapOf<Column<*>, Any?>()
 
@@ -22,9 +22,9 @@ class UpdateStatement(
 
     init {
         table.columns.filter { it.update != null }.forEach {
-            defaultValues[it] = it.update?.invoke()
+            updateValues[it] = it.update?.invoke()
         }
-        values.putAll(defaultValues)
+        values.putAll(updateValues)
     }
 
     override fun generateStatement(): Bundle {
