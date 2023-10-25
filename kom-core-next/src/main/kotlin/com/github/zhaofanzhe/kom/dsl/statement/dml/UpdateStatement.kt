@@ -2,12 +2,12 @@ package com.github.zhaofanzhe.kom.dsl.statement.dml
 
 import com.github.zhaofanzhe.kom.core.Executor
 import com.github.zhaofanzhe.kom.core.execute
+import com.github.zhaofanzhe.kom.dsl.Bundle
 import com.github.zhaofanzhe.kom.dsl.clause.WhereClause
 import com.github.zhaofanzhe.kom.dsl.column.Column
 import com.github.zhaofanzhe.kom.dsl.express.Express
 import com.github.zhaofanzhe.kom.dsl.statement.Statement
 import com.github.zhaofanzhe.kom.dsl.table.Table
-import com.github.zhaofanzhe.kom.dsl.Bundle
 
 class UpdateStatement(
     internal val executor: Executor,
@@ -17,6 +17,12 @@ class UpdateStatement(
     internal val updates = mutableMapOf<Column<*>, Any?>()
 
     internal var where: WhereClause? = null
+
+    init {
+        table.columns.filter { it.update != null }.forEach {
+            updates[it] = it.update?.invoke()
+        }
+    }
 
     override fun generateStatement(): Bundle {
         var sql = "update ${table.tableDefine()}\r\n"

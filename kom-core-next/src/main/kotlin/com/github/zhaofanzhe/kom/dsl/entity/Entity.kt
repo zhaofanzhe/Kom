@@ -38,7 +38,7 @@ fun <T : Table> Database.create(entity: Entity<T>) {
 
     for (entityFieldName in entityFieldNames) {
         val column = ReflectionUtil.getTableColumn(table, entityFieldName) ?: continue
-        val value = ReflectionUtil.getFieldValue(entity, entityFieldName)
+        val value = ReflectionUtil.getFieldValue(entity, entityFieldName) ?: continue
         expr = expr.set(column, value)
     }
 

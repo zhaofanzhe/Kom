@@ -14,6 +14,12 @@ class InsertStatement(
 
     internal val updates = mutableMapOf<Column<*>, Any?>()
 
+    init {
+        table.columns.filter { it.default != null }.forEach {
+            updates[it] = it.default?.invoke()
+        }
+    }
+
     override fun generateStatement(): Bundle {
         var sql = "insert into `${table.name}` "
         val args = mutableListOf<Any?>()

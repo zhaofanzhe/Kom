@@ -38,6 +38,9 @@ fun Executor.execute(bundle: Bundle): Int {
 fun Executor.executeCreate(bundle: Bundle): Long? {
     val connection = factory.getConnection()
 
+    println(bundle.sql)
+    println(bundle.args)
+
     val prepareStatement = connection.prepareStatement(bundle.sql, Statement.RETURN_GENERATED_KEYS)
 
     bundle.args.forEachIndexed { index, value ->

@@ -13,6 +13,8 @@ class Column<R>(
     internal var isAutoIncrement: Boolean = false,
     internal var isNullable: Boolean = false,
     internal var comment: String? = null,
+    internal var default: (() -> R)? = null,
+    internal var update: (() -> R)? = null,
 ) : Express<R>, Selectable {
 
     private fun fullColumnName(): String {
@@ -65,6 +67,19 @@ fun <R> Column<R>.index(indexName: String = this.name): Column<R> {
 fun <R> Column<R>.unique(indexName: String = this.name): Column<R> {
     val finalIndexName = "${table.name}_${indexName}_uindex"
     this.table.uniqueIndexes.getOrPut(finalIndexName) { mutableSetOf() } += this
+    return this
+}
+
+fun <R> Column<R>.default(fn: () -> R): Column<R> {
+    this.default = fn
+    return this
+}
+
+fun <R> Column<R>.update(withDefault: Boolean = false, fn: () -> R): Column<R> {
+    this.update = fn
+    if (withDefault) {
+        this.default = fn
+    }
     return this
 }
 
