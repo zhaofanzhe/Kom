@@ -6,7 +6,9 @@ import com.github.zhaofanzhe.kom.dsl.column.comment
 import com.github.zhaofanzhe.kom.dsl.column.index
 import com.github.zhaofanzhe.kom.dsl.column.primaryKey
 import com.github.zhaofanzhe.kom.dsl.entity.Entity
-import com.github.zhaofanzhe.kom.dsl.entity.create
+import com.github.zhaofanzhe.kom.dsl.entity.delete
+import com.github.zhaofanzhe.kom.dsl.express.eq
+import com.github.zhaofanzhe.kom.dsl.express.param
 import com.github.zhaofanzhe.kom.dsl.table.Table
 import com.github.zhaofanzhe.kom.dsl.table.int
 import com.github.zhaofanzhe.kom.dsl.table.varchar
@@ -51,13 +53,8 @@ fun main() {
 
     KomToolkit.migrate(database, users)
 
-    val user = User()
+    database.delete(User()) { it.id eq 3.param }
 
-    user.username = "你好"
-    user.password = "测试"
-
-    database.create(user)
-
-    println(user)
+    database.delete(User().also { it.id = 4 })
 
 }
