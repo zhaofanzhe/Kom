@@ -12,21 +12,24 @@ class InsertStatement(
     internal val table: Table,
 ) : Statement {
 
-    internal val updates = mutableMapOf<Column<*>, Any?>()
+    internal val defaultValues = mutableMapOf<Column<*>, Any?>()
+
+    internal val values = mutableMapOf<Column<*>, Any?>()
 
     init {
         table.columns.filter { it.default != null }.forEach {
-            updates[it] = it.default?.invoke()
+            defaultValues[it] = it.default?.invoke()
         }
+        values.putAll(defaultValues)
     }
 
     override fun generateStatement(): Bundle {
         var sql = "insert into `${table.name}` "
         val args = mutableListOf<Any?>()
 
-        sql += "(${updates.map { it.key.generateSelectable().sql }.joinToString(", ")}) "
-        sql += "values (${updates.map { '?' }.joinToString(", ")})"
-        args.addAll(updates.map { it.value })
+        sql += "(${values.map { it.key.generateSelectable().sql }.joinToString(", ")}) "
+        sql += "values (${values.map { '?' }.joinToString(", ")})"
+        args.addAll(values.map { it.value })
 
         return Bundle(
             sql = sql,
@@ -37,7 +40,7 @@ class InsertStatement(
 }
 
 fun InsertStatement.set(key: Column<*>, value: Any?): InsertStatement {
-    this.updates += key to value
+    this.values += key to value
     return this
 }
 

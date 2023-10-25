@@ -19,20 +19,25 @@ open class BaseEntity<T : Table>(
     clazz: KClass<T>,
 ) : Entity<T>(clazz) {
 
-    var createdAt: LocalDateTime? = null
+   var createdAt: LocalDateTime? = null
 
-    var updateAt: LocalDateTime? = null
+   var updateAt: LocalDateTime? = null
 
-    var deleteAt: LocalDateTime? = null
+   var deleteAt: LocalDateTime? = null
 
 }
 
-data class User(
-    var id: Int = 0,
-    var username: String = "",
-    var password: String = "",
-) : BaseEntity<Users>(Users::class) {
-    constructor() : this(id = 0, username = "", password = "")
+class User : BaseEntity<Users>(Users::class) {
+
+    var id: Int = 0
+
+    var username: String = ""
+
+    var password: String = ""
+    override fun toString(): String {
+        return "User(createdAt=$createdAt, updateAt=$updateAt, deleteAt=$deleteAt, id=$id, username='$username', password='$password')"
+    }
+
 }
 
 open class BaseTable(name: String) : Table(name) {
@@ -66,6 +71,10 @@ fun main() {
 
     user.username = "张三"
 
+    println(user)
+
     database.create(user)
+
+    println(user)
 
 }

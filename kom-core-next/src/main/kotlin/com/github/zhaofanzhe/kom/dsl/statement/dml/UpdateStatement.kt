@@ -14,22 +14,25 @@ class UpdateStatement(
     internal val table: Table,
 ) : Statement {
 
-    internal val updates = mutableMapOf<Column<*>, Any?>()
+    internal val defaultValues = mutableMapOf<Column<*>, Any?>()
+
+    internal val values = mutableMapOf<Column<*>, Any?>()
 
     internal var where: WhereClause? = null
 
     init {
         table.columns.filter { it.update != null }.forEach {
-            updates[it] = it.update?.invoke()
+            defaultValues[it] = it.update?.invoke()
         }
+        values.putAll(defaultValues)
     }
 
     override fun generateStatement(): Bundle {
         var sql = "update ${table.tableDefine()}\r\n"
         val args = mutableListOf<Any?>()
 
-        sql += "set ${updates.map { "${it.key.generateSelectable().sql} = ?" }.joinToString(", ")}\r\n"
-        args.addAll(updates.map { it.value })
+        sql += "set ${values.map { "${it.key.generateSelectable().sql} = ?" }.joinToString(", ")}\r\n"
+        args.addAll(values.map { it.value })
 
         if (where != null) {
             val bundle = where!!.generateClause()
@@ -46,7 +49,7 @@ class UpdateStatement(
 }
 
 fun UpdateStatement.set(key: Column<*>, value: Any?): UpdateStatement {
-    this.updates += key to value
+    this.values += key to value
     return this
 }
 

@@ -92,3 +92,39 @@ fun ReflectionUtil.Companion.getTableFieldName(table: Table, column: Column<*>):
 fun ReflectionUtil.Companion.getTableColumn(table: Table, field: String): Column<*>? {
     return getFieldValue(table, field) as? Column<*> ?: return null
 }
+
+/**
+ * 设置 entity 的主键
+ */
+fun ReflectionUtil.Companion.setEntityPrimaryKey(table: Table, entity: Entity<*>, value: Long) {
+    // 主键字段数量不是1
+    if (table.primaryKey.size != 1) {
+        return
+    }
+
+    // 取出列
+    val column = table.primaryKey.find { true }!!
+
+    // 不是自增主键
+    if (!column.isAutoIncrement) {
+        return
+    }
+
+    // table 中主键的 字段名
+    val fieldName = ReflectionUtil.getTableFieldName(table, column) ?: return
+
+    // 主键类型
+    val pkType = entity::class.memberProperties.find { it.name == fieldName }?.returnType ?: return
+
+    // 转换数据
+    val pk = when (pkType) {
+        Byte::class.starProjectedType -> value.toByte()
+        Short::class.starProjectedType -> value.toShort()
+        Int::class.starProjectedType -> value.toInt()
+        Long::class.starProjectedType -> value
+        else -> throw RuntimeException("无法转换类型")
+    }
+
+    // 主键回写
+    ReflectionUtil.setFieldValue(entity, fieldName, pk)
+}
