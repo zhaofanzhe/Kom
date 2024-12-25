@@ -4,13 +4,7 @@ import com.github.zhaofanzhe.kom.table.Column
 import com.github.zhaofanzhe.kom.table.FieldDelegate
 import kotlin.reflect.KProperty
 
-// 基础模型类
-abstract class Model(tableName: String? = null, primaryKey: KProperty<*>? = null) {
-
-    companion object
-
-}
-
+abstract class Model(val tableName: String? = null, val primaryKey: KProperty<*>? = null)
 
 fun int(primaryKey: Boolean = false) =
     FieldDelegate(0, Column("", "INT", false, primaryKey))
