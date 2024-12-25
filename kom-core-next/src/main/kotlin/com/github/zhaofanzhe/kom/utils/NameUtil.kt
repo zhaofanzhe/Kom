@@ -3,7 +3,7 @@ package com.github.zhaofanzhe.kom.utils
 import com.github.zhaofanzhe.kom.KomException
 import kotlin.reflect.KClass
 
-object NameUtils {
+object NameUtil {
 
     fun toColumnName(fieldName: String): String {
         val words = toWords(fieldName)
