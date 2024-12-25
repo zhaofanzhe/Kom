@@ -1,3 +1,5 @@
 package com.github.zhaofanzhe.kom.table
 
-class Table(val name: String, val columns: List<Column>)
+abstract class Table(val tableName: String) {
+    protected fun <T> column(columnName: String) = Column<T>(columnName)
+}
