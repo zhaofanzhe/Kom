@@ -10,6 +10,7 @@
 
     <modules>
         <module>kom-core</module>
+        <module>kom-core-next</module>
         <module>kom-support-mysql</module>
         <module>kom-support-postgresql</module>
         <module>kom-example</module>
