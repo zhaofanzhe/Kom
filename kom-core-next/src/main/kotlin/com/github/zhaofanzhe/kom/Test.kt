@@ -1,22 +1,22 @@
 package com.github.zhaofanzhe.kom
 
-import com.github.zhaofanzhe.kom.expression.and
 import com.github.zhaofanzhe.kom.expression.eq
-import com.github.zhaofanzhe.kom.expression.gt
-import com.github.zhaofanzhe.kom.expression.select
 import com.github.zhaofanzhe.kom.table.Table
 
-
-object Users : Table("users") {
-    val id = column<String>("id")
-    val name = column<String>("name")
-    val age = column<Int>("age")
+class User {
+    var id: Int = 0
+    var name: String = ""
 }
 
+object Users : Table("users") {
+    val id = column<Int>("id")
+    val name = column<String>("name")
+}
 
 fun main() {
-    val sql = select(Users.id, Users.name, Users.age)
-        .from(Users)
-        .where { (Users.age gt 18) and (Users.name eq "tom") }
+    val sql = from(Users)
+        .select(Users.id, Users.name)
+        .where { Users.id eq 1 }
+        .sql
     println(sql)
 }
