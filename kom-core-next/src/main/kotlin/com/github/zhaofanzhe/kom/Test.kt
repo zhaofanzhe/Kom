@@ -1,5 +1,6 @@
 package com.github.zhaofanzhe.kom
 
+import com.github.zhaofanzhe.kom.dsl.*
 import com.github.zhaofanzhe.kom.expression.eq
 import com.github.zhaofanzhe.kom.table.Table
 
@@ -14,9 +15,25 @@ object Users : Table("users") {
 }
 
 fun main() {
-    val sql = from(Users)
-        .select(Users.id, Users.name)
-        .where { Users.id eq 1 }
-        .sql
+
+    val database = Database()
+
+    var sql = database.from(Users).drop(10).take(10).sql
+
     println(sql)
+
+    sql = database.from(Users)
+        .where { Users.id eq 1 }
+        .union {
+            database.from(Users).where { Users.id eq 2 }
+        }
+        .unionAll {
+            database.from(Users).where { Users.id eq 2 }
+        }
+        .drop(10)
+        .take(10)
+        .sql
+
+    println(sql)
+
 }
