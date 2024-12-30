@@ -17,6 +17,9 @@ class QueryGenerator : SqlGenerator<QueryExpression>() {
             builder.writeKeyword(" WHERE ")
             dispatch(builder, it)
         }
+        expression.unions.forEach {
+            dispatch(builder, it)
+        }
         if (expression.orderBy.isNotEmpty()) {
             builder.writeKeyword(" ORDER BY ")
             expression.orderBy.forEachIndexed { index, orderBy ->
@@ -25,9 +28,6 @@ class QueryGenerator : SqlGenerator<QueryExpression>() {
                 }
                 dispatch(builder, orderBy)
             }
-        }
-        expression.unions.forEach {
-            dispatch(builder, it)
         }
         if (expression.limit != null) {
             builder.writeKeyword(" LIMIT ?")

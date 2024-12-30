@@ -1,11 +1,13 @@
 package com.github.zhaofanzhe.kom.table
 
-interface ColumnDeclaring {
+import com.github.zhaofanzhe.kom.expression.ColumnExpression
+import com.github.zhaofanzhe.kom.expression.ScalarExpression
 
-//    public fun asExpression(): ScalarExpression<T>
 
-}
+class Column<T>(val columnName: String) : ColumnDeclaring<T> {
 
-class Column<T>(val columnName: String) {
-    override fun toString() = columnName
+    override fun asExpression(): ScalarExpression<T> {
+        return ColumnExpression(this)
+    }
+
 }

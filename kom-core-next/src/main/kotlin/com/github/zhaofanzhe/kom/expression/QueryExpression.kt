@@ -6,7 +6,7 @@ import com.github.zhaofanzhe.kom.table.Table
 data class QueryExpression(
     val table: Table,
     val columns: List<Column<*>>? = null,
-    val where: SqlExpression? = null,
+    val where: ScalarExpression<Boolean>? = null,
     val unions: List<UnionExpression> = emptyList(),
     val orderBy: List<OrderByExpression> = emptyList(),
     val offset: Int? = null,

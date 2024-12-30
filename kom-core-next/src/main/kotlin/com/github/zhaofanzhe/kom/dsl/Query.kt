@@ -2,13 +2,13 @@ package com.github.zhaofanzhe.kom.dsl
 
 import com.github.zhaofanzhe.kom.Database
 import com.github.zhaofanzhe.kom.expression.QueryExpression
-import com.github.zhaofanzhe.kom.expression.SqlExpression
+import com.github.zhaofanzhe.kom.expression.ScalarExpression
 import com.github.zhaofanzhe.kom.expression.UnionExpression
 import com.github.zhaofanzhe.kom.generator.SqlGenerator
 import com.github.zhaofanzhe.kom.table.Column
 import com.github.zhaofanzhe.kom.table.Table
 
-data class QueryContext(val expression: QueryExpression) {
+data class Query(val expression: QueryExpression) {
 
 
     val sql: String
@@ -16,44 +16,52 @@ data class QueryContext(val expression: QueryExpression) {
 
 }
 
-fun Database.from(table: Table): QueryContext {
-    return QueryContext(QueryExpression(table = table))
+fun Database.from(table: Table): Query {
+    return Query(QueryExpression(table = table))
 }
 
-fun QueryContext.select(vararg columns: Column<*>): QueryContext {
+fun Query.select(vararg columns: Column<*>): Query {
     return this.copy(expression = expression.copy(columns = columns.toList()))
 }
 
-fun QueryContext.where(condition: () -> SqlExpression): QueryContext {
+fun Query.where(condition: () -> ScalarExpression<Boolean>): Query {
     return this.copy(expression = expression.copy(where = condition()))
 }
 
-fun QueryContext.union(block: () -> QueryContext): QueryContext {
+fun Query.union(block: () -> Query): Query {
     return this.copy(
         expression = expression.copy(
             unions = expression.unions + UnionExpression(
-                expression = block().expression,
+                expression = block().expression.copy(
+                    orderBy = emptyList(),
+                    offset = null,
+                    limit = null,
+                ),
                 isUnionAll = false
             )
         )
     )
 }
 
-fun QueryContext.unionAll(block: () -> QueryContext): QueryContext {
+fun Query.unionAll(block: () -> Query): Query {
     return this.copy(
         expression = expression.copy(
             unions = expression.unions + UnionExpression(
-                expression = block().expression,
+                expression = block().expression.copy(
+                    orderBy = emptyList(),
+                    offset = null,
+                    limit = null,
+                ),
                 isUnionAll = true
             )
         )
     )
 }
 
-fun QueryContext.drop(offset: Int): QueryContext {
+fun Query.drop(offset: Int): Query {
     return this.copy(expression = expression.copy(offset = offset))
 }
 
-fun QueryContext.take(limit: Int): QueryContext {
+fun Query.take(limit: Int): Query {
     return this.copy(expression = expression.copy(limit = limit))
 }

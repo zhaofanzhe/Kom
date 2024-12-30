@@ -1,3 +1,3 @@
 package com.github.zhaofanzhe.kom.expression
 
-data class ArgumentExpression(val value: Any?) : SqlExpression()
+data class ArgumentExpression<T>(val value: T) : ScalarExpression<T>()
